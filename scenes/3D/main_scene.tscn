@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://de8beyoq8ki7u"]
+
+[sub_resource type="Environment" id="Environment_jt87a"]
+background_mode = 1
+
+[node name="MainScene" type="Node3D"]
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="CentralWorldEnv" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_jt87a")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 0.874764, 0.48455, 0, -0.48455, 0.874764, 0, 0, 0)
