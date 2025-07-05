@@ -3,6 +3,7 @@ extends Node
 @export_category("3D")
 @export var cluster: Node3D
 @export var user_cube_scene: PackedScene
+@export var cubes_per_frame: int = 10
 @export var gen_cubes_request_url: String = "http://localhost:8081/api/v1/cubes"
 
 @export_category("UI")
@@ -18,12 +19,28 @@ func _ready() -> void:
 
 # This function will be replaced in future versions
 func generate_cubes(cubes_array: Array) -> void:
-	if cubes_array != []:
-		for cube in cubes_array:
-			await get_tree().process_frame
-			new_cube(cube)
-	else:
-		push_error("cubes_array is empty.")
+
+	if cubes_array.is_empty():
+		push_error("cubes_array is empty")
+		return
+	
+	var total := cubes_array.size()
+	var i := 0
+
+	while i < total:
+		for j in range(i, min(i + cubes_per_frame, total)):
+			new_cube(cubes_array[j])
+		i += cubes_per_frame
+
+		await get_tree().process_frame
+		
+
+	# if cubes_array != []:
+	# 	for cube in cubes_array:
+	# 		await get_tree().process_frame
+	# 		new_cube(cube)
+	# else:
+	# 	push_error("cubes_array is empty.")
 
 
 func new_cube(cube_data: Dictionary) -> void:
