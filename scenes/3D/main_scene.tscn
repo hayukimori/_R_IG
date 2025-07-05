@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://de8beyoq8ki7u"]
+[gd_scene load_steps=6 format=3 uid="uid://de8beyoq8ki7u"]
 
+[ext_resource type="Script" uid="uid://dde25ltj4ho43" path="res://scripts/main_scene.gd" id="1_4tr61"]
 [ext_resource type="PackedScene" uid="uid://bnmbbvw7s6jsy" path="res://screens/development_ui.tscn" id="1_tv7g3"]
 [ext_resource type="Script" uid="uid://chanhpuexa4jl" path="res://scripts/cubes_handler.gd" id="2_4p2wk"]
 [ext_resource type="PackedScene" uid="uid://p7dnwllk8kn3" path="res://scenes/3D/components/user_cube.tscn" id="3_kb4e5"]
@@ -9,6 +10,8 @@ background_mode = 1
 background_color = Color(0.0936695, 0.0936694, 0.093669, 1)
 
 [node name="MainScene" type="Node3D"]
+script = ExtResource("1_4tr61")
+demo_mode = true
 
 [node name="DevelopmentUI" parent="." instance=ExtResource("1_tv7g3")]
 
@@ -30,4 +33,4 @@ devel_ui = NodePath("../DevelopmentUI")
 [node name="CubesCluster" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.707107, 0.32102, -0.630037, 0, 0.891007, 0.453991, 0.707107, -0.32102, 0.630037, -275, 145, 285.965)
+transform = Transform3D(0.707107, 0.32102, -0.630037, 0, 0.891007, 0.453991, 0.707107, -0.32102, 0.630037, -275, 145, 275)
