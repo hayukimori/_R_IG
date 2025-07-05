@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://de8beyoq8ki7u"]
+[gd_scene load_steps=4 format=3 uid="uid://de8beyoq8ki7u"]
 
 [ext_resource type="PackedScene" uid="uid://bnmbbvw7s6jsy" path="res://screens/development_ui.tscn" id="1_tv7g3"]
+[ext_resource type="Script" uid="uid://chanhpuexa4jl" path="res://scripts/cubes_handler.gd" id="2_4p2wk"]
 
 [sub_resource type="Environment" id="Environment_jt87a"]
 background_mode = 1
@@ -19,5 +20,6 @@ transform = Transform3D(1, 0, 0, 0, 0.874764, 0.48455, 0, -0.48455, 0.874764, 0,
 [node name="DevelopmentUI" parent="." instance=ExtResource("1_tv7g3")]
 
 [node name="CubesHandler" type="Node" parent="."]
+script = ExtResource("2_4p2wk")
 
 [node name="CubesCluster" type="Node3D" parent="."]
