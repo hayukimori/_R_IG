@@ -3,7 +3,7 @@ extends Node
 @export_category("3D")
 @export var cluster: Node3D
 @export var user_cube_scene: PackedScene
-@export var gen_cubes_request_url: String = "http://localhost/getcubes"
+@export var gen_cubes_request_url: String = "http://localhost:8081/api/v1/cubes"
 
 @export_category("UI")
 @export var devel_ui: DevelopmentUI

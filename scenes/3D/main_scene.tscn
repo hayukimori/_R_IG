@@ -27,7 +27,6 @@ transform = Transform3D(1, 0, 0, 0, 0.874764, 0.48455, 0, -0.48455, 0.874764, 0,
 script = ExtResource("2_4p2wk")
 cluster = NodePath("../CubesCluster")
 user_cube_scene = ExtResource("3_kb4e5")
-gen_cubes_request_url = "http://localhost:8080/getcubes"
 devel_ui = NodePath("../DevelopmentUI")
 
 [node name="CubesCluster" type="Node3D" parent="."]
