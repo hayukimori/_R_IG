@@ -2,7 +2,7 @@
 
 [sub_resource type="Environment" id="Environment_jt87a"]
 background_mode = 1
-background_color = Color(0.763809, 0.763809, 0.763808, 1)
+background_color = Color(0.0936695, 0.0936694, 0.093669, 1)
 
 [node name="MainScene" type="Node3D"]
 
