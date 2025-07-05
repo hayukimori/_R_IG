@@ -33,4 +33,4 @@ devel_ui = NodePath("../DevelopmentUI")
 [node name="CubesCluster" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.707107, 0.32102, -0.630037, 0, 0.891007, 0.453991, 0.707107, -0.32102, 0.630037, -275, 145, 275)
+transform = Transform3D(0.707107, 0.32102, -0.630037, 0, 0.891007, 0.453991, 0.707107, -0.32102, 0.630037, -200, 145, 200)
