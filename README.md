@@ -18,15 +18,5 @@ You choose who to discover — and when.
 ![RIG Preview Development](./readme_contents/window.png)
 
 
-### Typography Notice
-
-This project uses the **Aldrich** typeface, designed by Matthew Desmond and licensed under the [SIL Open Font License 1.1](https://openfontlicense.org).
-
-A copy of the license is available in the [`licenses/Aldrich-OFL.txt`](./licenses/Aldrich-OFL.txt) file.
-
-
-
-### Project License
-
 License: Business Source License 1.1 — Non-commercial use only.  
 See [LICENSE.md](./LICENSE.md) for details. Contact the author for commercial licensing.
