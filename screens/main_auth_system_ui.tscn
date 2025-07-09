@@ -1,0 +1,571 @@
+[gd_scene load_steps=20 format=3 uid="uid://bjofi1c2jdw8p"]
+
+[ext_resource type="Script" uid="uid://bvqhv8cjvvan5" path="res://scripts/main_auth_system_ui.gd" id="1_d4jrm"]
+[ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="2_6c6bm"]
+[ext_resource type="Script" uid="uid://bopmajimwpyp3" path="res://scripts/components/sbv_node_3d_login_register.gd" id="3_g02x7"]
+[ext_resource type="Script" uid="uid://543v7nppoov" path="res://scripts/components/user_cube.gd" id="3_xm0er"]
+[ext_resource type="Script" uid="uid://fc7djnq3nbjb" path="res://scripts/components/cube_grid.gd" id="4_o523d"]
+[ext_resource type="Theme" uid="uid://dgrqrtlgktrk5" path="res://assets/themes/main_auth_system_ui.tres" id="5_60g0b"]
+[ext_resource type="Texture2D" uid="uid://pkr5l1nqxwxs" path="res://assets/textures/icons/auth_system_ui_icons/next_btn.png" id="7_8wg3i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60g0b"]
+bg_color = Color(0.215686, 0.215686, 0.215686, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mpfq1"]
+bg_color = Color(0.215686, 0.215686, 0.215686, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_o523d"]
+font = ExtResource("2_6c6bm")
+font_size = 18
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_60g0b"]
+offsets = PackedFloat32Array(0, 0.528571, 1)
+colors = PackedColorArray(0, 0, 0, 0.27451, 0, 0, 0, 0.0823529, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8wg3i"]
+gradient = SubResource("Gradient_60g0b")
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o523d"]
+bg_color = Color(0.217101, 0.217101, 0.217101, 1)
+
+[sub_resource type="Gradient" id="Gradient_mpfq1"]
+offsets = PackedFloat32Array(0, 0.528571, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.0823529, 0, 0, 0, 0.27451)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0mj6l"]
+gradient = SubResource("Gradient_mpfq1")
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0mj6l"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xm0er"]
+font = ExtResource("2_6c6bm")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8wg3i"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8wg3i"]
+font = ExtResource("2_6c6bm")
+
+[node name="MainAuthSystemUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d4jrm")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="SBVNode3DLoginRegister" type="Node3D" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("3_g02x7")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/SBVNode3DLoginRegister"]
+
+[node name="UserCube" type="CSGBox3D" parent="SubViewportContainer/SubViewport/SBVNode3DLoginRegister"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.74971, -0.228184, -2.59247)
+visible = false
+script = ExtResource("3_xm0er")
+metadata/_custom_type_script = "uid://543v7nppoov"
+
+[node name="CubeGrid" type="Node3D" parent="SubViewportContainer/SubViewport/SBVNode3DLoginRegister"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12.9674)
+script = ExtResource("4_o523d")
+grid_size = Vector2i(128, 64)
+spacing = 1.0
+noise_strength = 2.345
+noise_speed = 0.785
+noise_scale = 0.39
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/SBVNode3DLoginRegister"]
+transform = Transform3D(0.50817, -0.646038, 0.569559, -2.69591e-09, 0.661312, 0.750111, -0.861257, -0.381184, 0.336059, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+sky_mode = 1
+
+[node name="RegisterTest" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 92.0
+offset_top = 129.0
+offset_right = 502.0
+offset_bottom = 481.0
+
+[node name="UsernameLabel" type="Label" parent="RegisterTest"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Username"
+
+[node name="EmailLabel" type="Label" parent="RegisterTest"]
+layout_mode = 0
+offset_top = 66.0
+offset_right = 80.0
+offset_bottom = 89.0
+text = "Email"
+
+[node name="PasswordLabel" type="Label" parent="RegisterTest"]
+layout_mode = 0
+offset_top = 142.0
+offset_right = 80.0
+offset_bottom = 165.0
+text = "Password"
+
+[node name="ConfirmPasswordLabel" type="Label" parent="RegisterTest"]
+layout_mode = 0
+offset_top = 212.0
+offset_right = 80.0
+offset_bottom = 235.0
+text = "Confirm password"
+
+[node name="UsernameLineEdit" type="LineEdit" parent="RegisterTest"]
+layout_mode = 0
+offset_top = 23.0
+offset_right = 410.0
+offset_bottom = 54.0
+
+[node name="EmailLineEdit" type="LineEdit" parent="RegisterTest"]
+layout_mode = 0
+offset_top = 89.0
+offset_right = 410.0
+offset_bottom = 120.0
+
+[node name="PasswordLineEdit" type="LineEdit" parent="RegisterTest"]
+layout_mode = 0
+offset_top = 165.0
+offset_right = 410.0
+offset_bottom = 196.0
+
+[node name="ConfirmPasswordLineEdit" type="LineEdit" parent="RegisterTest"]
+layout_mode = 0
+offset_top = 234.0
+offset_right = 410.0
+offset_bottom = 265.0
+
+[node name="RegisterBtn" type="Button" parent="RegisterTest"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Register"
+
+[node name="RegisterControl" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.5
+offset_top = -324.0
+offset_right = 276.5
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="Control" parent="RegisterControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.5
+offset_top = -228.5
+offset_right = 180.5
+offset_bottom = 228.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainFramePanel" type="Panel" parent="RegisterControl/BG"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 154.0
+offset_right = 356.0
+offset_bottom = 312.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_60g0b")
+
+[node name="UsernameLineEdit" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -166.5
+offset_top = -65.0
+offset_right = 157.5
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_60g0b")
+placeholder_text = "your_username"
+alignment = 1
+
+[node name="EmailLineEdit" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -18.5
+offset_right = 158.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_60g0b")
+placeholder_text = "your.email@example.com"
+alignment = 1
+
+[node name="PasswordLineEdit" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -153.0
+offset_top = 25.5
+offset_right = -4.0
+offset_bottom = 56.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_60g0b")
+placeholder_text = "password"
+alignment = 1
+secret = true
+
+[node name="ConfirmPasswordLineEdit" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 6.0
+offset_top = 25.5
+offset_right = 155.0
+offset_bottom = 56.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_60g0b")
+placeholder_text = "confirm_password"
+alignment = 1
+secret = true
+
+[node name="HeadPanel" type="Panel" parent="RegisterControl/BG"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 100.0
+offset_right = 356.0
+offset_bottom = 157.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mpfq1")
+
+[node name="Label" type="Label" parent="RegisterControl/BG/HeadPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sign Up"
+label_settings = SubResource("LabelSettings_o523d")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="GradientTR" type="TextureRect" parent="RegisterControl/BG/HeadPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = SubResource("GradientTexture2D_8wg3i")
+expand_mode = 1
+
+[node name="HeadPanel2" type="Panel" parent="RegisterControl/BG"]
+layout_mode = 0
+offset_left = 0.5
+offset_top = 311.5
+offset_right = 355.5
+offset_bottom = 368.5
+theme_override_styles/panel = SubResource("StyleBoxFlat_o523d")
+
+[node name="GradientTR" type="TextureRect" parent="RegisterControl/BG/HeadPanel2"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -14.0
+grow_horizontal = 2
+texture = SubResource("GradientTexture2D_0mj6l")
+expand_mode = 1
+
+[node name="RegisterBtn" type="Button" parent="RegisterControl/BG/HeadPanel2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -18.0
+offset_right = 15.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/icon_hover_pressed_color = Color(0.0415072, 0.0415072, 0.0415072, 1)
+theme_override_colors/icon_hover_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0mj6l")
+icon = ExtResource("7_8wg3i")
+icon_alignment = 1
+
+[node name="LoginControl" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.5
+offset_top = -324.0
+offset_right = 276.5
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="Control" parent="LoginControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.5
+offset_top = -228.5
+offset_right = 180.5
+offset_bottom = 228.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainFramePanel" type="Panel" parent="LoginControl/BG"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 154.0
+offset_right = 356.0
+offset_bottom = 312.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_60g0b")
+
+[node name="EmailLineEdit" type="LineEdit" parent="LoginControl/BG/MainFramePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -162.0
+offset_top = -34.5
+offset_right = 161.0
+offset_bottom = -3.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_60g0b")
+placeholder_text = "your.email@example.com"
+alignment = 1
+
+[node name="PasswordLineEdit" type="LineEdit" parent="LoginControl/BG/MainFramePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -161.5
+offset_top = 13.0
+offset_right = 162.5
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_60g0b")
+placeholder_text = "password"
+alignment = 1
+secret = true
+
+[node name="HeadPanel" type="Panel" parent="LoginControl/BG"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 100.0
+offset_right = 356.0
+offset_bottom = 157.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mpfq1")
+
+[node name="Label" type="Label" parent="LoginControl/BG/HeadPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sign In"
+label_settings = SubResource("LabelSettings_o523d")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="LoginControl/BG/HeadPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = SubResource("GradientTexture2D_8wg3i")
+expand_mode = 1
+
+[node name="HeadPanel2" type="Panel" parent="LoginControl/BG"]
+layout_mode = 0
+offset_left = 0.5
+offset_top = 311.5
+offset_right = 355.5
+offset_bottom = 368.5
+theme_override_styles/panel = SubResource("StyleBoxFlat_o523d")
+
+[node name="GradientTR" type="TextureRect" parent="LoginControl/BG/HeadPanel2"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -14.0
+grow_horizontal = 2
+texture = SubResource("GradientTexture2D_0mj6l")
+expand_mode = 1
+
+[node name="LoginBtn" type="Button" parent="LoginControl/BG/HeadPanel2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -18.0
+offset_right = 15.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/icon_hover_pressed_color = Color(0.0415072, 0.0415072, 0.0415072, 1)
+theme_override_colors/icon_hover_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0mj6l")
+icon = ExtResource("7_8wg3i")
+icon_alignment = 1
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 1
+offset_right = 234.0
+offset_bottom = 88.0
+text = "<R>IG SN"
+label_settings = SubResource("LabelSettings_xm0er")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChangeAuthMethod" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -91.0
+offset_top = -138.0
+offset_right = 97.0
+offset_bottom = -107.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_hover_pressed_color = Color(0.407056, 0.407056, 0.407056, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.374641, 0.5694, 1, 1)
+theme_override_colors/font_focus_color = Color(0.376471, 0.568627, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.00243804, 0.000138135, 0.491117, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8wg3i")
+text = "{ default auth method text }"
+
+[node name="ErrorLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -172.0
+offset_bottom = 186.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.494118, 0, 0, 1)
+label_settings = SubResource("LabelSettings_8wg3i")
+autowrap_mode = 3
+
+[connection signal="pressed" from="RegisterTest/RegisterBtn" to="." method="_on_register_btn_pressed"]
+[connection signal="pressed" from="RegisterControl/BG/HeadPanel2/RegisterBtn" to="." method="_on_register_btn_pressed"]
+[connection signal="pressed" from="LoginControl/BG/HeadPanel2/LoginBtn" to="." method="_on_login_btn_pressed"]
+[connection signal="pressed" from="ChangeAuthMethod" to="." method="_on_change_auth_method_pressed"]
