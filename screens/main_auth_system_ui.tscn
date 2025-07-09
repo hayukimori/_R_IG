@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bjofi1c2jdw8p"]
+[gd_scene load_steps=20 format=3 uid="uid://bjofi1c2jdw8p"]
 
 [ext_resource type="Script" uid="uid://bvqhv8cjvvan5" path="res://scripts/main_auth_system_ui.gd" id="1_d4jrm"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="2_6c6bm"]
@@ -48,6 +48,9 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 font = ExtResource("2_6c6bm")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8wg3i"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8wg3i"]
+font = ExtResource("2_6c6bm")
 
 [node name="MainAuthSystemUI" type="Control"]
 layout_mode = 3
@@ -326,7 +329,7 @@ grow_horizontal = 2
 texture = SubResource("GradientTexture2D_0mj6l")
 expand_mode = 1
 
-[node name="NextBtn" type="Button" parent="RegisterControl/BG/HeadPanel2"]
+[node name="RegisterBtn" type="Button" parent="RegisterControl/BG/HeadPanel2"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -476,7 +479,7 @@ grow_horizontal = 2
 texture = SubResource("GradientTexture2D_0mj6l")
 expand_mode = 1
 
-[node name="NextBtn" type="Button" parent="LoginControl/BG/HeadPanel2"]
+[node name="LoginBtn" type="Button" parent="LoginControl/BG/HeadPanel2"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -546,5 +549,23 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8wg3i")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_8wg3i")
 text = "{ default auth method text }"
 
+[node name="ErrorLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -172.0
+offset_bottom = 186.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.494118, 0, 0, 1)
+label_settings = SubResource("LabelSettings_8wg3i")
+autowrap_mode = 3
+
 [connection signal="pressed" from="RegisterTest/RegisterBtn" to="." method="_on_register_btn_pressed"]
+[connection signal="pressed" from="RegisterControl/BG/HeadPanel2/RegisterBtn" to="." method="_on_register_btn_pressed"]
+[connection signal="pressed" from="LoginControl/BG/HeadPanel2/LoginBtn" to="." method="_on_login_btn_pressed"]
 [connection signal="pressed" from="ChangeAuthMethod" to="." method="_on_change_auth_method_pressed"]
