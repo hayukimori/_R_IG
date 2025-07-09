@@ -196,8 +196,12 @@ func handleAuth(action: AuthActions, content: Array) -> void:
 	for item in content:
 		if item.has("name") and item.has("errorType"):
 			handleError(item)
+			return
 
-		
+		errors.clear()
+		$ErrorLabel.text = ""
+		if action:
+			print("User token: " + item.token)
 
 
 func _on_register_btn_pressed() -> void:
