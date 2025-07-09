@@ -1,18 +1,52 @@
 extends Control
 
-@onready var register_username_line_edit: LineEdit = $RegisterTest/UsernameLineEdit
-@onready var register_email_line_edit: LineEdit = $RegisterTest/EmailLineEdit
-@onready var register_password_line_edit: LineEdit = $RegisterTest/PasswordLineEdit
-@onready var register_password_confirm_line_edit: LineEdit = $RegisterTest/ConfirmPasswordLineEdit
-
-
 enum AuthActions { REGISTER, LOGIN }
+
+@export_group("Settings")
+@export var default_method: AuthActions = AuthActions.LOGIN
+
+@onready var login_control: Control = $LoginControl
+@onready var register_control: Control = $RegisterControl
+
+@onready var register_email_line_edit = $RegisterControl/BG/MainFramePanel/EmailLineEdit
+@onready var register_username_line_edit = $RegisterControl/BG/MainFramePanel/UsernameLineEdit
+@onready var register_password_line_edit = $RegisterControl/BG/MainFramePanel/PasswordLineEdit
+@onready var register_confirm_password_line_edit = $RegisterControl/BG/MainFramePanel/PasswordLineEdit
+
+@onready var login_email_line_edit = $LoginControl/BG/MainFramePanel/EmailLineEdit
+@onready var login_password_line_edit = $LoginControl/BG/MainFramePanel/PasswordLineEdit
+
+@onready var change_auth_method_btn: Button = $ChangeAuthMethod
+
+
+var current_auth_method: AuthActions
+
 
 var register_user_url: String = "http://localhost:3000/api/auth/register"
 var login_url: String = "http://localhost:3000/api/auth/login"
 
+
 func _ready() -> void:
-	pass
+	define_current_auth_method(default_method)
+
+
+func define_current_auth_method(action: AuthActions) -> void:
+	current_auth_method = action
+
+	match action:
+		AuthActions.REGISTER:
+			login_control.visible = true
+			register_control.visible = false
+
+			change_auth_method_btn.text = "I don't have an account"
+
+		AuthActions.LOGIN:
+			login_control.visible = false
+			register_control.visible = true
+
+			change_auth_method_btn.text = "I already have an account"
+	
+	
 
 
 func auth_action(action: AuthActions) -> Array:
@@ -50,7 +84,7 @@ func auth_action(action: AuthActions) -> Array:
 				"username": register_username_line_edit.text,
 				"email": register_email_line_edit.text,
 				"password": register_password_line_edit.text,
-				"confirm_password": register_password_confirm_line_edit.text
+				"confirm_password": register_confirm_password_line_edit.text
 			}
 			
 		AuthActions.LOGIN: 
@@ -69,6 +103,9 @@ func auth_action(action: AuthActions) -> Array:
 	return result
 
 
-func _on_register_btn_pressed() -> void:
-	var data = await auth_action(AuthActions.REGISTER)
-	print_debug(data)
+func _on_change_auth_method_pressed() -> void:
+	match current_auth_method:
+		AuthActions.REGISTER:
+			define_current_auth_method(AuthActions.LOGIN)
+		AuthActions.LOGIN:
+			define_current_auth_method(AuthActions.REGISTER)

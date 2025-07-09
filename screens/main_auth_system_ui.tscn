@@ -206,7 +206,7 @@ offset_right = 356.0
 offset_bottom = 312.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_60g0b")
 
-[node name="MainLineEdit" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
+[node name="UsernameLineEdit" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -223,7 +223,24 @@ theme = ExtResource("5_60g0b")
 placeholder_text = "your_username"
 alignment = 1
 
-[node name="MainLineEdit3" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
+[node name="EmailLineEdit" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -18.5
+offset_right = 158.0
+offset_bottom = 12.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_60g0b")
+placeholder_text = "your.email@example.com"
+alignment = 1
+
+[node name="PasswordLineEdit" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -241,7 +258,7 @@ placeholder_text = "password"
 alignment = 1
 secret = true
 
-[node name="MainLineEdit4" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
+[node name="ConfirmPasswordLineEdit" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -258,23 +275,6 @@ theme = ExtResource("5_60g0b")
 placeholder_text = "confirm_password"
 alignment = 1
 secret = true
-
-[node name="MainLineEdit2" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -165.0
-offset_top = -18.5
-offset_right = 158.0
-offset_bottom = 12.5
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("5_60g0b")
-placeholder_text = "your.email@example.com"
-alignment = 1
 
 [node name="HeadPanel" type="Panel" parent="RegisterControl/BG"]
 layout_mode = 0
@@ -297,7 +297,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="TextureRect" type="TextureRect" parent="RegisterControl/BG/HeadPanel"]
+[node name="GradientTR" type="TextureRect" parent="RegisterControl/BG/HeadPanel"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -356,6 +356,7 @@ icon = ExtResource("7_8wg3i")
 icon_alignment = 1
 
 [node name="LoginControl" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -391,7 +392,24 @@ offset_right = 356.0
 offset_bottom = 312.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_60g0b")
 
-[node name="MainLineEdit3" type="LineEdit" parent="LoginControl/BG/MainFramePanel"]
+[node name="EmailLineEdit" type="LineEdit" parent="LoginControl/BG/MainFramePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -162.0
+offset_top = -34.5
+offset_right = 161.0
+offset_bottom = -3.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_60g0b")
+placeholder_text = "your.email@example.com"
+alignment = 1
+
+[node name="PasswordLineEdit" type="LineEdit" parent="LoginControl/BG/MainFramePanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -408,23 +426,6 @@ theme = ExtResource("5_60g0b")
 placeholder_text = "password"
 alignment = 1
 secret = true
-
-[node name="MainLineEdit2" type="LineEdit" parent="LoginControl/BG/MainFramePanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -162.0
-offset_top = -34.5
-offset_right = 161.0
-offset_bottom = -3.5
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("5_60g0b")
-placeholder_text = "your.email@example.com"
-alignment = 1
 
 [node name="HeadPanel" type="Panel" parent="LoginControl/BG"]
 layout_mode = 0
@@ -546,3 +547,4 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_8wg3i")
 text = "{ default auth method text }"
 
 [connection signal="pressed" from="RegisterTest/RegisterBtn" to="." method="_on_register_btn_pressed"]
+[connection signal="pressed" from="ChangeAuthMethod" to="." method="_on_change_auth_method_pressed"]
