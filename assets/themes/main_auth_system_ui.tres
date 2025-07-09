@@ -1,0 +1,19 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://dgrqrtlgktrk5"]
+
+[ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="1_um7al"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_um7al"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8wg3i"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 2
+border_blend = true
+
+[resource]
+LineEdit/font_sizes/font_size = 12
+LineEdit/fonts/font = ExtResource("1_um7al")
+LineEdit/styles/focus = SubResource("StyleBoxFlat_um7al")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_8wg3i")
+LineEdit/styles/read_only = null
