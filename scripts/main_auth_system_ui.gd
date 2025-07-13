@@ -62,7 +62,13 @@ func auth_action(action: AuthActions) -> Array:
 	http_request.request_completed.connect(func(result_code, response_code, _headers, body):
 		if result_code != 0:
 			print("error connecting, result_code: %d" % result_code)
-			result.assign([{"InternalError": "Connection error", "context": "Couldn't connect: result_code: %d"  % result_code}])
+			result.assign([
+				{
+				"ConnectionError": "Connection error", 
+				"context": "Couldn't connect: result_code: %d"  % result_code, 
+				"code": result_code
+				}
+			])
 			
 		match response_code:
 			200, 201: print("Ok")
@@ -156,6 +162,28 @@ func _on_change_auth_method_pressed() -> void:
 			define_current_auth_method(AuthActions.REGISTER)
 
 
+func handleConnectionError(errorData: Dictionary):
+	var err_code: int = errorData.code
+	var error_message := ""
+	match err_code:
+		1: error_message = "Chunked body size mismatch: Network error, server misconfiguration, or chunked encoding issue."
+		2: error_message = "Can't connect: Request failed while connecting."
+		3: error_message = "Can't resolve: Request failed while resolving."
+		4: error_message = "Connection error: Read/write error during request."
+		5: error_message = "TLS handshake error: Request failed on TLS handshake."
+		6: error_message = "No response: Request does not have a response yet."
+		7: error_message = "Body size limit exceeded: Request exceeded its maximum size limit."
+		8: error_message = "Body decompress failed: Error decompressing response body. Possible unsupported format or corrupted data."
+		9: error_message = "Request failed: (Unused error code)."
+		10: error_message = "Download file can't open: Couldn't open the download file."
+		11: error_message = "Download file write error: Couldn't write to the download file."
+		12: error_message = "Redirect limit reached: Request reached its maximum redirect limit."
+		13: error_message = "Timeout: Request failed due to a timeout."
+		_: error_message = "Unknown connection error (code: %d)" % err_code
+
+	if has_node("ErrorLabel"):
+		$ErrorLabel.text = error_message
+
 func handleError(errorData: Dictionary) -> void:
 	errors.clear()
 
@@ -196,6 +224,10 @@ func handleAuth(action: AuthActions, content: Array) -> void:
 	for item in content:
 		if item.has("name") and item.has("errorType"):
 			handleError(item)
+			return
+
+		if item.has("ConnectionError"):
+			handleConnectionError(item)
 			return
 
 		errors.clear()
