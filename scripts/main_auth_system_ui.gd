@@ -236,18 +236,21 @@ func handleAuth(action: AuthActions, content: Array) -> void:
 		if item.has("authorizedUser"):
 			item.authorizedUser["token"] = item.token
 			CurrentUserSession.set_session_data(item.authorizedUser)
-			return
 
 		elif item.has("createdUser"):
 			item.createdUser["token"] = item.token
 			CurrentUserSession.set_session_data(item.createdUser)
-			return
+			
 		
 		else:
 			$ErrorLabel.text += "::: No user or known errors. Please check the output and try again"
 			printerr("No user or known errors. Please check the output and try again")
+			return
 		
-
+		
+		#get_tree().change_scene_to_packed(redirect_scene)
+		
+		return
 
 func _on_register_btn_pressed() -> void:
 	disable_register_fields()
