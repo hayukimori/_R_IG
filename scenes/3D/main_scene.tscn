@@ -32,5 +32,5 @@ devel_ui = NodePath("../DevelopmentUI")
 [node name="CubesCluster" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.707107, 0.32102, -0.630037, 0, 0.891007, 0.453991, 0.707107, -0.32102, 0.630037, -200, 145, 200)
+transform = Transform3D(0.8059, -0.313607, 0.502172, 0, 0.848189, 0.529695, -0.592053, -0.426881, 0.683555, 161.995, 165.493, 184.89)
 script = ExtResource("5_m7mqk")
