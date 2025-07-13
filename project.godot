@@ -16,4 +16,5 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-CurrentUserSession="*res://scripts/CurrentUserSession.gd"
+CurrentUserSession="*res://autoloads/CurrentUserSession.gd"
+SceneRouter="*res://autoloads/SceneRouter.gd"
