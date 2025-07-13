@@ -248,9 +248,8 @@ func handleAuth(action: AuthActions, content: Array) -> void:
 			return
 		
 		
-		#get_tree().change_scene_to_packed(redirect_scene)
-		
-		return
+		get_tree().change_scene_to_packed(SceneRouter.get_main_scene())
+
 
 func _on_register_btn_pressed() -> void:
 	disable_register_fields()
