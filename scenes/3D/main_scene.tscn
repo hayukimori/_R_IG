@@ -12,7 +12,6 @@ background_color = Color(0.0936695, 0.0936694, 0.093669, 1)
 
 [node name="MainScene" type="Node3D"]
 script = ExtResource("1_4tr61")
-demo_mode = true
 
 [node name="DevelopmentUI" parent="." instance=ExtResource("1_tv7g3")]
 
