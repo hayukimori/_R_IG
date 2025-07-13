@@ -1,6 +1,6 @@
 extends Node
 
-@export var default_cubes_scene: PackedScene
+@export var default_cubes_scene: PackedScene = preload("res://scenes/3D/main_scene.tscn")
 
 
 func get_main_scene(_first_login: bool = false) -> PackedScene:
