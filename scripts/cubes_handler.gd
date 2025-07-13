@@ -94,7 +94,18 @@ func request_cubes() -> Array:
 			push_error("Server response code: %d" % response_code)
 	)
 
-	http_request.request(gen_cubes_request_url)
+	
+	var token = CurrentUserSession.login_token
+	if token == "":
+		push_error("CUBES HANDLER REQUEST ERROR: No Token Provided, it can result in request error.")
+
+	var headers = [
+		"Content-Type: application/json",
+		"Accept: application/json",
+		"Authorization: Bearer %s" % token
+	]
+
+	http_request.request(gen_cubes_request_url, headers, HTTPClient.METHOD_GET)
 
 	await http_request.request_completed
 	http_request.queue_free()
