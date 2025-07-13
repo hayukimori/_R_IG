@@ -1,6 +1,7 @@
 extends Node
 
 # => Memory Data
+var user_id: String = ""
 var username: String = ""
 var email: String = ""
 var created_at: String = ""
@@ -15,6 +16,7 @@ func _ready() -> void:
 	load_token_from_file()
 
 func set_session_data(data: Dictionary) -> void:
+	user_id = data.get("id", "")
 	username = data.get("name", "")
 	email = data.get("email", "")
 	created_at = data.get("created_at", "")
@@ -27,6 +29,7 @@ func set_session_data(data: Dictionary) -> void:
 
 
 func clear_session() -> void:
+	user_id = ""
 	username = ""
 	email = ""
 	created_at = ""
