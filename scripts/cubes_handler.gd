@@ -5,16 +5,29 @@ extends Node
 @export var user_cube_scene: PackedScene
 @export var cubes_per_frame: int = 10
 @export var gen_cubes_request_url: String = "http://localhost:3000/api/v1/cubes"
+@export var new_cubes_url: String = "http://localhost:3000/api/v1/checknewcubes"
 
 @export_category("UI")
 @export var devel_ui: DevelopmentUI
 
+@onready var main_timer: Timer = $Timer
+
 
 var cubes_count: int = 0
+var cubes_history: Array = []
+var last_cube_owid: String = ""
 
 func _ready() -> void:
 	var content = await request_cubes()
+	# TODO: Add an error hanlder
+	
+	cubes_history = content
 	generate_cubes(content)
+
+	last_cube_owid = content[-1].owner_id
+	main_timer.start()
+
+	
 
 
 # This function will be replaced in future versions
@@ -76,7 +89,7 @@ func new_cube(cube_data: Dictionary) -> void:
 
 # Request for gen_cubes_request_url (GET) to get an array from all existing cubes
 # This function is temporary, and it will be replaced in future versions
-func request_cubes() -> Array:
+func request_cubes(get_new: bool = false, last_id: String = "") -> Array:
 	var http_request := HTTPRequest.new()
 	add_child(http_request)
 
@@ -117,9 +130,28 @@ func request_cubes() -> Array:
 		"Authorization: Bearer %s" % token
 	]
 
-	http_request.request(gen_cubes_request_url, headers, HTTPClient.METHOD_GET)
+	if get_new:
+		var dict_data = { "last_id": last_id }
+		var jsondata = JSON.stringify(dict_data)
+
+		http_request.request(new_cubes_url, headers, HTTPClient.METHOD_POST, jsondata)
+
+	else:
+		http_request.request(gen_cubes_request_url, headers, HTTPClient.METHOD_GET)
 
 	await http_request.request_completed
 	http_request.queue_free()
 
 	return result
+
+
+func _on_timer_timeout() -> void:
+	var new_cubes = await request_cubes(true, last_cube_owid)
+
+	if new_cubes.size() > 0:
+		if new_cubes != cubes_history:
+			cubes_history += new_cubes
+			generate_cubes(new_cubes)
+			last_cube_owid = cubes_history[-1].owner_id
+		else:
+			print("Is equals")
