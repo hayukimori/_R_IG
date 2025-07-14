@@ -83,15 +83,27 @@ func request_cubes() -> Array:
 	var result: Array = []
 
 	http_request.request_completed.connect(func(result_code, response_code, _headers, body):
-		print_debug(result_code)
-		if response_code == 200:
-			var json = JSON.parse_string(body.get_string_from_utf8())
-			if typeof(json) == TYPE_ARRAY:
-				result.assign(json)
-			elif typeof(json) == TYPE_DICTIONARY:
-				result.append(json)
-		else:
-			push_error("Server response code: %d" % response_code)
+		if result_code != 0:
+			print("error connecting, result_code: %d" % result_code)
+			result.assign([
+				{
+				"ConnectionError": "Connection error", 
+				"context": "Couldn't connect: result_code: %d"  % result_code, 
+				"code": result_code
+				}
+			])
+			
+		match response_code:
+			200, 201: print("Ok")
+			400: push_error("400 Error")
+			500: push_error("Server error")
+		
+		
+		var json = JSON.parse_string(body.get_string_from_utf8())
+		if typeof(json) == TYPE_ARRAY:
+			result.assign(json)
+		elif typeof(json) == TYPE_DICTIONARY:
+			result.append(json)
 	)
 
 	
