@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://p7dnwllk8kn3"]
+[gd_scene load_steps=3 format=3 uid="uid://p7dnwllk8kn3"]
 
 [ext_resource type="Script" uid="uid://543v7nppoov" path="res://scripts/components/user_cube.gd" id="1_tsou6"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tsou6"]
+shading_mode = 0
+
 [node name="UserCube" type="CSGBox3D"]
+material = SubResource("StandardMaterial3D_tsou6")
 script = ExtResource("1_tsou6")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bjofi1c2jdw8p"]
+[gd_scene load_steps=21 format=3 uid="uid://bjofi1c2jdw8p"]
 
 [ext_resource type="Script" uid="uid://bvqhv8cjvvan5" path="res://scripts/main_auth_system_ui.gd" id="1_d4jrm"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="2_6c6bm"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://fc7djnq3nbjb" path="res://scripts/components/cube_grid.gd" id="4_o523d"]
 [ext_resource type="Theme" uid="uid://dgrqrtlgktrk5" path="res://assets/themes/main_auth_system_ui.tres" id="5_60g0b"]
 [ext_resource type="Texture2D" uid="uid://pkr5l1nqxwxs" path="res://assets/textures/icons/auth_system_ui_icons/next_btn.png" id="7_8wg3i"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8wg3i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60g0b"]
 bg_color = Color(0.215686, 0.215686, 0.215686, 1)
@@ -84,6 +86,7 @@ script = ExtResource("3_g02x7")
 [node name="UserCube" type="CSGBox3D" parent="SubViewportContainer/SubViewport/SBVNode3DLoginRegister"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.74971, -0.228184, -2.59247)
 visible = false
+material = SubResource("StandardMaterial3D_8wg3i")
 script = ExtResource("3_xm0er")
 metadata/_custom_type_script = "uid://543v7nppoov"
 
