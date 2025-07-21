@@ -15,7 +15,7 @@ extends Node
 
 var cubes_count: int = 0
 var cubes_history: Array = []
-var last_cube_owid: String = ""
+var last_cube_id: String = ""
 
 func _ready() -> void:
 	var content = await request_cubes()
@@ -24,7 +24,7 @@ func _ready() -> void:
 	cubes_history = content
 	generate_cubes(content)
 
-	last_cube_owid = content[-1].owner_id
+	last_cube_id = content[-1].id
 	main_timer.start()
 
 	
@@ -65,12 +65,14 @@ func new_cube(cube_data: Dictionary) -> void:
 		push_error("Cluster is null")
 		return
 
-	var cid: String = cube_data.id
+	var cid: String = cube_data["id"]
+	
+
 	var owner_id: String = cube_data.owner_id
 	var cube_position: Vector3 = Vector3(
-		cube_data.position_x,
-		cube_data.position_y,
-		cube_data.position_z
+		cube_data.position.x,
+		cube_data.position.y,
+		cube_data.position.z
 	)
 
 	var t_cube: UserCube = user_cube_scene.instantiate()
@@ -131,7 +133,7 @@ func request_cubes(get_new: bool = false, last_id: String = "") -> Array:
 	]
 
 	if get_new:
-		var dict_data = { "last_id": last_id }
+		var dict_data = { "id": last_id }
 		var jsondata = JSON.stringify(dict_data)
 
 		http_request.request(new_cubes_url, headers, HTTPClient.METHOD_POST, jsondata)
@@ -146,12 +148,13 @@ func request_cubes(get_new: bool = false, last_id: String = "") -> Array:
 
 
 func _on_timer_timeout() -> void:
-	var new_cubes = await request_cubes(true, last_cube_owid)
+	var new_cubes = await request_cubes(true, last_cube_id)
 
 	if new_cubes.size() > 0:
 		if new_cubes != cubes_history:
 			cubes_history += new_cubes
 			generate_cubes(new_cubes)
-			last_cube_owid = cubes_history[-1].owner_id
+			print(cubes_history[-1])
+			last_cube_id = cubes_history[-1].id
 		else:
 			print("Is equals")

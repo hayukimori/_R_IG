@@ -20,10 +20,13 @@ func update_current_json_content(new_value: Dictionary) -> void:
 	update_current_cube_info(
 		new_value.id,
 		new_value.owner_id,
-		new_value.position_x,
-		new_value.position_y,
-		new_value.position_z
+		new_value.position.x,
+		new_value.position.y,
+		new_value.position.z
 	)
+
+func update_user_id(new_value: String) -> void:
+	user_id_label.text = "MY ID: %s" % new_value
 
 func update_current_cube_info(cube_id: String, owner_id: String, pos_x: float, pos_y: float, pos_z: float) -> void:
 	var text_content = []
