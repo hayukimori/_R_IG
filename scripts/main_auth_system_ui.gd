@@ -5,6 +5,10 @@ enum AuthActions { REGISTER = 0, LOGIN = 1}
 @export_group("Settings")
 @export var default_method: AuthActions = AuthActions.LOGIN
 
+@export_group("Network Settings")
+@export var register_user_url: String = "http://localhost:3000/api/auth/register"
+@export var login_url: String = "http://localhost:3000/api/auth/login"
+
 @onready var login_control: Control = $LoginControl
 @onready var register_control: Control = $RegisterControl
 
@@ -22,12 +26,10 @@ enum AuthActions { REGISTER = 0, LOGIN = 1}
 
 
 var current_auth_method: AuthActions
-
 var errors: Array = []
 
 
-var register_user_url: String = "http://localhost:3000/api/auth/register"
-var login_url: String = "http://localhost:3000/api/auth/login"
+
 
 
 func _ready() -> void:
