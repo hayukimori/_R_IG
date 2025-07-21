@@ -18,6 +18,13 @@ var cubes_history: Array = []
 var last_cube_id: String = ""
 
 func _ready() -> void:
+	if (
+		CurrentUserSession.login_token != "" and 
+		CurrentUserSession.user_id != ""
+	):
+		if devel_ui != null:
+			devel_ui.update_user_id(CurrentUserSession.user_id)
+
 	var content = await request_cubes()
 	# TODO: Add an error hanlder
 	
