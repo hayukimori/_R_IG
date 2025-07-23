@@ -30,20 +30,21 @@ func _input(event):
 	if event is InputEventMouseButton:
 		match event.button_index:
 			MOUSE_BUTTON_LEFT: # Raycast Mod
-				var mouse_pos = get_viewport().get_mouse_position()
-				var from = project_ray_origin(mouse_pos)
-				var to = from + project_ray_normal(mouse_pos) * ray_length
-				var space = get_world_3d().direct_space_state
-				var ray_query = PhysicsRayQueryParameters3D.new()
-				ray_query.from = from
-				ray_query.to = to
-				ray_query.collide_with_areas = true
-				ray_query.collide_with_bodies = true
-				var result = space.intersect_ray(ray_query)
-				
-				if result and result["collider"].is_in_group("cubes"):
-					var cube: UserCube = result["collider"]
-					print(cube)
+				if event.pressed:
+					var mouse_pos = get_viewport().get_mouse_position()
+					var from = project_ray_origin(mouse_pos)
+					var to = from + project_ray_normal(mouse_pos) * ray_length
+					var space = get_world_3d().direct_space_state
+					var ray_query = PhysicsRayQueryParameters3D.new()
+					ray_query.from = from
+					ray_query.to = to
+					ray_query.collide_with_areas = true
+					ray_query.collide_with_bodies = true
+					var result = space.intersect_ray(ray_query)
+					
+					if result and result["collider"].is_in_group("cubes"):
+						var cube: UserCube = result["collider"]
+						print(cube)
 
 			MOUSE_BUTTON_RIGHT:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if event.pressed else Input.MOUSE_MODE_VISIBLE)
