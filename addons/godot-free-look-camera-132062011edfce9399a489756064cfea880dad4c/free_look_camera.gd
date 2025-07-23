@@ -1,4 +1,5 @@
 #Copyright © 2022 Marc Nahr: https://github.com/MarcPhi/godot-free-look-camera
+# Modded by hayukimori in july 2025 (reason: Camera Raycast by mouse pointer position)
 extends Camera3D
 
 @export_range(0, 10, 0.01) var sensitivity : float = 3
@@ -8,7 +9,13 @@ extends Camera3D
 @export var max_speed : float = 1000
 @export var min_speed : float = 0.2
 
+
+@export_group("Mouse Raycast")
+@export var ray_length = 100
+
 @onready var _velocity = default_velocity
+
+
 
 func _input(event):
 	if not current:
@@ -22,6 +29,18 @@ func _input(event):
 	
 	if event is InputEventMouseButton:
 		match event.button_index:
+			MOUSE_BUTTON_LEFT: # Raycast Mod
+				var mouse_pos = get_viewport().get_mouse_position()
+				var from = project_ray_origin(mouse_pos)
+				var to = from + project_ray_normal(mouse_pos) * ray_length
+				var space = get_world_3d().direct_space_state
+				var ray_query = PhysicsRayQueryParameters3D.new()
+				ray_query.from = from
+				ray_query.to = to
+				ray_query.collide_with_areas = true
+				ray_query.collide_with_bodies = true
+				var raycast_result = space.intersect_ray(ray_query)
+				print_debug(raycast_result)
 			MOUSE_BUTTON_RIGHT:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if event.pressed else Input.MOUSE_MODE_VISIBLE)
 			MOUSE_BUTTON_WHEEL_UP: # increase fly velocity
