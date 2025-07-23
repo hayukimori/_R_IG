@@ -85,6 +85,7 @@ func new_cube(cube_data: Dictionary) -> void:
 	var t_cube: UserCube = user_cube_scene.instantiate()
 	t_cube.cube_id = cid
 	t_cube.user_id = owner_id
+	t_cube.add_to_group("cubes")
 
 	cluster.add_child(t_cube)
 	t_cube.position = cube_position

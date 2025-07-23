@@ -10,7 +10,7 @@
 background_mode = 1
 background_color = Color(0.0936695, 0.0936694, 0.093669, 1)
 
-[node name="MainScene" type="Node3D"]
+[node name="MainScene" type="Node3D" groups=["cubes"]]
 script = ExtResource("1_4tr61")
 
 [node name="DevelopmentUI" parent="." instance=ExtResource("1_tv7g3")]
