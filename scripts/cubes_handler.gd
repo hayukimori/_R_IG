@@ -95,6 +95,8 @@ func new_cube(cube_data: Dictionary) -> void:
 	devel_ui.update_cubes_count(cubes_count)
 	devel_ui.update_current_json_content(cube_data)
 
+	t_cube.add_to_group("cubes")
+
 
 # Request for gen_cubes_request_url (GET) to get an array from all existing cubes
 # This function is temporary, and it will be replaced in future versions
