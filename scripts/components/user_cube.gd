@@ -8,3 +8,7 @@ func _ready() -> void:
 	if cube_id == null or user_id == null:
 		push_error("Invalid user/cube.")
 		queue_free()
+
+
+func on_clicked() -> void:
+	push_warning("Cube function on_clicked not implemented.")

@@ -39,8 +39,12 @@ func _input(event):
 				ray_query.to = to
 				ray_query.collide_with_areas = true
 				ray_query.collide_with_bodies = true
-				var raycast_result = space.intersect_ray(ray_query)
-				print_debug(raycast_result)
+				var result = space.intersect_ray(ray_query)
+				
+				if result and result["collider"].is_in_group("cubes"):
+					var cube: UserCube = result["collider"]
+					print(cube)
+
 			MOUSE_BUTTON_RIGHT:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if event.pressed else Input.MOUSE_MODE_VISIBLE)
 			MOUSE_BUTTON_WHEEL_UP: # increase fly velocity

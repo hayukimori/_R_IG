@@ -85,7 +85,6 @@ func new_cube(cube_data: Dictionary) -> void:
 	var t_cube: UserCube = user_cube_scene.instantiate()
 	t_cube.cube_id = cid
 	t_cube.user_id = owner_id
-	t_cube.add_to_group("cubes")
 
 	cluster.add_child(t_cube)
 	t_cube.position = cube_position
@@ -95,6 +94,8 @@ func new_cube(cube_data: Dictionary) -> void:
 	# DEBUG
 	devel_ui.update_cubes_count(cubes_count)
 	devel_ui.update_current_json_content(cube_data)
+
+	t_cube.add_to_group("cubes")
 
 
 # Request for gen_cubes_request_url (GET) to get an array from all existing cubes
