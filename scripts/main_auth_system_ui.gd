@@ -1,6 +1,6 @@
 extends Control
 
-enum AuthActions { REGISTER = 0, LOGIN = 1}
+enum AuthActions { REGISTER = 0, LOGIN = 1 }
 
 @export_group("Settings")
 @export var default_method: AuthActions = AuthActions.LOGIN
