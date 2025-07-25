@@ -251,6 +251,7 @@ func handleAuth(action: AuthActions, content: Array) -> void:
 		
 		
 		get_tree().change_scene_to_packed(SceneRouter.get_main_scene())
+		queue_free()
 
 
 func _on_register_btn_pressed() -> void:

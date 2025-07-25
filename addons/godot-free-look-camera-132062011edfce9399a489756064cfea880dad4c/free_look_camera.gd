@@ -44,7 +44,7 @@ func _input(event):
 					
 					if result and result["collider"].is_in_group("cubes"):
 						var cube: UserCube = result["collider"]
-						print(cube)
+						cube.on_clicked()
 
 			MOUSE_BUTTON_RIGHT:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if event.pressed else Input.MOUSE_MODE_VISIBLE)

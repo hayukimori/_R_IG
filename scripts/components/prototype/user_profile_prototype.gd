@@ -21,6 +21,12 @@ var headers: Array = [
 ]
 
 
+# TEST INPUT
+func _input(event: InputEvent) -> void:
+	print(event)
+
+
+
 #region Interfaces and Validations
 class UserProfile:
 	var id: String
@@ -135,4 +141,6 @@ func _request_profile() -> Dictionary:
 
 #region Button Signals
 func _on_close_profile_button_pressed() -> void:
-	queue_free()
+	print("Profile Close Button hit")
+	self.queue_free()
+#endregion
