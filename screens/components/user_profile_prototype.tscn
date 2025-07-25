@@ -1,0 +1,249 @@
+[gd_scene load_steps=16 format=3 uid="uid://3h8evek0d8yi"]
+
+[ext_resource type="Script" uid="uid://nljuq63jlygb" path="res://scripts/components/prototype/user_profile_prototype.gd" id="1_4o36r"]
+[ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="1_u4e2g"]
+[ext_resource type="Script" uid="uid://cwasfeb3if57j" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="3_bl1jv"]
+[ext_resource type="Texture2D" uid="uid://clv12evmtslyb" path="res://icon.svg" id="4_mc22h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bl1jv"]
+bg_color = Color(0.557203, 0.0830559, 0.238389, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mc22h"]
+bg_color = Color(0.712899, 0, 0.247446, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4o36r"]
+bg_color = Color(0.0664378, 0.0664378, 0.0664378, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4ody"]
+bg_color = Color(0.0674377, 0.0674377, 0.0674377, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bucfp"]
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+corner_detail = 20
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ljdun"]
+draw_center = false
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+corner_detail = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_4o36r"]
+font = ExtResource("1_u4e2g")
+font_size = 22
+
+[sub_resource type="LabelSettings" id="LabelSettings_bucfp"]
+font = ExtResource("1_u4e2g")
+font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_u4e2g"]
+font_size = 10
+font_color = Color(1, 1, 1, 0.141176)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mc22h"]
+font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_bl1jv"]
+font_size = 10
+
+[node name="UserProfilePrototype" type="Control"]
+layout_mode = 3
+anchor_left = 0.24
+anchor_top = 0.25
+anchor_right = 0.751
+anchor_bottom = 0.755
+offset_left = 13.02
+offset_right = 0.347961
+offset_bottom = -3.24002
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_4o36r")
+
+[node name="CloseProfileButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -4.0
+offset_top = 22.0
+offset_right = 28.0
+offset_bottom = 71.0
+grow_horizontal = 0
+mouse_force_pass_scroll_events = false
+theme_override_fonts/font = ExtResource("1_u4e2g")
+theme_override_styles/focus = SubResource("StyleBoxFlat_bl1jv")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_bl1jv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mc22h")
+theme_override_styles/normal = SubResource("StyleBoxFlat_4o36r")
+button_mask = 7
+text = "X"
+
+[node name="BgPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4ody")
+
+[node name="Background" type="TextureRect" parent="BgPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProfilePictureTextureRect" type="Panel" parent="BgPanel"]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bucfp")
+script = ExtResource("3_bl1jv")
+corner_detail = 100
+radius_bottom_left = 100
+radius_bottom_right = 100
+radius_top_left = 100
+radius_top_right = 100
+texture = ExtResource("4_mc22h")
+metadata/_custom_type_script = "uid://cwasfeb3if57j"
+metadata/_edit_lock_ = true
+
+[node name="Panel" type="Panel" parent="BgPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -72.0
+offset_right = 71.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ljdun")
+
+[node name="DisplayNameLabel" type="Label" parent="BgPanel"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 22.0
+offset_right = 543.0
+offset_bottom = 91.0
+text = "{displayName}"
+label_settings = SubResource("LabelSettings_4o36r")
+vertical_alignment = 1
+
+[node name="UsernameLabel" type="Label" parent="BgPanel"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 63.0
+offset_right = 521.0
+offset_bottom = 111.0
+text = "{username}"
+label_settings = SubResource("LabelSettings_bucfp")
+vertical_alignment = 1
+
+[node name="IDLabel" type="Label" parent="BgPanel"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = 324.0
+offset_bottom = -296.0
+grow_horizontal = 0
+grow_vertical = 2
+rotation = 1.5708
+text = "ID: 000000000000000"
+label_settings = SubResource("LabelSettings_u4e2g")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProfileLinksVBoxContainer" type="VBoxContainer" parent="BgPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.096
+anchor_right = 1.003
+anchor_bottom = 1.0
+offset_left = -71.0
+offset_top = -9.104
+offset_right = -15.728
+offset_bottom = -9.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ProfileBadgesHBoxContainer" type="HBoxContainer" parent="BgPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -174.0
+offset_top = -75.0
+offset_right = 172.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="EmptyLabel" type="Label" parent="BgPanel/ProfileBadgesHBoxContainer"]
+layout_mode = 2
+text = "BGIDTEMP"
+label_settings = SubResource("LabelSettings_mc22h")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WARNING" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.5
+offset_top = 9.0
+offset_right = 0.5
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "THIS IS A TEST UI, IT DOES NOT REPRESENT THE FINAL PRODUCT"
+label_settings = SubResource("LabelSettings_bl1jv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="CloseProfileButton" to="." method="_on_close_profile_button_pressed"]
