@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 CurrentUserSession="*res://autoloads/CurrentUserSession.gd"
 SceneRouter="*res://autoloads/SceneRouter.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/TextureRectRounded/plugin.cfg")
+
 [global_group]
 
 cubes=""
