@@ -21,12 +21,6 @@ var headers: Array = [
 ]
 
 
-# TEST INPUT
-func _input(event: InputEvent) -> void:
-	print(event)
-
-
-
 #region Interfaces and Validations
 class UserProfile:
 	var id: String
