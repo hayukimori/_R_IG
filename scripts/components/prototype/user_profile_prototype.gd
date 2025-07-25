@@ -12,7 +12,9 @@ class_name UserProfileUIPrototype
 @onready var displayNameLabel: Label = $BgPanel/DisplayNameLabel
 @onready var usernameLabel: Label = $BgPanel/UsernameLabel
 @onready var idLabel: Label = $BgPanel/IDLabel
+@onready var profile_picture_texture_rect: TextureRectRounded = $BgPanel/ProfilePictureTextureRect
 
+@export_file("*.png", "*.jpg", "*.webp", "*.svg") var default_profile_picture: String
 
 var headers: Array = [
 	"Authorization: Bearer %s" % CurrentUserSession.login_token,
@@ -59,6 +61,30 @@ class Validations:
 
 		return true
 
+	func validate_url(url: String) -> bool:
+		# Early return method
+		if !type_string(typeof(url)): return false
+		if url == "": return false
+		if not url.begins_with("http://") and not url.begins_with("https://"): return false
+
+		return true
+
+	func validate_image_format(data: PackedByteArray) -> String:
+		if data.size() >= 9:
+			var png_header := PackedByteArray([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A])
+			if data.slice(0, 8) == png_header:
+				return "png"
+		if data.size() >= 2:
+			if data[0] == 0xFF and data[1] == 0xD8:
+				return "jpg"
+		if data.size() >= 12:
+			var riff_str = data.slice(0, 4).get_string_from_ascii()
+			var webp_str = data.slice(8, 12).get_string_from_ascii()
+			if riff_str == "RIFF" and webp_str == "WEBP":
+				return "webp"
+		return "unknown"
+
+
 func prepareRequirements() -> bool:
 	var c_valids = Validations.new()
 	var uid_is_valid: bool = c_valids.validate_uid(profile_id)
@@ -82,6 +108,13 @@ func updateUI(profile_data: UserProfile) -> void:
 	displayNameLabel.text = profile_data.displayName
 	usernameLabel.text = profile_data.username
 	idLabel.text = profile_data.id
+	if profile_data.avatarUrl != "":
+		_get_user_pfp(profile_data)
+	else:
+		var default_image = Image.new()
+		default_image.load(default_profile_picture)
+		var texture = ImageTexture.create_from_image(default_image)
+		profile_picture_texture_rect.texture = texture
 #endregion
 
 #region underscore functions
@@ -90,7 +123,6 @@ func _ready() -> void:
 
 	if prepareRequirements():
 		loadProfile()
-
 
 func _request_profile() -> Dictionary:
 	var http_request := HTTPRequest.new()
@@ -131,6 +163,49 @@ func _request_profile() -> Dictionary:
 	http_request.queue_free()
 
 	return result
+
+
+func _get_user_pfp(profile_data: UserProfile) -> void:
+
+	var http_request := HTTPRequest.new()
+	add_child(http_request)
+
+	http_request.request_completed.connect(func(result_code, response_code, _headers, body):
+		if result_code != HTTPRequest.RESULT_SUCCESS:
+			push_error("Image couldn't be downloaded. Result: %d" % result_code)
+	
+		var image = Image.new()
+		var format = Validations.new().validate_image_format(body)
+		var err = OK
+
+		print_debug("Image format detected: %s" % format)
+		print_debug(result_code, response_code, _headers)
+
+		match format:
+			"png":
+				err = image.load_png_from_buffer(body)
+			"jpg", "jpeg":
+				err = image.load_jpg_from_buffer(body)
+			"webp":
+				err = image.load_webp_from_buffer(body)
+			_:
+				push_error("Unsupported image format: %s" % format)
+				err = image.load(default_profile_picture)
+
+		if err != OK:
+			push_error("Couldn't load image. Error code: %d" % err)
+			return
+		else:
+			var texture = ImageTexture.create_from_image(image)
+			profile_picture_texture_rect.texture = texture
+	)
+
+	var url = profile_data.avatarUrl
+	if not Validations.new().validate_url(url):
+		push_error("Invalid URL: %s" % url)
+		return
+	http_request.request(url, headers, HTTPClient.METHOD_GET)
+
 #endregion
 
 #region Button Signals
