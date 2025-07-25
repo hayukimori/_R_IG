@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://3h8evek0d8yi"]
+[gd_scene load_steps=12 format=3 uid="uid://3h8evek0d8yi"]
 
 [ext_resource type="Script" uid="uid://nljuq63jlygb" path="res://scripts/components/prototype/user_profile_prototype.gd" id="1_4o36r"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="1_u4e2g"]
@@ -20,13 +20,28 @@ font_size = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_u4e2g"]
 font_size = 10
-font_color = Color(1, 1, 1, 0.266667)
+font_color = Color(1, 1, 1, 0.141176)
 
 [sub_resource type="LabelSettings" id="LabelSettings_mc22h"]
 font_size = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_bl1jv"]
 font_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bl1jv"]
+bg_color = Color(0.0664378, 0.0664378, 0.0664378, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mc22h"]
+bg_color = Color(0.0664378, 0.0664378, 0.0664378, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4o36r"]
+bg_color = Color(0.0664378, 0.0664378, 0.0664378, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
 
 [node name="UserProfilePrototype" type="Control"]
 layout_mode = 3
@@ -41,6 +56,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 script = ExtResource("1_4o36r")
+profile_id = "68825f4c5af5dd3b9107156c"
 
 [node name="BgPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -88,9 +104,9 @@ autowrap_mode = 3
 
 [node name="DisplayNameLabel" type="Label" parent="BgPanel"]
 layout_mode = 0
-offset_left = 26.5
+offset_left = 26.0
 offset_top = 22.0
-offset_right = 194.5
+offset_right = 543.0
 offset_bottom = 91.0
 text = "{displayName}"
 label_settings = SubResource("LabelSettings_4o36r")
@@ -98,28 +114,28 @@ vertical_alignment = 1
 
 [node name="UsernameLabel" type="Label" parent="BgPanel"]
 layout_mode = 0
-offset_left = 1.0
+offset_left = 27.0
 offset_top = 63.0
-offset_right = 196.0
+offset_right = 521.0
 offset_bottom = 111.0
 text = "{username}"
 label_settings = SubResource("LabelSettings_bucfp")
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="IDLabel" type="Label" parent="BgPanel"]
 layout_mode = 1
-anchors_preset = 1
+anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -174.0
-offset_top = 8.0
-offset_right = -11.0
-offset_bottom = 31.0
+anchor_bottom = 1.0
+offset_right = 324.0
+offset_bottom = -296.0
 grow_horizontal = 0
+grow_vertical = 2
+rotation = 1.5708
 text = "ID: 000000000000000"
 label_settings = SubResource("LabelSettings_u4e2g")
-horizontal_alignment = 2
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ProfileLinksVBoxContainer" type="VBoxContainer" parent="BgPanel"]
@@ -129,9 +145,10 @@ anchor_left = 1.0
 anchor_top = 0.096
 anchor_right = 1.003
 anchor_bottom = 1.0
-offset_left = -56.0
-offset_top = -0.104
-offset_right = 0.271973
+offset_left = -71.0
+offset_top = -9.104
+offset_right = -15.728
+offset_bottom = -9.0
 grow_horizontal = 0
 grow_vertical = 2
 
@@ -169,7 +186,25 @@ offset_right = 0.5
 offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "THIS IS AN TEST UI, DOES NOT REPRESENTS THE FINAL PRODUCT"
+text = "THIS IS A TEST UI, IT DOES NOT REPRESENT THE FINAL PRODUCT"
 label_settings = SubResource("LabelSettings_bl1jv")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="CloseProfileButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -4.0
+offset_top = 22.0
+offset_right = 28.0
+offset_bottom = 71.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("1_u4e2g")
+theme_override_styles/focus = SubResource("StyleBoxFlat_bl1jv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mc22h")
+theme_override_styles/normal = SubResource("StyleBoxFlat_4o36r")
+text = "X"
+
+[connection signal="pressed" from="CloseProfileButton" to="." method="_on_close_profile_button_pressed"]
