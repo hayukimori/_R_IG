@@ -5,8 +5,9 @@ class_name UserProfileUIPrototype
 ## Profile_ID should set in script
 @export var profile_id: String
 
-## `profile_getter_url` is an url to get profile data (currently it's set to search by id (uid))
-@export var profile_getter_url: String = "http://localhost:3000/api/v1/profile/uid/%s"
+## `profile_getter_endpoint` is an url to get profile data (currently it's set to search by id (uid))
+
+var profile_getter_endpoint: String = "/api/v1/profile/uid/%s"
 
 # Basic Scene Objects
 @onready var displayNameLabel: Label = $BgPanel/DisplayNameLabel
@@ -119,6 +120,14 @@ func updateUI(profile_data: UserProfile) -> void:
 
 #region underscore functions
 func _ready() -> void:
+	# Check for host setting
+	var host = ProjectSettings.get_setting("application/config/api_host")
+	if host != "":
+		profile_getter_endpoint = host + profile_getter_endpoint
+	else:
+		push_error("API host is not set in project settings. Using default endpoint.")
+		profile_getter_endpoint = "http://localhost:3000" + profile_getter_endpoint
+
 	await get_tree().process_frame
 
 	if prepareRequirements():
@@ -150,7 +159,7 @@ func _request_profile() -> Dictionary:
 			result.assign(json)
 	)
 
-	var url = profile_getter_url % profile_id	
+	var url = profile_getter_endpoint % profile_id	
 	#var token = CurrentUserSession.login_token
 
 	# if token == "":
