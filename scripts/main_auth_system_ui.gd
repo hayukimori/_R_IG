@@ -34,7 +34,7 @@ var errors: Array = []
 func _ready() -> void:
 	# Check for host setting
 	var host = ProjectSettings.get_setting("application/config/api_host")
-	if host != "":
+	if host != "" and host != null:
 		register_user_url = host + register_user_endpoint
 		login_url = host + login_endpoint
 	else:
