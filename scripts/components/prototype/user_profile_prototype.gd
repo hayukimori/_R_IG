@@ -209,7 +209,16 @@ func _get_user_pfp(profile_data: UserProfile) -> void:
 			profile_picture_texture_rect.texture = texture
 	)
 
-	var url = profile_data.avatarUrl
+	var url: String
+
+	# Checks if image is from gravatar or not
+	# If it is, increase size to 512px
+	if "gravatar.com" in profile_data.avatarUrl:
+		var temp_url = profile_data.avatarUrl
+		url = "%s?size=512" % temp_url
+	else:
+		url = profile_data.avatarUrl
+
 	if not Validations.new().validate_url(url):
 		push_error("Invalid URL: %s" % url)
 		return
