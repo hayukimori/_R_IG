@@ -110,15 +110,7 @@ func get_user_by_token(token: String):
 
 			if typeof(json) == TYPE_DICTIONARY:
 				set_session_data(json.get("user", {}), token)
-				print("Set session data from token: %s" % json.get("user", {}))
-
-				print("Current user session data: %s" % {
-					"user_id": user_id,
-					"username": username,
-					"email": email,
-					"created_at": created_at,
-					"login_token": login_token
-				})
+				print("User data set from token")
 
 		http_request.queue_free()
 	)
