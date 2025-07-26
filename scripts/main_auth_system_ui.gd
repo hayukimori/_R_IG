@@ -42,7 +42,10 @@ func _ready() -> void:
 		register_user_url = "http://localhost:3000" + register_user_endpoint
 		login_url = "http://localhost:3000" + login_endpoint
 	
+	# Set initial auth method
 	define_current_auth_method(default_method)
+
+	CurrentUserSession.session_data_changed.connect(Callable(self, "_on_session_data_changed"))
 
 
 func define_current_auth_method(action: AuthActions) -> void:
@@ -60,9 +63,6 @@ func define_current_auth_method(action: AuthActions) -> void:
 			register_control.visible = false
 
 			change_auth_method_btn.text = "I don't have an account"
-	
-	
-
 
 func auth_action(action: AuthActions) -> Array:
 	var http_request := HTTPRequest.new()
@@ -229,8 +229,6 @@ func handleAuth(action: AuthActions, content: Array) -> void:
 	if content.size() < 0: # First no data is returned from the server
 		handleError({"InternalError": "No Data"})
 		return
-
-	print(content)
 	
 	for item in content:
 		if item.has("name") and item.has("errorType"):
@@ -246,21 +244,25 @@ func handleAuth(action: AuthActions, content: Array) -> void:
 
 		if item.has("authorizedUser"):
 			item.authorizedUser["token"] = item.token
-			CurrentUserSession.set_session_data(item.authorizedUser)
+			CurrentUserSession.set_session_data(item.authorizedUser, item.token)
 
 		elif item.has("createdUser"):
 			item.createdUser["token"] = item.token
-			CurrentUserSession.set_session_data(item.createdUser)
+			CurrentUserSession.set_session_data(item.createdUser, item.token)
 			
 		
 		else:
 			$ErrorLabel.text += "::: No user or known errors. Please check the output and try again"
 			printerr("No user or known errors. Please check the output and try again")
 			return
-		
-		
-		get_tree().change_scene_to_packed(SceneRouter.get_main_scene())
-		queue_free()
+
+
+
+func change_to_main() -> void:
+	# Change to main scene
+	print("Changing to main scene...")
+	get_tree().change_scene_to_packed(SceneRouter.get_main_scene())
+	queue_free()
 
 
 func _on_register_btn_pressed() -> void:
@@ -276,3 +278,11 @@ func _on_login_btn_pressed() -> void:
 	handleAuth(AuthActions.LOGIN, content)
 
 	enable_login_fields()
+
+
+func _on_session_data_changed(data: Dictionary) -> void:
+	if not data.has("user_id") or not data.has("login_token"):
+		push_error("Session data is incomplete: %s" % data)
+		return
+	
+	change_to_main()
