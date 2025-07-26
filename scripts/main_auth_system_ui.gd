@@ -6,8 +6,8 @@ enum AuthActions { REGISTER = 0, LOGIN = 1 }
 @export var default_method: AuthActions = AuthActions.LOGIN
 
 @export_group("Network Settings")
-@export var register_user_url: String = "http://localhost:3000/api/auth/register"
-@export var login_url: String = "http://localhost:3000/api/auth/login"
+@export var register_user_endpoint: String = "/api/auth/register"
+@export var login_endpoint: String = "/api/auth/login"
 
 @onready var login_control: Control = $LoginControl
 @onready var register_control: Control = $RegisterControl
@@ -24,15 +24,24 @@ enum AuthActions { REGISTER = 0, LOGIN = 1 }
 @onready var login_btn: Button = $LoginControl/BG/HeadPanel2/LoginBtn
 @onready var change_auth_method_btn: Button = $ChangeAuthMethod
 
+var register_user_url: String
+var login_url: String
 
 var current_auth_method: AuthActions
 var errors: Array = []
 
 
-
-
-
 func _ready() -> void:
+	# Check for host setting
+	var host = ProjectSettings.get_setting("application/config/api_host")
+	if host != "" and host != null:
+		register_user_url = host + register_user_endpoint
+		login_url = host + login_endpoint
+	else:
+		push_error("API host is not set in project settings. Using default endpoint.")
+		register_user_url = "http://localhost:3000" + register_user_endpoint
+		login_url = "http://localhost:3000" + login_endpoint
+	
 	define_current_auth_method(default_method)
 
 

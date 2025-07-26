@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 CurrentUserSession="*res://autoloads/CurrentUserSession.gd"
 SceneRouter="*res://autoloads/SceneRouter.gd"
+AppConfig="*res://autoloads/AppConfig.gd"
 
 [editor_plugins]
 
