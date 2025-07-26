@@ -42,9 +42,6 @@ func _ready() -> void:
 		register_user_url = "http://localhost:3000" + register_user_endpoint
 		login_url = "http://localhost:3000" + login_endpoint
 	
-	print("Register URL: %s" % register_user_url)
-	print("Login URL: %s" % login_url)
-
 	define_current_auth_method(default_method)
 
 
