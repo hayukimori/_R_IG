@@ -21,6 +21,11 @@ CurrentUserSession="*res://autoloads/CurrentUserSession.gd"
 SceneRouter="*res://autoloads/SceneRouter.gd"
 AppConfig="*res://autoloads/AppConfig.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/TextureRectRounded/plugin.cfg")
