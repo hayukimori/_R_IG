@@ -11,6 +11,6 @@ func _ready():
 	var api_url = config.get_value("network", "api_base_url", "")
 	if api_url != "":
 		ProjectSettings.set_setting("application/config/api_host", api_url)
-		print("API HOST setado para: ", api_url)
+		print("API HOST set to: ", api_url)
 	else:
 		push_error("API_BASE_URL not set in environment config. Using default endpoint.")
