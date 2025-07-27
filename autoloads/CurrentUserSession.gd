@@ -9,6 +9,8 @@ var email: String = ""
 var created_at: String = ""
 var logged_in: bool = false
 
+var protected_endpoint: String = "/api/auth/protected"
+
 
 # => Persistent Data
 var login_token: String = ""
@@ -120,7 +122,9 @@ func get_user_by_token(token: String):
 		"Authorization: Bearer %s" % token
 	]
 
-	var url = "http://localhost:3000/api/auth/protected"
+	var host = ProjectSettings.get_setting("application/config/api_host")
+	#var url = "http://localhost:3000/api/auth/protected"
+	var url = host + protected_endpoint
 
 	if not token.is_empty():
 		print("Requesting user data by token: %s" % url)
