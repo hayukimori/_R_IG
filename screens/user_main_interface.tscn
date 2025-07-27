@@ -1,0 +1,199 @@
+[gd_scene load_steps=11 format=3 uid="uid://dvlqau5c7adr6"]
+
+[ext_resource type="Script" uid="uid://cwasfeb3if57j" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="1_qflfr"]
+[ext_resource type="Texture2D" uid="uid://clv12evmtslyb" path="res://icon.svg" id="2_j72kl"]
+[ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="3_j72kl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rdgy6"]
+bg_color = Color(0.118581, 0.118581, 0.118581, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_j72kl"]
+font = ExtResource("3_j72kl")
+font_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4mht3"]
+bg_color = Color(0.188235, 0.188235, 0.188235, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qflfr"]
+bg_color = Color(0.188067, 0.188067, 0.188067, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_156ji"]
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 20
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_156ji"]
+font = ExtResource("3_j72kl")
+font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_xhogk"]
+font = ExtResource("3_j72kl")
+font_size = 10
+
+[node name="UserMainInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBarControl" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 67.0
+grow_horizontal = 2
+
+[node name="MainPanel" type="Panel" parent="TopBarControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 20.0
+offset_right = -40.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rdgy6")
+
+[node name="LeftSide" type="Control" parent="TopBarControl/MainPanel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -25.0
+offset_right = 221.0
+offset_bottom = 25.0
+grow_vertical = 2
+
+[node name="RIGAPP_LOGO_TEMP" type="Label" parent="TopBarControl/MainPanel/LeftSide"]
+layout_mode = 0
+offset_right = 135.0
+offset_bottom = 50.0
+text = "[R]IG"
+label_settings = SubResource("LabelSettings_j72kl")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightSide" type="Control" parent="TopBarControl/MainPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -371.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="NotificationsButton" type="Button" parent="TopBarControl/MainPanel/RightSide"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -15.0
+offset_right = -17.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_j72kl")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_4mht3")
+text = "[N]"
+
+[node name="ProfileButton" type="Panel" parent="TopBarControl/MainPanel/RightSide"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -202.0
+offset_top = -15.0
+offset_right = -60.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qflfr")
+
+[node name="ProfilePicture" type="Panel" parent="TopBarControl/MainPanel/RightSide/ProfileButton"]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -11.0
+offset_right = 30.0
+offset_bottom = 11.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_156ji")
+script = ExtResource("1_qflfr")
+corner_detail = 20
+radius_bottom_left = 20
+radius_bottom_right = 20
+radius_top_left = 20
+radius_top_right = 20
+texture = ExtResource("2_j72kl")
+metadata/_custom_type_script = "uid://cwasfeb3if57j"
+
+[node name="UsernameLabel" type="Label" parent="TopBarControl/MainPanel/RightSide/ProfileButton"]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 4.0
+offset_right = 137.0
+offset_bottom = 27.0
+text = "{username}"
+label_settings = SubResource("LabelSettings_156ji")
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Center" type="Control" parent="TopBarControl/MainPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -215.0
+offset_top = -25.0
+offset_right = 220.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DateTimeLabel" type="Label" parent="TopBarControl/MainPanel/Center"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Current Time: XX/XX/XXXX - XX:XX"
+label_settings = SubResource("LabelSettings_xhogk")
+horizontal_alignment = 1
+vertical_alignment = 1
