@@ -4,9 +4,25 @@ extends Control
 @onready var notifications_button: Button = $TopBarControl/MainPanel/RightSide/NotificationsButton
 @onready var profile_picture_trd: TextureRectRounded = $TopBarControl/MainPanel/RightSide/ProfileButton/ProfilePicture
 @onready var username_label: Label = $TopBarControl/MainPanel/RightSide/ProfileButton/UsernameLabel
+@onready var datetime_label: Label = $TopBarControl/MainPanel/Center/DateTimeLabel
+
+var default_datetime_format: String = "%02d/%02d/%04d - %02d:%02d:%02d"
+var current_time_string: String = "00/00/0000 - 00:00:00"
+var time: Dictionary = { 
+	"year": 2025, 
+	"month": 7, 
+	"day": 27, 
+	"weekday": 0, 
+	"hour": 0, 
+	"minute": 5, 
+	"second": 28, 
+	"dst": false 
+}
 
 
 func _ready() -> void:
+	time = Time.get_datetime_dict_from_system()
+
 	if !CurrentUserSession.logged_in:
 		push_warning("User is not logged in, profile won't be loaded")
 		return
@@ -61,4 +77,13 @@ func loadProfile(profile_id) -> GeneralTools.UserProfile:
 	return profileData
 
 	
+func _process(_delta: float) -> void:
 
+	time = Time.get_datetime_dict_from_system()
+	
+	current_time_string = default_datetime_format % [
+		time.day, time.month, time.year,
+		time.hour, time.minute, time.second
+	]
+
+	datetime_label.text = current_time_string
