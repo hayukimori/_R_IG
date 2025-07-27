@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://dvlqau5c7adr6"]
+[gd_scene load_steps=12 format=3 uid="uid://dvlqau5c7adr6"]
 
+[ext_resource type="Script" uid="uid://c3j3p428oc40d" path="res://scripts/user_main_interface.gd" id="1_156ji"]
 [ext_resource type="Script" uid="uid://cwasfeb3if57j" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="1_qflfr"]
 [ext_resource type="Texture2D" uid="uid://clv12evmtslyb" path="res://icon.svg" id="2_j72kl"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="3_j72kl"]
@@ -52,6 +53,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_156ji")
 
 [node name="TopBarControl" type="Control" parent="."]
 layout_mode = 1

@@ -1,11 +1,18 @@
 extends Control
 
+# Top Bar
+@onready var notifications_button: Button = $TopBarControl/MainPanel/RightSide/NotificationsButton
+@onready var profile_picture_trd: TextureRectRounded = $TopBarControl/MainPanel/RightSide/ProfileButton/ProfilePicture
+@onready var username_label: Label = $TopBarControl/MainPanel/RightSide/ProfileButton/UsernameLabel
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
-	pass # Replace with function body.
+	if !CurrentUserSession.logged_in:
+		push_warning("User is not logged in, profile won't be loaded")
+		return
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func load_profile() -> void:
+	# Get user basic info from current session
+	username_label.text = CurrentUserSession.username
+
