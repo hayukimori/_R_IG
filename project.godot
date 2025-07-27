@@ -14,6 +14,7 @@ config/name="<R>IG"
 run/main_scene="uid://bjofi1c2jdw8p"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+config/api_host="http://localhost:3000"
 
 [autoload]
 

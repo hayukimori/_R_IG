@@ -123,7 +123,14 @@ func get_user_by_token(token: String):
 	]
 
 	var host = ProjectSettings.get_setting("application/config/api_host")
-	#var url = "http://localhost:3000/api/auth/protected"
+	var final_url: String = ""
+
+	if host != "":
+		final_url = host + protected_endpoint
+	else:
+		push_error("API host is not set in project settings. Using default endpoint.")
+		final_url = "http://localhost:3000" + protected_endpoint
+
 	var url = host + protected_endpoint
 
 	if not token.is_empty():
