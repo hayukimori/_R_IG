@@ -21,6 +21,7 @@ CurrentUserSession="*res://autoloads/CurrentUserSession.gd"
 SceneRouter="*res://autoloads/SceneRouter.gd"
 AppConfig="*res://autoloads/AppConfig.gd"
 SceneHandler="*res://autoloads/SceneHandler.gd"
+GeneralTools="*res://autoloads/GeneralTools.gd"
 
 [display]
 
