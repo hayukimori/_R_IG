@@ -13,6 +13,7 @@ class_name UserProfileUIPrototype
 @onready var usernameLabel: Label = $BgPanel/UsernameLabel
 @onready var idLabel: Label = $BgPanel/IDLabel
 @onready var profile_picture_texture_rect: TextureRectRounded = $BgPanel/ProfilePictureTextureRect
+@onready var bio_label: Label = $BgPanel/BioLabel
 @onready var bgpanel: Panel = $BgPanel
 
 @export_file("*.png", "*.jpg", "*.webp", "*.svg") var default_profile_picture: String
@@ -47,6 +48,7 @@ func updateUI(profile_data: GeneralTools.UserProfile) -> void:
 	displayNameLabel.text = profile_data.displayName
 	usernameLabel.text = profile_data.username
 	idLabel.text = profile_data.id
+	bio_label.text = profile_data.bio
 
 	changeBackground(profile_data.bannerColor)
 

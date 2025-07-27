@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://3h8evek0d8yi"]
+[gd_scene load_steps=17 format=3 uid="uid://3h8evek0d8yi"]
 
 [ext_resource type="Script" uid="uid://nljuq63jlygb" path="res://scripts/components/prototype/user_profile_prototype.gd" id="1_4o36r"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="1_u4e2g"]
@@ -62,6 +62,11 @@ font_color = Color(1, 1, 1, 0.141176)
 
 [sub_resource type="LabelSettings" id="LabelSettings_mc22h"]
 font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_ljdun"]
+font = ExtResource("1_u4e2g")
+font_size = 10
+font_color = Color(1, 1, 1, 0.552941)
 
 [sub_resource type="LabelSettings" id="LabelSettings_bl1jv"]
 font_size = 10
@@ -230,6 +235,18 @@ text = "BGIDTEMP"
 label_settings = SubResource("LabelSettings_mc22h")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BioLabel" type="Label" parent="BgPanel"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 113.0
+offset_right = 179.0
+offset_bottom = 214.0
+text = "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas."
+label_settings = SubResource("LabelSettings_ljdun")
+vertical_alignment = 1
+autowrap_mode = 2
+text_overrun_behavior = 4
 
 [node name="WARNING" type="Label" parent="."]
 layout_mode = 1
