@@ -125,6 +125,24 @@ theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = SubResource("StyleBoxFlat_4mht3")
 text = "[N]"
 
+[node name="LogoutButton" type="Button" parent="TopBarControl/MainPanel/RightSide"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -87.0
+offset_top = -15.0
+offset_right = -57.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_j72kl")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_4mht3")
+text = "[LO]"
+
 [node name="ProfileButton" type="Panel" parent="TopBarControl/MainPanel/RightSide"]
 layout_mode = 1
 anchors_preset = 6
@@ -132,9 +150,9 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -202.0
+offset_left = -240.0
 offset_top = -15.0
-offset_right = -60.0
+offset_right = -98.0
 offset_bottom = 15.0
 grow_horizontal = 0
 grow_vertical = 2
@@ -199,3 +217,5 @@ text = "Current Time: XX/XX/XXXX - XX:XX"
 label_settings = SubResource("LabelSettings_xhogk")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="TopBarControl/MainPanel/RightSide/LogoutButton" to="." method="_on_logout_button_pressed"]

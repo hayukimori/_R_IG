@@ -80,10 +80,14 @@ func loadProfile(profile_id) -> GeneralTools.UserProfile:
 func _process(_delta: float) -> void:
 
 	time = Time.get_datetime_dict_from_system()
-	
+
 	current_time_string = default_datetime_format % [
 		time.day, time.month, time.year,
 		time.hour, time.minute, time.second
 	]
 
 	datetime_label.text = current_time_string
+
+
+func _on_logout_button_pressed() -> void:
+	SceneHandler.logout()
