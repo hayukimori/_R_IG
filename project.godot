@@ -18,9 +18,9 @@ config/api_host="http://localhost:3000"
 
 [autoload]
 
+AppConfig="*res://autoloads/AppConfig.gd"
 CurrentUserSession="*res://autoloads/CurrentUserSession.gd"
 SceneRouter="*res://autoloads/SceneRouter.gd"
-AppConfig="*res://autoloads/AppConfig.gd"
 SceneHandler="*res://autoloads/SceneHandler.gd"
 GeneralTools="*res://autoloads/GeneralTools.gd"
 
