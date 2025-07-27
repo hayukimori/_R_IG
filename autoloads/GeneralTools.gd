@@ -67,9 +67,6 @@ class Validations:
 
 
 func getUserPfp(profile_data: UserProfile) -> ImageTexture:
-
-	print_debug("executing getUserPfp") # DEBUG
-
 	var http_request := HTTPRequest.new()
 	add_child(http_request)
 
@@ -78,11 +75,9 @@ func getUserPfp(profile_data: UserProfile) -> ImageTexture:
 	# Checks if image is from gravatar or not
 	# If it is, increase size to 512px
 	if "gravatar.com" in profile_data.avatarUrl:
-		print_debug("Got gravatar url")
 		var temp_url = profile_data.avatarUrl
 		url = "%s?size=512" % temp_url
 	else:
-		print_debug("Got other avatar url")
 		url = profile_data.avatarUrl
 
 	if not GeneralTools.Validations.new().validate_url(url):
@@ -94,7 +89,6 @@ func getUserPfp(profile_data: UserProfile) -> ImageTexture:
 		push_error("Failed to make request.")
 		return ImageTexture.new()
 
-	print_debug("Getting result")
 	var result = await http_request.request_completed
 
 	var result_code = result[0]
@@ -102,8 +96,6 @@ func getUserPfp(profile_data: UserProfile) -> ImageTexture:
 	var _headers = result[2]
 	var body = result[3]
 
-
-	print_debug("Doing the thing with image before return")
 	if result_code != HTTPRequest.RESULT_SUCCESS:
 		push_error("Image couldn't be downloaded. Result: %d" % result_code)
 		return ImageTexture.new()
@@ -111,9 +103,6 @@ func getUserPfp(profile_data: UserProfile) -> ImageTexture:
 	var image = Image.new()
 	var format = GeneralTools.Validations.new().validate_image_format(body)
 	var err = OK
-
-	print_debug("Image format detected: %s" % format)
-	print_debug(result_code, response_code, _headers)
 
 	match format:
 		"png":
@@ -131,7 +120,6 @@ func getUserPfp(profile_data: UserProfile) -> ImageTexture:
 		return ImageTexture.new()
 	else:
 		var texture = ImageTexture.create_from_image(image)
-		print_debug("Sending texture: ", texture)
 		return texture
 
 

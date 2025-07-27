@@ -16,6 +16,7 @@ background_color = Color(0.0936695, 0.0936694, 0.093669, 1)
 script = ExtResource("1_4tr61")
 
 [node name="DevelopmentUI" parent="." instance=ExtResource("1_tv7g3")]
+visible = false
 
 [node name="UserMainInterface" parent="." instance=ExtResource("3_gs2a8")]
 
