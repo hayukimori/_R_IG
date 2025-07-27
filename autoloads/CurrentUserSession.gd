@@ -131,11 +131,10 @@ func get_user_by_token(token: String):
 		push_error("API host is not set in project settings. Using default endpoint.")
 		final_url = "http://localhost:3000" + protected_endpoint
 
-	var url = host + protected_endpoint
 
 	if not token.is_empty():
-		print("Requesting user data by token: %s" % url)
-		http_request.request(url, headers, HTTPClient.METHOD_POST)
+		print("Requesting user data by token: %s" % final_url)
+		http_request.request(final_url, headers, HTTPClient.METHOD_POST)
 
 	else:
 		push_error("No token provided for user request.")
