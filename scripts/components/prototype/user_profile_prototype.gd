@@ -13,6 +13,7 @@ class_name UserProfileUIPrototype
 @onready var usernameLabel: Label = $BgPanel/UsernameLabel
 @onready var idLabel: Label = $BgPanel/IDLabel
 @onready var profile_picture_texture_rect: TextureRectRounded = $BgPanel/ProfilePictureTextureRect
+@onready var bgpanel: Panel = $BgPanel
 
 @export_file("*.png", "*.jpg", "*.webp", "*.svg") var default_profile_picture: String
 
@@ -47,6 +48,8 @@ func updateUI(profile_data: GeneralTools.UserProfile) -> void:
 	usernameLabel.text = profile_data.username
 	idLabel.text = profile_data.id
 
+	changeBackground(profile_data.bannerColor)
+
 	if profile_data.avatarUrl != "":
 		var texture = await GeneralTools.getUserPfp(profile_data)
 		profile_picture_texture_rect.texture = texture
@@ -57,6 +60,16 @@ func updateUI(profile_data: GeneralTools.UserProfile) -> void:
 
 		var texture = ImageTexture.create_from_image(default_image)
 		profile_picture_texture_rect.texture = texture
+
+func changeBackground(target_color: String) -> void:
+	var color = Color(target_color)
+
+	print(target_color)
+
+	var stylebox = bgpanel.get_theme_stylebox("panel")
+	if stylebox is StyleBoxFlat:
+		stylebox.bg_color = color
+		bgpanel.add_theme_stylebox_override("panel", stylebox)
 
 #endregion
 
