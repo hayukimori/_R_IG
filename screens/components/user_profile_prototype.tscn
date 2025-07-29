@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://3h8evek0d8yi"]
+[gd_scene load_steps=27 format=3 uid="uid://3h8evek0d8yi"]
 
 [ext_resource type="Script" uid="uid://nljuq63jlygb" path="res://scripts/components/prototype/user_profile_prototype.gd" id="1_4o36r"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="1_u4e2g"]
@@ -17,6 +17,26 @@ corner_radius_bottom_right = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4o36r"]
 bg_color = Color(0.0664378, 0.0664378, 0.0664378, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0nsjr"]
+bg_color = Color(0.557203, 0.0830559, 0.238389, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jgs2v"]
+bg_color = Color(0.557203, 0.0830559, 0.238389, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_882he"]
+bg_color = Color(0.712899, 0, 0.247446, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m2okr"]
+bg_color = Color(0.0666667, 0.682353, 0.0666667, 1)
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 
@@ -48,13 +68,17 @@ corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 corner_detail = 20
 
-[sub_resource type="LabelSettings" id="LabelSettings_4o36r"]
-font = ExtResource("1_u4e2g")
-font_size = 22
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mc22h"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_bucfp"]
-font = ExtResource("1_u4e2g")
-font_size = 10
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bucfp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ljdun"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0nsjr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jgs2v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_882he"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u4e2g"]
 font_size = 10
@@ -63,10 +87,11 @@ font_color = Color(1, 1, 1, 0.141176)
 [sub_resource type="LabelSettings" id="LabelSettings_mc22h"]
 font_size = 10
 
-[sub_resource type="LabelSettings" id="LabelSettings_ljdun"]
-font = ExtResource("1_u4e2g")
-font_size = 10
-font_color = Color(1, 1, 1, 0.552941)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m2okr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hxdwq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qkpf8"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bl1jv"]
 font_size = 10
@@ -103,6 +128,26 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_mc22h")
 theme_override_styles/normal = SubResource("StyleBoxFlat_4o36r")
 button_mask = 7
 text = "X"
+
+[node name="ProfileDoneButton" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -3.5
+offset_top = 77.0
+offset_right = 28.5
+offset_bottom = 126.0
+grow_horizontal = 0
+mouse_force_pass_scroll_events = false
+theme_override_fonts/font = ExtResource("1_u4e2g")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0nsjr")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jgs2v")
+theme_override_styles/hover = SubResource("StyleBoxFlat_882he")
+theme_override_styles/normal = SubResource("StyleBoxFlat_m2okr")
+button_mask = 7
+text = "✓"
 
 [node name="BgPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -146,6 +191,16 @@ texture = ExtResource("4_mc22h")
 metadata/_custom_type_script = "uid://cwasfeb3if57j"
 metadata/_edit_lock_ = true
 
+[node name="EditPFPButton" type="Button" parent="BgPanel/ProfilePictureTextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+flat = true
+
 [node name="Panel" type="Panel" parent="BgPanel"]
 layout_mode = 1
 anchors_preset = 8
@@ -161,25 +216,37 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ljdun")
 
-[node name="DisplayNameLabel" type="Label" parent="BgPanel"]
+[node name="DisplayNameLineEdit" type="LineEdit" parent="BgPanel"]
 layout_mode = 0
 offset_left = 26.0
-offset_top = 22.0
-offset_right = 543.0
-offset_bottom = 91.0
-text = "{displayName}"
-label_settings = SubResource("LabelSettings_4o36r")
-vertical_alignment = 1
+offset_top = 35.0
+offset_right = 563.0
+offset_bottom = 78.0
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_u4e2g")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mc22h")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_bucfp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ljdun")
+placeholder_text = "{displayName}"
+editable = false
 
-[node name="UsernameLabel" type="Label" parent="BgPanel"]
+[node name="UsernameLineEdit" type="LineEdit" parent="BgPanel"]
 layout_mode = 0
 offset_left = 27.0
-offset_top = 63.0
-offset_right = 521.0
-offset_bottom = 111.0
-text = "{username}"
-label_settings = SubResource("LabelSettings_bucfp")
-vertical_alignment = 1
+offset_top = 72.0
+offset_right = 563.0
+offset_bottom = 94.0
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_u4e2g")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0nsjr")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_jgs2v")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_882he")
+placeholder_text = "{username}"
+editable = false
 
 [node name="IDLabel" type="Label" parent="BgPanel"]
 layout_mode = 1
@@ -236,17 +303,23 @@ label_settings = SubResource("LabelSettings_mc22h")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BioLabel" type="Label" parent="BgPanel"]
+[node name="BioTextEdit" type="TextEdit" parent="BgPanel"]
 layout_mode = 0
 offset_left = 27.0
 offset_top = 113.0
-offset_right = 179.0
+offset_right = 192.0
 offset_bottom = 214.0
+theme_override_colors/font_readonly_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_u4e2g")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxEmpty_m2okr")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hxdwq")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_qkpf8")
 text = "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas."
-label_settings = SubResource("LabelSettings_ljdun")
-vertical_alignment = 1
+editable = false
+wrap_mode = 1
 autowrap_mode = 2
-text_overrun_behavior = 4
 
 [node name="WARNING" type="Label" parent="."]
 layout_mode = 1
@@ -266,3 +339,4 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="CloseProfileButton" to="." method="_on_close_profile_button_pressed"]
+[connection signal="pressed" from="ProfileDoneButton" to="." method="_on_profile_done_button_pressed"]

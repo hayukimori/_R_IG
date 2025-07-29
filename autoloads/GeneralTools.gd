@@ -29,6 +29,30 @@ class UserProfile:
 		self.badgeIds = data.get('badgeIds', [])
 		self.links = data.get('links', [])
 
+	func get_fields_as_dict(ignore_follow_system := true, ignore_badges := true) -> Dictionary:
+		var data := {
+			"id": self.id,
+			"displayName": self.displayName,
+			"username": self.username,
+			"bio": self.bio,
+			"avatarUrl": self.avatarUrl,
+			"bannerColor": self.bannerColor,
+			"links": self.links
+		}
+
+		if not ignore_follow_system:
+			data.merge({
+				"followersCount": self.followersCount,
+				"followingCount": self.followingCount,
+				"isFollowing": self.isFollowing
+			})
+		
+		if not ignore_badges:
+			data.merge({
+				"badgeIds": self.badgeIds
+			})
+
+		return data
 
 
 
@@ -92,7 +116,7 @@ func getUserPfp(profile_data: UserProfile) -> ImageTexture:
 	var result = await http_request.request_completed
 
 	var result_code = result[0]
-	var response_code = result[1]
+	var _response_code = result[1]
 	var _headers = result[2]
 	var body = result[3]
 
@@ -175,3 +199,33 @@ func requestProfile(profile_id: String) -> Dictionary:
 	http_request.queue_free()
 
 	return result
+
+
+
+func compare_profile_datas(profile_d1: UserProfile, profile_d2: UserProfile) -> void:
+	var d1d = profile_d1.get_fields_as_dict()
+	var d2d = profile_d2.get_fields_as_dict()
+
+	var comp = compare_dicts(d1d, d2d)
+	print(comp)
+
+
+func compare_dicts(dict_a: Dictionary, dict_b: Dictionary) -> Array:
+	var differing_keys: Array = []
+	var all_keys: Array = []
+
+	for key in dict_a.keys():
+		if not all_keys.has(key):
+			all_keys.append(key)
+	for key in dict_b.keys():
+		if not all_keys.has(key):
+			all_keys.append(key)
+
+	# Compare values
+	for key in all_keys:
+		if not dict_a.has(key) or not dict_b.has(key):
+			differing_keys.append(key)
+		elif dict_a[key] != dict_b[key]:
+			differing_keys.append(key)
+
+	return differing_keys
