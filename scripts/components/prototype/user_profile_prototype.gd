@@ -88,7 +88,7 @@ func send_profile(new_data: GeneralTools.UserProfile) -> void:
 func activate_edit_functions() -> void:
 	# Verify if user can edit this profile or not.
 	displayNameLineEdit.editable = true
-	usernameLineEdit.editable = true
+	#usernameLineEdit.editable = true # Should'nt be editable here
 	bioTextEdit.editable = true
 	editPfpButton.disabled = false	
 	profileDoneButton.disabled = false
@@ -96,7 +96,7 @@ func activate_edit_functions() -> void:
 
 func disable_edit_functions() -> void:
 	displayNameLineEdit.editable = false
-	usernameLineEdit.editable = false
+	# usernameLineEdit.editable = false
 	bioTextEdit.editable = false
 	
 	profileDoneButton.disabled = true
