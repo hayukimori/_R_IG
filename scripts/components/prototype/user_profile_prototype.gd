@@ -80,18 +80,27 @@ func changeBackground(target_color: String) -> void:
 #endregion
 
 func send_profile(new_data: GeneralTools.UserProfile) -> void:
-	GeneralTools.compare_profile_datas(original_data,new_data)
+	var diff = GeneralTools.compare_profile_datas(original_data,new_data)
 
 	# Lock content
 	disable_edit_functions()
 
-func activate_edit_functions() -> void:
+	if diff == {}:
+		activate_edit_functions(true)
+		return
+	
+	await GeneralTools.sendNewProfileData(profile_id, diff)
+
+func activate_edit_functions(reenable: bool = false) -> void:
 	# Verify if user can edit this profile or not.
 	displayNameLineEdit.editable = true
 	#usernameLineEdit.editable = true # Should'nt be editable here
 	bioTextEdit.editable = true
 	editPfpButton.disabled = false	
 	profileDoneButton.disabled = false
+
+	if !reenable:
+		profileDoneButton.disabled = false
 	profileDoneButton.visible = true
 
 func disable_edit_functions() -> void:
