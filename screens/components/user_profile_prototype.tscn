@@ -354,6 +354,7 @@ text = "0"
 label_settings = SubResource("LabelSettings_ljdun")
 
 [node name="ProfileColorButton" type="ColorPickerButton" parent="BgPanel"]
+visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0

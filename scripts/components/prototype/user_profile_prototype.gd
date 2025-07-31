@@ -140,6 +140,7 @@ func open_file_selector() -> void:
 #endregion
 
 func send_profile(new_data: GeneralTools.UserProfile) -> void:
+	loading_panel.show()
 	var diff = GeneralTools.compare_profile_datas(original_data,new_data)
 
 	# Lock content
@@ -154,8 +155,8 @@ func send_profile(new_data: GeneralTools.UserProfile) -> void:
 		return
 	
 	await GeneralTools.sendNewProfileData(profile_id, diff)
-
 	activate_edit_functions(true)
+	loading_panel.hide()
 
 
 func activate_edit_functions(reenable: bool = false) -> void:
@@ -169,6 +170,7 @@ func activate_edit_functions(reenable: bool = false) -> void:
 	if !reenable:
 		profileDoneButton.disabled = false
 	profileDoneButton.visible = true
+	profile_color_button.visible = true
 
 func disable_edit_functions() -> void:
 	displayNameLineEdit.editable = false
@@ -218,7 +220,6 @@ func _on_bio_edit_text_changed() -> void:
 
 
 func _on_close_profile_button_pressed() -> void:
-	print("Profile Close Button hit")
 	self.queue_free()
 
 
