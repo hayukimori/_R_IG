@@ -17,8 +17,10 @@ class_name UserProfileUIPrototype
 @onready var idLabel: Label = $BgPanel/IDLabel
 @onready var profile_picture_texture_rect: TextureRectRounded = $BgPanel/ProfilePictureTextureRect
 @onready var bgpanel: Panel = $BgPanel
-@onready var editPfpButton: Button = $BgPanel/ProfilePictureTextureRect/EditPFPButton
+@onready var editPfpButton: Button = $BgPanel/EditPFPButton
 @onready var profileDoneButton: Button = $ProfileDoneButton
+
+@onready var file_dialog: FileDialog = $Files/FileDialog
 
 var edit_mode: bool = false
 var original_data: GeneralTools.UserProfile
@@ -122,6 +124,22 @@ func _ready() -> void:
 	if edit_mode:
 		activate_edit_functions()
 
+		file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+		file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+		file_dialog.filters = [
+			"*.jpeg ; JPEG Image",
+			"*.jpg ; JPG Image",
+			"*.png ; PNG Image",
+			"*.webp ; WEBP Image"
+		]
+
+		file_dialog.connect("file_selected", Callable(self, "_on_file_selected"))
+
+
+func open_file_selector() -> void:
+	file_dialog.popup_centered()
+
+
 #region Button Signals
 func _on_close_profile_button_pressed() -> void:
 	print("Profile Close Button hit")
@@ -145,5 +163,18 @@ func _on_profile_done_button_pressed() -> void:
 	var new_data: GeneralTools.UserProfile = GeneralTools.UserProfile.new()
 	new_data.initializeData(raw_data)
 	send_profile(new_data)
+
+
+func _on_edit_pfp_button_pressed() -> void:
+	print("Opening file selector...")
+	open_file_selector()
+
+func _on_file_selected(path: String) -> void:
+	var string_base64_rest: String = GeneralTools.image_to_base64(path)
+
+	if string_base64_rest.is_empty():
+		push_error("Couldn't encode image to base64")
+	else:
+		print("Image encoded to base64 successfully")
 
 #endregion

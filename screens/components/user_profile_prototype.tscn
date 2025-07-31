@@ -189,17 +189,6 @@ radius_top_left = 100
 radius_top_right = 100
 texture = ExtResource("4_mc22h")
 metadata/_custom_type_script = "uid://cwasfeb3if57j"
-metadata/_edit_lock_ = true
-
-[node name="EditPFPButton" type="Button" parent="BgPanel/ProfilePictureTextureRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-disabled = true
-flat = true
 
 [node name="Panel" type="Panel" parent="BgPanel"]
 layout_mode = 1
@@ -215,6 +204,22 @@ offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ljdun")
+
+[node name="EditPFPButton" type="Button" parent="BgPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -61.0
+offset_top = -72.0
+offset_right = 61.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+flat = true
 
 [node name="DisplayNameLineEdit" type="LineEdit" parent="BgPanel"]
 layout_mode = 0
@@ -338,5 +343,16 @@ label_settings = SubResource("LabelSettings_bl1jv")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Files" type="Node" parent="."]
+
+[node name="FileDialog" type="FileDialog" parent="Files"]
+title = "Open a File"
+position = Vector2i(253, 146)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+
 [connection signal="pressed" from="CloseProfileButton" to="." method="_on_close_profile_button_pressed"]
 [connection signal="pressed" from="ProfileDoneButton" to="." method="_on_profile_done_button_pressed"]
+[connection signal="pressed" from="BgPanel/EditPFPButton" to="." method="_on_edit_pfp_button_pressed"]

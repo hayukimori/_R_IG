@@ -301,3 +301,19 @@ func compare_dicts(dict_a: Dictionary, dict_b: Dictionary) -> Array:
 			differing_keys.append(key)
 
 	return differing_keys
+
+
+func image_to_base64(path: String) -> String:
+	var file = FileAccess.open(path, FileAccess.READ)
+	if not FileAccess.file_exists(path) or file == null:
+		push_error("Failed opening image file: %s" % path)
+		return ""
+	
+	var image_bytes: PackedByteArray = file.get_buffer(file.get_length())
+	file.close()
+
+	var base64_string: String = Marshalls.raw_to_base64(image_bytes)
+
+	return base64_string
+
+
