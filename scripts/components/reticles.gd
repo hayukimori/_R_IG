@@ -4,8 +4,8 @@ extends Node3D
 @onready var off_screen_rtc: TextureRect = $OffscreenRTC
 
 var camera: Camera3D
-var rtc_offset: Vector2 = Vector2(40, 40)
-var border_offset: Vector2 = Vector2(40, 40)
+var rtc_offset: Vector2 = Vector2(12, 12)
+var border_offset: Vector2 = Vector2(12, 12)
 var viewport_center: Vector2
 var max_rtc_position
 

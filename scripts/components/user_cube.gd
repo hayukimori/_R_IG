@@ -10,7 +10,15 @@ func _ready() -> void:
 	if cube_id == null or user_id == null:
 		push_error("Invalid user/cube.")
 		queue_free()
+	else:
+		if user_id == CurrentUserSession.user_id:
+			enable_track()
+		
 
+func enable_track() -> void:
+	var track_scene: PackedScene = load("res://scenes/3D/components/track_reticles.tscn")
+	var tmp_scene: Node3D = track_scene.instantiate()
+	add_child(tmp_scene)
 
 func on_clicked() -> void:
 	push_warning("Cube function on_clicked not implemented.")

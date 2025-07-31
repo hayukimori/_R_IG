@@ -8,14 +8,34 @@
 script = ExtResource("1_v4fxn")
 
 [node name="OnScreenRTC" type="TextureRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+modulate = Color(1, 1, 1, 0.529412)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("2_pvxt3")
 expand_mode = 1
 
 [node name="OffscreenRTC" type="TextureRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+modulate = Color(1, 1, 1, 0.666667)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
 pivot_offset = Vector2(20, 20)
 texture = ExtResource("3_sc0nt")
 expand_mode = 1
