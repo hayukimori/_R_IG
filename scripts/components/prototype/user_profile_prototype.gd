@@ -22,6 +22,9 @@ class_name UserProfileUIPrototype
 
 @onready var file_dialog: FileDialog = $Files/FileDialog
 
+var current_pfp_path: String = ""
+var pfp_replaced: bool = false
+
 var edit_mode: bool = false
 var original_data: GeneralTools.UserProfile
 
@@ -79,6 +82,17 @@ func changeBackground(target_color: String) -> void:
 		stylebox.bg_color = color
 		bgpanel.add_theme_stylebox_override("panel", stylebox)
 
+
+func replaceCurrentPicture(path: String) -> void:
+	if path.is_empty():
+		push_warning("path is empty")
+		return
+	
+	var texture := GeneralTools.texture_from_file(path)
+	if texture:
+		profile_picture_texture_rect.texture = texture
+
+
 #endregion
 
 func send_profile(new_data: GeneralTools.UserProfile) -> void:
@@ -87,11 +101,16 @@ func send_profile(new_data: GeneralTools.UserProfile) -> void:
 	# Lock content
 	disable_edit_functions()
 
+	if pfp_replaced == true and current_pfp_path.is_empty() == false:
+		print("New Pfp: ", current_pfp_path)
+
+
 	if diff == {}:
 		activate_edit_functions(true)
 		return
 	
 	await GeneralTools.sendNewProfileData(profile_id, diff)
+
 
 func activate_edit_functions(reenable: bool = false) -> void:
 	# Verify if user can edit this profile or not.
@@ -172,6 +191,8 @@ func _on_edit_pfp_button_pressed() -> void:
 func _on_file_selected(path: String) -> void:
 	# DEBUG: SENDS INSTANT TO SERVER.
 	#GeneralTools.send_image_to_server(profile_id, path)
-	pass
+	replaceCurrentPicture(path)
+	pfp_replaced = true
+	current_pfp_path = path
 
 #endregion

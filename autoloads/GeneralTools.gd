@@ -304,6 +304,15 @@ func compare_dicts(dict_a: Dictionary, dict_b: Dictionary) -> Array:
 	return differing_keys
 
 
+func texture_from_file(path: String) -> Texture2D:
+	var image := Image.load_from_file(path)
+	if image == null:
+		push_error("Error loading image: %s" % path)
+		return null
+	
+	var texture := ImageTexture.create_from_image(image)
+	return texture
+
 func image_to_base64(path: String) -> String:
 	var file = FileAccess.open(path, FileAccess.READ)
 	if not FileAccess.file_exists(path) or file == null:
