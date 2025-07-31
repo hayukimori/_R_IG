@@ -170,11 +170,8 @@ func _on_edit_pfp_button_pressed() -> void:
 	open_file_selector()
 
 func _on_file_selected(path: String) -> void:
-	var string_base64_rest: String = GeneralTools.image_to_base64(path)
-
-	if string_base64_rest.is_empty():
-		push_error("Couldn't encode image to base64")
-	else:
-		print("Image encoded to base64 successfully")
+	# DEBUG: SENDS INSTANT TO SERVER.
+	#GeneralTools.send_image_to_server(profile_id, path)
+	pass
 
 #endregion

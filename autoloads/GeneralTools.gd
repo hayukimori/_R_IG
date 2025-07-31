@@ -3,6 +3,7 @@ extends Node
 var default_profile_picture: String
 var profile_getter_endpoint: String = "/api/v1/profile/uid/%s"
 var profile_send_endpoint: String = "/api/v1/editprofile"
+var profile_picture_send_endpoint: String = "/api/v1/update-pfp"
 
 class UserProfile:
 	var id: String
@@ -317,3 +318,86 @@ func image_to_base64(path: String) -> String:
 	return base64_string
 
 
+func encode_image_to_data_url(image_path: String) -> String:
+	var base64_string = image_to_base64(image_path)
+
+	if base64_string.is_empty():
+		return ""
+	
+	var extension = image_path.get_extension().to_lower()
+	var mime_type = "application/octet-stream"
+
+	print("Current extension: ", extension)
+
+	match extension:
+		"png": 
+			mime_type = "image/png"
+		"jpg", "jpeg": 
+			mime_type = "image/jpeg"
+		"webp": 
+			mime_type = "image/webp"
+
+	return "data:%s;base64,%s" % [mime_type, base64_string]
+
+
+func send_image_to_server(target_id: String, image_path: String) -> void:
+	var data_url = encode_image_to_data_url(image_path)
+
+	if data_url.is_empty():
+		push_error("Could not prepare image to send")
+		return
+	
+	var payload = {
+		"targetId": target_id,
+		"imageData": data_url
+	}
+
+	var headers = [
+		"Authorization: Bearer %s" % CurrentUserSession.login_token,
+		"Content-Type: application/json",
+	]
+
+	var http_request = HTTPRequest.new()
+	var url = get_route(profile_picture_send_endpoint)
+
+	add_child(http_request)
+
+	var error = http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(payload))
+	if error != OK:
+		push_error("Failed to make request.")
+		return 
+
+	var result = await http_request.request_completed
+
+	var result_code = result[0]
+	var response_code = result[1]
+	var _headers = result[2]
+	var body = result[3]
+
+	if result_code != HTTPRequest.RESULT_SUCCESS:
+		push_error("Couldn't send profile data. Result: %d" % result_code)
+		return
+	
+	var body_text: String = body.get_string_from_utf8()
+	var parsed_json := {}
+	var is_json := true
+
+	if body_text != "":
+		var parse_result = JSON.parse_string(body_text)
+		if parse_result != null:
+			parsed_json = parse_result
+		else:
+			is_json = false
+	
+	match response_code:
+		200, 201: print("Profile updated successfuly")
+		400: push_warning("Bad request. %s" % JSON.stringify(parsed_json) if is_json else "")
+		401: push_warning("Unauthorized. Please log in and try again")
+		403: push_warning("Forbidden. You don't have permission")
+		404: push_warning("User or route not found")
+		409: push_warning("Conflicting data")
+		422: push_warning("Validation error: %s" % JSON.stringify(parsed_json) if is_json else "")
+		500, 502, 503: push_warning("Server error (%d). Try agian later." % response_code)
+		_: push_warning("Unexpected response (%d): %s" % [response_code, body_text])
+
+	
