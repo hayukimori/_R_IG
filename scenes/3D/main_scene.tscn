@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://de8beyoq8ki7u"]
+[gd_scene load_steps=9 format=3 uid="uid://de8beyoq8ki7u"]
 
 [ext_resource type="Script" uid="uid://dde25ltj4ho43" path="res://scripts/main_scene.gd" id="1_4tr61"]
 [ext_resource type="PackedScene" uid="uid://bnmbbvw7s6jsy" path="res://screens/development_ui.tscn" id="1_tv7g3"]
 [ext_resource type="Script" uid="uid://chanhpuexa4jl" path="res://scripts/cubes_handler.gd" id="2_4p2wk"]
+[ext_resource type="Script" uid="uid://cnuxw2616kqcb" path="res://scripts/UIManager.gd" id="2_gs2a8"]
 [ext_resource type="PackedScene" uid="uid://dvlqau5c7adr6" path="res://screens/user_main_interface.tscn" id="3_gs2a8"]
 [ext_resource type="PackedScene" uid="uid://p7dnwllk8kn3" path="res://scenes/3D/components/user_cube.tscn" id="3_kb4e5"]
 [ext_resource type="Script" uid="uid://cpcsr6ensolvq" path="res://addons/godot-free-look-camera-132062011edfce9399a489756064cfea880dad4c/free_look_camera.gd" id="5_m7mqk"]
@@ -13,6 +14,9 @@ background_color = Color(0.0936695, 0.0936694, 0.093669, 1)
 
 [node name="MainScene" type="Node3D" groups=["cubes"]]
 script = ExtResource("1_4tr61")
+
+[node name="UIManager" type="CanvasLayer" parent="."]
+script = ExtResource("2_gs2a8")
 
 [node name="DevelopmentUI" parent="." instance=ExtResource("1_tv7g3")]
 visible = false
@@ -45,4 +49,5 @@ transform = Transform3D(0.8059, -0.313607, 0.502172, 0, 0.848189, 0.529695, -0.5
 current = true
 script = ExtResource("5_m7mqk")
 
+[connection signal="cube_added_to_cluseter" from="CubesHandler" to="UIManager" method="_on_cubes_handler_cube_added_to_cluseter"]
 [connection signal="timeout" from="CubesHandler/Timer" to="CubesHandler" method="_on_timer_timeout"]
