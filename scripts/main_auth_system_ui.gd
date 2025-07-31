@@ -32,15 +32,9 @@ var errors: Array = []
 
 
 func _ready() -> void:
-	# Check for host setting
-	var host = ProjectSettings.get_setting("application/config/api_host")
-	if host != "" and host != null:
-		register_user_url = host + register_user_endpoint
-		login_url = host + login_endpoint
-	else:
-		push_error("API host is not set in project settings. Using default endpoint.")
-		register_user_url = "http://localhost:3000" + register_user_endpoint
-		login_url = "http://localhost:3000" + login_endpoint
+	# Check for host settings
+	register_user_url = GeneralTools.get_route(register_user_endpoint)
+	login_url = GeneralTools.get_route(login_endpoint)
 	
 	# Set initial auth method
 	define_current_auth_method(default_method)
