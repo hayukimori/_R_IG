@@ -243,6 +243,7 @@ offset_right = 563.0
 offset_bottom = 78.0
 theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("1_u4e2g")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/focus = SubResource("StyleBoxEmpty_mc22h")
@@ -259,6 +260,7 @@ offset_right = 563.0
 offset_bottom = 94.0
 theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("1_u4e2g")
 theme_override_font_sizes/font_size = 10
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0nsjr")
@@ -330,12 +332,13 @@ offset_right = 192.0
 offset_bottom = 214.0
 theme_override_colors/font_readonly_color = Color(1, 1, 1, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
 theme_override_fonts/font = ExtResource("1_u4e2g")
 theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = SubResource("StyleBoxEmpty_m2okr")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_hxdwq")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_qkpf8")
-text = "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis"
+placeholder_text = "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis"
 editable = false
 wrap_mode = 1
 autowrap_mode = 2
@@ -349,6 +352,19 @@ offset_right = 67.5
 offset_bottom = 249.0
 text = "0"
 label_settings = SubResource("LabelSettings_ljdun")
+
+[node name="ProfileColorButton" type="ColorPickerButton" parent="BgPanel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_top = -29.0
+offset_right = 68.0
+offset_bottom = -9.99997
+grow_vertical = 0
+flat = true
+edit_alpha = false
 
 [node name="LoadingPanel" type="Panel" parent="."]
 visible = false
@@ -408,3 +424,4 @@ access = 2
 [connection signal="pressed" from="CloseProfileButton" to="." method="_on_close_profile_button_pressed"]
 [connection signal="pressed" from="ProfileDoneButton" to="." method="_on_profile_done_button_pressed"]
 [connection signal="pressed" from="BgPanel/EditPFPButton" to="." method="_on_edit_pfp_button_pressed"]
+[connection signal="color_changed" from="BgPanel/ProfileColorButton" to="." method="_on_profile_color_button_color_changed"]

@@ -20,6 +20,7 @@ class_name UserProfileUIPrototype
 @onready var editPfpButton: Button = $BgPanel/EditPFPButton
 @onready var profileDoneButton: Button = $ProfileDoneButton
 @onready var char_count_label: Label = $BgPanel/CharCountLabel
+@onready var profile_color_button: ColorPickerButton = $BgPanel/ProfileColorButton
 
 @onready var loading_panel: Panel = $LoadingPanel
 @onready var file_dialog: FileDialog = $Files/FileDialog
@@ -222,13 +223,20 @@ func _on_close_profile_button_pressed() -> void:
 
 
 func _on_profile_done_button_pressed() -> void:
+
+	var current_color = "#1a1a1aff"
+
+	var stylebox = bgpanel.get_theme_stylebox("panel")
+	if stylebox is StyleBoxFlat:
+		current_color = "#%s" % stylebox.bg_color.to_html(false)
+
 	var raw_data = {
 		"id": profile_id,
 		"displayName": displayNameLineEdit.text,
 		"username": usernameLineEdit.text,
 		"bio": bioTextEdit.text,
 		"avatarUrl": original_data.avatarUrl,
-		"bannerColor": original_data.bannerColor,
+		"bannerColor": current_color,
 		"followersCount": original_data.followersCount,
 		"followingCount": original_data.followingCount,
 		"badgeIds": [],
@@ -250,3 +258,7 @@ func _on_file_selected(path: String) -> void:
 	current_pfp_path = path
 
 #endregion
+
+
+func _on_profile_color_button_color_changed(color: Color) -> void:
+	changeBackground(color.to_html(false))
