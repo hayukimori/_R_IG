@@ -41,6 +41,33 @@ var headers: Array = [
 	"Accept: application/json"
 ]
 
+
+
+func _ready() -> void:
+	await get_tree().process_frame
+
+	if profile_id != "":
+		self.edit_mode = profile_id == CurrentUserSession.user_id
+	if prepareRequirements():
+		loadProfile()
+
+	if edit_mode:
+		activate_edit_functions()
+
+		file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+		file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+		file_dialog.filters = [
+			"*.jpeg ; JPEG Image",
+			"*.jpg ; JPG Image",
+			"*.png ; PNG Image",
+			"*.webp ; WEBP Image"
+		]
+
+		file_dialog.connect("file_selected", Callable(self, "_on_file_selected"))
+
+		define_bio_settings()
+
+
 func prepareRequirements() -> bool:
 	var c_valids = GeneralTools.Validations.new()
 	var uid_is_valid: bool = c_valids.validate_uid(profile_id)
@@ -102,6 +129,12 @@ func replaceCurrentPicture(path: String) -> void:
 	if texture:
 		profile_picture_texture_rect.texture = texture
 
+func update_char_count(text: String) -> void:
+	char_count_label.text = "%d / %d" % [text.length(), BIO_MAX_CHARS]
+
+
+func open_file_selector() -> void:
+	file_dialog.popup_centered()
 
 #endregion
 
@@ -144,30 +177,6 @@ func disable_edit_functions() -> void:
 	profileDoneButton.disabled = true
 	editPfpButton.disabled = true
 
-func _ready() -> void:
-	await get_tree().process_frame
-
-	if profile_id != "":
-		self.edit_mode = profile_id == CurrentUserSession.user_id
-	if prepareRequirements():
-		loadProfile()
-
-	if edit_mode:
-		activate_edit_functions()
-
-		file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
-		file_dialog.access = FileDialog.ACCESS_FILESYSTEM
-		file_dialog.filters = [
-			"*.jpeg ; JPEG Image",
-			"*.jpg ; JPG Image",
-			"*.png ; PNG Image",
-			"*.webp ; WEBP Image"
-		]
-
-		file_dialog.connect("file_selected", Callable(self, "_on_file_selected"))
-
-		define_bio_settings()
-
 
 func define_bio_settings() -> void:
 	# Define Regex Patterns
@@ -180,13 +189,6 @@ func define_bio_settings() -> void:
 	bioTextEdit.text_changed.connect(_on_bio_edit_text_changed)
 	update_char_count(bioTextEdit.text)
 
-
-func update_char_count(text: String) -> void:
-	char_count_label.text = "%d / %d" % [text.length(), BIO_MAX_CHARS]
-
-
-func open_file_selector() -> void:
-	file_dialog.popup_centered()
 
 
 #region Signals
@@ -246,6 +248,5 @@ func _on_file_selected(path: String) -> void:
 	replaceCurrentPicture(path)
 	pfp_replaced = true
 	current_pfp_path = path
-
 
 #endregion

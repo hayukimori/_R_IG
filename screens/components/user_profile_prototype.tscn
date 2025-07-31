@@ -341,6 +341,7 @@ wrap_mode = 1
 autowrap_mode = 2
 
 [node name="CharCountLabel" type="Label" parent="BgPanel"]
+visible = false
 layout_mode = 0
 offset_left = 27.5
 offset_top = 226.0
