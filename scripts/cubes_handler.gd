@@ -1,5 +1,7 @@
 extends Node
 
+signal cube_added_to_cluseter(cube: UserCube)
+
 @export_category("3D")
 @export var cluster: Node3D
 @export var user_cube_scene: PackedScene
@@ -110,6 +112,7 @@ func new_cube(cube_data: Dictionary) -> void:
 	devel_ui.update_current_json_content(cube_data)
 
 	t_cube.add_to_group("cubes")
+	cube_added_to_cluseter.emit(t_cube)
 
 
 # Request for gen_cubes_request_url (GET) to get an array from all existing cubes

@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://3k02h3kwdxyg"]
+
+[ext_resource type="Script" uid="uid://jlh7joklsfub" path="res://scripts/components/reticles.gd" id="1_v4fxn"]
+[ext_resource type="Texture2D" uid="uid://du14jp68irvju" path="res://assets/textures/icons/google_icons/square_24dp.png" id="2_pvxt3"]
+[ext_resource type="Texture2D" uid="uid://d13kji0wh6306" path="res://assets/textures/icons/google_icons/arrow_up_24dp.png" id="3_sc0nt"]
+
+[node name="Reticles" type="Node3D"]
+script = ExtResource("1_v4fxn")
+
+[node name="OnScreenRTC" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.529412)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pvxt3")
+expand_mode = 1
+
+[node name="OffscreenRTC" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.666667)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(20, 20)
+texture = ExtResource("3_sc0nt")
+expand_mode = 1

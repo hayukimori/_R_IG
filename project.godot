@@ -14,13 +14,15 @@ config/name="<R>IG"
 run/main_scene="uid://bjofi1c2jdw8p"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+config/api_host="http://localhost:3000"
 
 [autoload]
 
+AppConfig="*res://autoloads/AppConfig.gd"
 CurrentUserSession="*res://autoloads/CurrentUserSession.gd"
 SceneRouter="*res://autoloads/SceneRouter.gd"
-AppConfig="*res://autoloads/AppConfig.gd"
 SceneHandler="*res://autoloads/SceneHandler.gd"
+GeneralTools="*res://autoloads/GeneralTools.gd"
 
 [display]
 
