@@ -24,6 +24,8 @@ enum AuthActions { REGISTER = 0, LOGIN = 1 }
 @onready var login_btn: Button = $LoginControl/BG/HeadPanel2/LoginBtn
 @onready var change_auth_method_btn: Button = $ChangeAuthMethod
 
+@onready var foreground_panel: Panel = $ForegroundPanel
+
 var register_user_url: String
 var login_url: String
 
@@ -39,6 +41,7 @@ func _ready() -> void:
 	# Set initial auth method
 	define_current_auth_method(default_method)
 
+	CurrentUserSession.auto_login_status.connect(Callable(self, "_on_login_status_updated"))
 	CurrentUserSession.session_data_changed.connect(Callable(self, "_on_session_data_changed"))
 
 
@@ -258,6 +261,20 @@ func change_to_main() -> void:
 	get_tree().change_scene_to_packed(SceneRouter.get_main_scene())
 	queue_free()
 
+
+func _process(_delta: float) -> void:
+	match CurrentUserSession.current_status:
+		"loading": foreground_panel.visible = true
+		"success": foreground_panel.visible = false
+		"failed": foreground_panel.visible = false
+		"no_default": foreground_panel.visible = false
+
+func _on_login_status_updated(status: String) -> void:
+	match status:
+		"loading": print("Requesting data");
+		"success": print("Success, redirecting to main scene");
+		"failed": print("Autologin failed");
+		"no_default": print("No login token found. Please log in");
 
 func _on_register_btn_pressed() -> void:
 	disable_register_fields()

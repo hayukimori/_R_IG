@@ -1,6 +1,7 @@
 extends Node
 
 signal session_data_changed(data: Dictionary)
+signal auto_login_status(status: String)
 
 # => Memory Data
 var user_id: String = ""
@@ -11,6 +12,7 @@ var logged_in: bool = false
 
 var protected_endpoint: String = "/api/auth/protected"
 
+var current_status: String = "loading"
 
 # => Persistent Data
 var login_token: String = ""
@@ -39,6 +41,8 @@ func set_session_data(data: Dictionary, token: String = "") -> void:
 		save_token_to_file()
 
 	logged_in = true
+	current_status = "success"
+	auto_login_status.emit("success")
 	session_data_changed.emit({
 		"user_id": user_id,
 		"username": username,
@@ -46,6 +50,7 @@ func set_session_data(data: Dictionary, token: String = "") -> void:
 		"created_at": created_at,
 		"login_token": login_token
 	})
+	
 
 func clear_session() -> void:
 	user_id = ""
@@ -89,19 +94,29 @@ func get_user_by_token(token: String):
 		if response_code >= 400:
 			push_error("Error request")
 			if response_code == 401:
+				current_status = "failed"
+				auto_login_status.emit("failed")
 				push_error("Unauthorized request, token may be invalid or expired.")
 				clear_session()
 				return
 			elif response_code == 403:
+				current_status = "failed"
+				auto_login_status.emit("failed")
 				push_error("Forbidden request, you may not have access to this resource.")
 				return
 			elif response_code == 404:
+				current_status = "failed"
+				auto_login_status.emit("failed")
 				push_error("Not Found, the requested resource does not exist.")
 				return
 			elif response_code == 429:
+				current_status = "failed"
+				auto_login_status.emit("failed")
 				push_error("Too Many Requests, you have exceeded the rate limit.")
 				return
 		elif response_code >= 500:
+			current_status = "failed"
+			auto_login_status.emit("failed")
 			push_error("Server Error")
 			return
 		
@@ -135,6 +150,7 @@ func get_user_by_token(token: String):
 	if not token.is_empty():
 		print("Requesting user data by token: %s" % final_url)
 		http_request.request(final_url, headers, HTTPClient.METHOD_POST)
+		current_status = "loading"
 
 	else:
 		push_error("No token provided for user request.")
@@ -142,8 +158,10 @@ func get_user_by_token(token: String):
 func load_token_from_file() -> void:
 	if not FileAccess.file_exists(TOKEN_FILE_PATH):
 		push_warning("TOKEN NOT EXISTS: Token file does not exists.")
+		current_status = "no_default"
 		return
 	else:
 		print("Found file: %s" % TOKEN_FILE_PATH)
 		var token = FileAccess.get_file_as_string(TOKEN_FILE_PATH).strip_edges()
 		get_user_by_token(token)
+		current_status = "loading"
