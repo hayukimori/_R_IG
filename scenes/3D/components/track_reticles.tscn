@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://3k02h3kwdxyg"]
+
+[ext_resource type="Script" uid="uid://jlh7joklsfub" path="res://scripts/components/reticles.gd" id="1_v4fxn"]
+
+[node name="Reticles" type="Node3D"]
+script = ExtResource("1_v4fxn")
+
+[node name="OnScreenRTC" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="OffscreenRTC" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset = Vector2(20, 20)
