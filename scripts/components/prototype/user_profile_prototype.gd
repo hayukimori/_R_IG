@@ -19,14 +19,21 @@ class_name UserProfileUIPrototype
 @onready var bgpanel: Panel = $BgPanel
 @onready var editPfpButton: Button = $BgPanel/EditPFPButton
 @onready var profileDoneButton: Button = $ProfileDoneButton
+@onready var char_count_label: Label = $BgPanel/CharCountLabel
 
+@onready var loading_panel: Panel = $LoadingPanel
 @onready var file_dialog: FileDialog = $Files/FileDialog
 
 var current_pfp_path: String = ""
 var pfp_replaced: bool = false
+var is_updating_text: bool = false
 
 var edit_mode: bool = false
 var original_data: GeneralTools.UserProfile
+
+const BIO_MAX_CHARS = 200
+var validator_regex: RegEx
+var corrector_regex: RegEx
 
 var headers: Array = [
 	"Authorization: Bearer %s" % CurrentUserSession.login_token,
@@ -43,14 +50,17 @@ func prepareRequirements() -> bool:
 #endregion
 
 func loadProfile() -> void:
+	loading_panel.show()
+
 	var data = await GeneralTools.requestProfile(profile_id)
 	if data.has("error"):
 		print_debug("Got error at data", data) # TODO: Handle Errors
-	
+
 	var	profileData: GeneralTools.UserProfile = GeneralTools.UserProfile.new()
 	profileData.initializeData(data)
 
 	updateUI(profileData)
+	loading_panel.hide()
 
 
 #region UI Functions
@@ -101,15 +111,17 @@ func send_profile(new_data: GeneralTools.UserProfile) -> void:
 	# Lock content
 	disable_edit_functions()
 
-	if pfp_replaced == true and current_pfp_path.is_empty() == false:
-		print("New Pfp: ", current_pfp_path)
 
+	if pfp_replaced == true and current_pfp_path.is_empty() == false:
+		await GeneralTools.send_image_to_server(profile_id, current_pfp_path)
 
 	if diff == {}:
 		activate_edit_functions(true)
 		return
 	
 	await GeneralTools.sendNewProfileData(profile_id, diff)
+
+	activate_edit_functions(true)
 
 
 func activate_edit_functions(reenable: bool = false) -> void:
@@ -154,12 +166,54 @@ func _ready() -> void:
 
 		file_dialog.connect("file_selected", Callable(self, "_on_file_selected"))
 
+		define_bio_settings()
+
+
+func define_bio_settings() -> void:
+	# Define Regex Patterns
+	var validation_pattern = "^[\\p{L}\\p{N}\\p{M}\\p{Script=Han}\\p{Script=Hiragana}\\p{Script=Katakana}\\p{Emoji_Presentation}\\s.,?!\\-'\"()☆★♥❤️✨💡🎮🚀🔥🧠🌟]*$"
+	validator_regex = RegEx.create_from_string(validation_pattern)
+
+	var correction_pattern = "[^\\p{L}\\p{N}\\p{M}\\p{Script=Han}\\p{Script=Hiragana}\\p{Script=Katakana}\\p{Emoji_Presentation}\\s.,?!\\-'\"()☆★♥❤️✨💡🎮🚀🔥🧠🌟]"
+	corrector_regex = RegEx.create_from_string(correction_pattern)
+	
+	bioTextEdit.text_changed.connect(_on_bio_edit_text_changed)
+	update_char_count(bioTextEdit.text)
+
+
+func update_char_count(text: String) -> void:
+	char_count_label.text = "%d / %d" % [text.length(), BIO_MAX_CHARS]
+
 
 func open_file_selector() -> void:
 	file_dialog.popup_centered()
 
 
-#region Button Signals
+#region Signals
+
+func _on_bio_edit_text_changed() -> void:
+	var current_text: String = bioTextEdit.text
+	var new_text: String = current_text
+
+	new_text = corrector_regex.sub(new_text, "", true)
+
+	if new_text.length() > BIO_MAX_CHARS:
+		new_text = new_text.left(BIO_MAX_CHARS)
+	
+
+	if new_text != current_text:
+		var caret_line = bioTextEdit.get_caret_line()
+		var caret_col = bioTextEdit.get_caret_column() - 1
+
+		bioTextEdit.text = new_text
+		
+		# Restaura a posição do cursor para uma experiência suave
+		bioTextEdit.set_caret_line(caret_line)
+		# Garante que a coluna não seja negativa
+		bioTextEdit.set_caret_column(max(0, caret_col))
+
+
+
 func _on_close_profile_button_pressed() -> void:
 	print("Profile Close Button hit")
 	self.queue_free()
@@ -189,10 +243,9 @@ func _on_edit_pfp_button_pressed() -> void:
 	open_file_selector()
 
 func _on_file_selected(path: String) -> void:
-	# DEBUG: SENDS INSTANT TO SERVER.
-	#GeneralTools.send_image_to_server(profile_id, path)
 	replaceCurrentPicture(path)
 	pfp_replaced = true
 	current_pfp_path = path
+
 
 #endregion

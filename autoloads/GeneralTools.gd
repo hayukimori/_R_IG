@@ -408,5 +408,3 @@ func send_image_to_server(target_id: String, image_path: String) -> void:
 		422: push_warning("Validation error: %s" % JSON.stringify(parsed_json) if is_json else "")
 		500, 502, 503: push_warning("Server error (%d). Try agian later." % response_code)
 		_: push_warning("Unexpected response (%d): %s" % [response_code, body_text])
-
-	
