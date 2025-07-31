@@ -24,9 +24,14 @@ This project uses the **Aldrich** typeface, designed by Matthew Desmond and lice
 
 A copy of the license is available in the [`licenses/Aldrich-OFL.txt`](./licenses/Aldrich-OFL.txt) file.
 
+This product uses Material Design Icons by Google LLC. These icons are licensed under the Apache License, Version 2.0.
+
+A copy of the license is included in the project's 'licenses' directory and is also available at:
+http://www.apache.org/licenses/LICENSE-2.0
 
 
 ### Project License
 
 License: Business Source License 1.1 — Non-commercial use only.  
 See [LICENSE.md](./LICENSE.md) for details. Contact the author for commercial licensing.
+
