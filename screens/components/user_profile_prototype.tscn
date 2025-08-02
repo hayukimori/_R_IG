@@ -49,7 +49,7 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bucfp"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qkpf8"]
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
@@ -194,7 +194,7 @@ offset_right = 64.0
 offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bucfp")
+theme_override_styles/panel = SubResource("StyleBoxFlat_qkpf8")
 script = ExtResource("3_bl1jv")
 corner_detail = 100
 radius_bottom_left = 100
@@ -202,6 +202,7 @@ radius_bottom_right = 100
 radius_top_left = 100
 radius_top_right = 100
 texture = ExtResource("4_mc22h")
+stretch_mode = 6
 metadata/_custom_type_script = "uid://cwasfeb3if57j"
 
 [node name="Panel" type="Panel" parent="BgPanel"]
