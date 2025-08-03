@@ -1,0 +1,24 @@
+File: certificates/ca-bundle.crt
+License file location: licenses/ca-bundle-crt.MPL-2.0.txt
+
+This file is a converted bundle of Certificate Authority (CA) root certificates based on Mozilla's certdata.txt.
+
+Originally distributed as: cacert.pem  
+Renamed to: ca-bundle.crt (for compatibility with the Godot Engine)
+
+This file has not been modified in any way except for its filename.  
+It is redistributed under the Mozilla Public License 2.0.
+
+Source:
+  https://curl.se/docs/caextract.html
+
+License:
+  Mozilla Public License, version 2.0  
+  https://www.mozilla.org/MPL/2.0/
+
+
+A full copy of the Mozilla Public License 2.0 is provided in this project at:
+  licenses/LICENSE-MPL-2.0.txt
+
+
+Redistribution of this file complies with the MPL 2.0 as long as this license notice is preserved and the file content remains unmodified.

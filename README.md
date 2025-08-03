@@ -24,6 +24,23 @@ This project uses the **Aldrich** typeface, designed by Matthew Desmond and lice
 
 A copy of the license is available in the [`licenses/Aldrich-OFL.txt`](./licenses/Aldrich-OFL.txt) file.
 
+## Third-Party Components
+
+### ca-bundle.crt
+This application includes a Certificate Authority bundle used for secure HTTPS communication.
+
+- File: `certificates/ca-bundle.crt`
+- Source: Based on Mozilla's certificate store, converted via curl project (https://curl.se/docs/caextract.html)
+- License: Mozilla Public License 2.0
+- Location: `licenses/ca-bundle-crt.MPL-2.0.txt`
+- License location (full text): `licenses/MPL-2.0.txt`
+
+
+This file has not been modified (only renamed for compatibility).  
+It is embedded in the application binary as part of the Godot export package.
+
+
+### Google Icons
 This product uses Material Design Icons by Google LLC. These icons are licensed under the Apache License, Version 2.0.
 
 A copy of the license is included in the project's 'licenses' directory and is also available at:

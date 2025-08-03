@@ -36,3 +36,7 @@ enabled=PackedStringArray("res://addons/TextureRectRounded/plugin.cfg")
 [global_group]
 
 cubes=""
+
+[network]
+
+tls/certificate_bundle_override="res://certificates/ca-bundle.crt"
