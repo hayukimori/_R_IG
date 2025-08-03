@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://de8beyoq8ki7u"]
+[gd_scene load_steps=10 format=3 uid="uid://de8beyoq8ki7u"]
 
 [ext_resource type="Script" uid="uid://dde25ltj4ho43" path="res://scripts/main_scene.gd" id="1_4tr61"]
 [ext_resource type="PackedScene" uid="uid://bnmbbvw7s6jsy" path="res://screens/development_ui.tscn" id="1_tv7g3"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dvlqau5c7adr6" path="res://screens/user_main_interface.tscn" id="3_gs2a8"]
 [ext_resource type="PackedScene" uid="uid://p7dnwllk8kn3" path="res://scenes/3D/components/user_cube.tscn" id="3_kb4e5"]
 [ext_resource type="Script" uid="uid://cpcsr6ensolvq" path="res://addons/godot-free-look-camera-132062011edfce9399a489756064cfea880dad4c/free_look_camera.gd" id="5_m7mqk"]
+[ext_resource type="Script" uid="uid://qj4p3pnjsgbi" path="res://scripts/follows_handler.gd" id="7_b6edr"]
 
 [sub_resource type="Environment" id="Environment_jt87a"]
 background_mode = 1
@@ -41,6 +42,9 @@ devel_ui = NodePath("../DevelopmentUI")
 
 [node name="Timer" type="Timer" parent="CubesHandler"]
 wait_time = 5.0
+
+[node name="FollowsHandler" type="Node" parent="."]
+script = ExtResource("7_b6edr")
 
 [node name="CubesCluster" type="Node3D" parent="."]
 

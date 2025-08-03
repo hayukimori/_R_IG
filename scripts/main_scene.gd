@@ -7,6 +7,8 @@ extends Node3D
 @onready var http := HTTPRequest.new()
 
 func _ready() -> void:
+	GlobalCluster.cluster_3d = cubes_cluster
+
 	# Add this scene to the current scenes list for management
 	SceneHandler.current_scenes.append(self)
 
