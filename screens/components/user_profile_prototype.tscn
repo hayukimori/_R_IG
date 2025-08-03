@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://3h8evek0d8yi"]
+[gd_scene load_steps=34 format=3 uid="uid://3h8evek0d8yi"]
 
 [ext_resource type="Script" uid="uid://nljuq63jlygb" path="res://scripts/components/prototype/user_profile_prototype.gd" id="1_4o36r"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="1_u4e2g"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://clv12evmtslyb" path="res://icon.svg" id="4_mc22h"]
 [ext_resource type="Texture2D" uid="uid://c8yyrk3qh1rn1" path="res://assets/textures/icons/google_icons/person_add_24dp.png" id="7_0nsjr"]
 [ext_resource type="Script" uid="uid://divehiwsvop7k" path="res://scripts/components/prototype/follow_system.gd" id="7_jgs2v"]
+[ext_resource type="Texture2D" uid="uid://ciebp2aikntob" path="res://assets/textures/icons/google_icons/person_remove_24dp.png" id="9_882he"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bl1jv"]
 bg_color = Color(0.557203, 0.0830559, 0.238389, 1)
@@ -438,6 +439,8 @@ offset_bottom = 3.05176e-05
 grow_horizontal = 0
 grow_vertical = 0
 script = ExtResource("7_jgs2v")
+follow_image = ExtResource("7_0nsjr")
+unfollow_image = ExtResource("9_882he")
 
 [node name="FollowUnfollowButton" type="Button" parent="FollowSystem"]
 visible = false

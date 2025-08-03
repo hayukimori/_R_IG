@@ -1,7 +1,14 @@
 extends Control
 
+@export_group("Endpoints")
 @export var follow_endpoint: String = "/api/v1/follow"
-@export var unfollow_endpoint: String = "api/v1/unfollow"
+@export var unfollow_endpoint: String = "/api/v1/unfollow"
+@export var follow_exists_endpoint: String = "/api/v1/follow-exists"
+
+@export_group("UI Settings")
+@export var follow_image: CompressedTexture2D
+@export var unfollow_image: CompressedTexture2D
+
 @onready var follow_button: Button = $FollowUnfollowButton
 
 var profile_data: GeneralTools.UserProfile
@@ -30,18 +37,68 @@ func follow() -> void:
 		if content == {}:
 			return
 
-		var code = content.get('response_code', '')
-		if code.is_empty():
+		var code = content.get('response_code')
+		if code == null:
 			print("Error")
 			return
 
 		if code == 200 or code == 201:
 			print("Success")
+			update_button(unfollow)
 
 
 func unfollow() -> void:
-	pass
+	if valid_profile_id(profile_data.id):
+		var url = GeneralTools.get_route(unfollow_endpoint)
+		var content = await protected_request(
+			url, 
+			{"targetId": profile_data.id}, 
+			HTTPClient.METHOD_POST
+		)
 
+		if content == {}:
+			return
+
+		var code = content.get('response_code')
+		if code == null:
+			print("Error")
+			return
+
+		if code == 200 or code == 201:
+			print("Success")
+			update_button(follow)
+
+func update_button(function) -> void:
+	if function == follow:
+		follow_button.icon = follow_image
+
+	if function == unfollow:
+		follow_button.icon = unfollow_image
+
+	follow_button.pressed.connect(function)
+
+func relation_exists(target_id: String) -> bool:
+	var url = GeneralTools.get_route(follow_exists_endpoint)
+	var content = await protected_request(url, {"targetId": target_id}, HTTPClient.METHOD_POST)
+
+	var code = content.get('response_code')
+	if code == null:
+		push_error("Content is empty. returning false")
+		return false
+
+	if code != 200:
+		push_error("Response != OK. (relation_exists function)")
+		return false
+
+	var json_data = content.get('parsed_json')
+	print_debug(json_data)
+	
+	var data = json_data.get('following')
+	if data == null:
+		push_error("'Following' data is empty")
+		return false
+	
+	return data
 
 
 func protected_request(url: String, payload: Dictionary, method: HTTPClient.Method, custom_headers: Array = []) -> Dictionary:
@@ -116,5 +173,11 @@ func _on_user_profile_prototype_profile_loaded(received_profile_data:GeneralTool
 	active = true
 
 	if valid_profile_id(profile_data.id):
+		if await relation_exists(profile_data.id):
+			follow_button.icon = unfollow_image
+			follow_button.pressed.connect(unfollow)
+		else:
+			follow_button.icon = follow_image
+			follow_button.pressed.connect(follow)
+		
 		follow_button.show()
-		follow_button.pressed.connect(follow)
