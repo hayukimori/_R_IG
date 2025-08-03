@@ -112,6 +112,7 @@ func new_cube(cube_data: Dictionary) -> void:
 	devel_ui.update_current_json_content(cube_data)
 
 	t_cube.add_to_group("cubes")
+	GlobalCluster.add_cube(t_cube)
 	cube_added_to_cluseter.emit(t_cube)
 
 

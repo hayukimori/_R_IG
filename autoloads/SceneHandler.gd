@@ -29,6 +29,9 @@ func logout() -> void:
         "login_token": ""
     })
     
+    GlobalCluster.cluster_3d = null
+    GlobalCluster.cubes_id.clear()
+    GlobalCluster.active_connections.clear()
     print_rich("[b]INFO[/b] User logged out successfully.")
     
     # Kill all current scenes
