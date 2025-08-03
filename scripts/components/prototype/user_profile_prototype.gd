@@ -1,6 +1,8 @@
 extends Control
 class_name UserProfileUIPrototype
 
+signal profile_loaded(profile_data: GeneralTools.UserProfile)
+
 @export_group("API")
 ## Profile_ID should set in script
 @export var profile_id: String
@@ -89,6 +91,9 @@ func loadProfile() -> void:
 
 	updateUI(profileData)
 	loading_panel.hide()
+
+	# Emits a profile_loaded signal
+	profile_loaded.emit(profileData)
 
 
 #region UI Functions
