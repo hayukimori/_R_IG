@@ -85,7 +85,6 @@ func relation_exists(target_id: String) -> bool:
 		return false
 
 	var json_data = content.get('parsed_json')
-	print_debug(json_data)
 	
 	var data = json_data.get('following')
 	if data == null:

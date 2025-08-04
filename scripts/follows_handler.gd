@@ -55,8 +55,6 @@ func _handle_follow_connection(follow: Dictionary) -> void:
 	var following_id = follow.get("following_id", "")
 	var active = follow.get("active", true)
 
-	print("Relation: %s -> %s | Active: %s" % [follower_id, following_id, str(active)])
-
 	var gcluster = GlobalCluster.cubes_id
 
 	if gcluster.has(follower_id) and gcluster.has(following_id):

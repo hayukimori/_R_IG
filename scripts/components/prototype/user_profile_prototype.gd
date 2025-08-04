@@ -82,7 +82,7 @@ func loadProfile() -> void:
 
 	var data = await GeneralTools.requestProfile(profile_id)
 	if data.has("error"):
-		print_debug("Got error at data", data) # TODO: Handle Errors
+		push_error("error at loadProfile(): ", data.get('error'))
 
 	var	profileData: GeneralTools.UserProfile = GeneralTools.UserProfile.new()
 	profileData.initializeData(data)
