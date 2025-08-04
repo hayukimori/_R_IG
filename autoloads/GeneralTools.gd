@@ -103,7 +103,20 @@ func get_route(endpoint: String) -> String:
 	
 	return url
 
+func format_number(value: int) -> String:
+	var suffixes = ["T", "B", "M", "K"]
+	var suffix_values = [1e12, 1e9, 1e6, 1e3]
+	
+	for i in range(suffixes.size()):
+		var suffix_value = suffix_values[i]
+		var suffix = suffixes[i]
 
+		if abs(value) >= suffix_value:
+			var formatted_value = round(value / suffix_value * 10.0) / 10.0
+			
+			return str(formatted_value) + suffix
+
+	return str(value)
 
 func getUserPfp(profile_data: UserProfile) -> ImageTexture:
 	var http_request := HTTPRequest.new()

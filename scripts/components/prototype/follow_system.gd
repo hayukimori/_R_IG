@@ -71,35 +71,12 @@ func update_button(function) -> void:
 
 	follow_button.pressed.connect(function)
 
-func relation_exists(target_id: String) -> bool:
-	var url = Routes.get_route(Routes.ENDPOINT_FL_EXISTS)
-	var content = await GeneralTools.protected_request(url, {"targetId": target_id}, HTTPClient.METHOD_POST)
-
-	var code = content.get('response_code')
-	if code == null:
-		push_error("Content is empty. returning false")
-		return false
-
-	if code != 200:
-		push_error("Response != OK. (relation_exists function)")
-		return false
-
-	var json_data = content.get('parsed_json')
-	
-	var data = json_data.get('following')
-	if data == null:
-		push_error("'Following' data is empty")
-		return false
-	
-	return data
-
-
 func _on_user_profile_prototype_profile_loaded(received_profile_data:GeneralTools.UserProfile) -> void:
 	profile_data = received_profile_data
 	active = true
 
 	if valid_profile_id(profile_data.id):
-		if await relation_exists(profile_data.id):
+		if profile_data.isFollowing:
 			follow_button.icon = unfollow_image
 			follow_button.pressed.connect(unfollow)
 		else:
