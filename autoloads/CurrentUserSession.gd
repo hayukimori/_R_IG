@@ -9,9 +9,6 @@ var username: String = ""
 var email: String = ""
 var created_at: String = ""
 var logged_in: bool = false
-
-var protected_endpoint: String = "/api/auth/protected"
-
 var current_status: String = "loading"
 
 # => Persistent Data
@@ -137,15 +134,8 @@ func get_user_by_token(token: String):
 		"Authorization: Bearer %s" % token
 	]
 
-	var host = ProjectSettings.get_setting("application/config/api_host")
 	var final_url: String = ""
-
-	if host != "":
-		final_url = host + protected_endpoint
-	else:
-		push_error("API host is not set in project settings. Using default endpoint.")
-		final_url = "http://localhost:3000" + protected_endpoint
-
+	final_url = Routes.get_route(Routes.ENDPOINT_PROTECTED)
 
 	if not token.is_empty():
 		print("Requesting user data by token: %s" % final_url)

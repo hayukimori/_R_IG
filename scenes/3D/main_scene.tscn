@@ -37,7 +37,6 @@ script = ExtResource("2_4p2wk")
 cluster = NodePath("../CubesCluster")
 user_cube_scene = ExtResource("3_kb4e5")
 cubes_per_frame = 8
-new_cubes_endpoint = "/api/v1/checknewcubes"
 devel_ui = NodePath("../DevelopmentUI")
 
 [node name="Timer" type="Timer" parent="CubesHandler"]

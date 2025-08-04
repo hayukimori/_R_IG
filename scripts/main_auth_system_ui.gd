@@ -5,10 +5,6 @@ enum AuthActions { REGISTER = 0, LOGIN = 1 }
 @export_group("Settings")
 @export var default_method: AuthActions = AuthActions.LOGIN
 
-@export_group("Network Settings")
-@export var register_user_endpoint: String = "/api/auth/register"
-@export var login_endpoint: String = "/api/auth/login"
-
 @onready var login_control: Control = $LoginControl
 @onready var register_control: Control = $RegisterControl
 
@@ -35,8 +31,8 @@ var errors: Array = []
 
 func _ready() -> void:
 	# Check for host settings
-	register_user_url = GeneralTools.get_route(register_user_endpoint)
-	login_url = GeneralTools.get_route(login_endpoint)
+	register_user_url = Routes.get_route(Routes.ENDPOINT_REGISTER)
+	login_url = Routes.get_route(Routes.ENDPOINT_LOGIN)
 	
 	# Set initial auth method
 	define_current_auth_method(default_method)

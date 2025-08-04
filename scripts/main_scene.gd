@@ -27,16 +27,11 @@ func _on_ping_timeout() -> void:
 	if !CurrentUserSession.logged_in:
 		return
 
-	var user_id = CurrentUserSession.user_id
 	var json = {"user_id": CurrentUserSession.user_id}
-	var headers = [
-		"Content-Type: application/json",
-		"Authorization: Bearer %s" % CurrentUserSession.login_token
-	]
-	var url = GeneralTools.get_route("/api/v1/ping")
+	var url = Routes.get_route(Routes.ENDPOINT_PING)
 
 	# Sends a ping to API, server will save for 60s
-	http.request(url, headers, HTTPClient.METHOD_PATCH, JSON.stringify(json))
+	GeneralTools.protected_request(url, json, HTTPClient.METHOD_PATCH)
 
 
 func _process(delta: float) -> void:

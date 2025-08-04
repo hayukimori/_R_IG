@@ -1,10 +1,5 @@
 extends Control
 
-@export_group("Endpoints")
-@export var follow_endpoint: String = "/api/v1/follow"
-@export var unfollow_endpoint: String = "/api/v1/unfollow"
-@export var follow_exists_endpoint: String = "/api/v1/follow-exists"
-
 @export_group("UI Settings")
 @export var follow_image: CompressedTexture2D
 @export var unfollow_image: CompressedTexture2D
@@ -27,7 +22,7 @@ func valid_profile_id(profile_id: String) -> bool:
 
 func follow() -> void:
 	if valid_profile_id(profile_data.id):
-		var url = GeneralTools.get_route(follow_endpoint)
+		var url = Routes.get_route(Routes.ENDPOINT_FOLLOW)
 		var content = await protected_request(
 			url, 
 			{"targetId": profile_data.id}, 
@@ -49,7 +44,7 @@ func follow() -> void:
 
 func unfollow() -> void:
 	if valid_profile_id(profile_data.id):
-		var url = GeneralTools.get_route(unfollow_endpoint)
+		var url = Routes.get_route(Routes.ENDPOINT_UNFOLLOW)
 		var content = await protected_request(
 			url, 
 			{"targetId": profile_data.id}, 
@@ -78,7 +73,7 @@ func update_button(function) -> void:
 	follow_button.pressed.connect(function)
 
 func relation_exists(target_id: String) -> bool:
-	var url = GeneralTools.get_route(follow_exists_endpoint)
+	var url = Routes.get_route(Routes.ENDPOINT_FL_EXISTS)
 	var content = await protected_request(url, {"targetId": target_id}, HTTPClient.METHOD_POST)
 
 	var code = content.get('response_code')

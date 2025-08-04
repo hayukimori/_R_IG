@@ -7,8 +7,6 @@ signal profile_loaded(profile_data: GeneralTools.UserProfile)
 ## Profile_ID should set in script
 @export var profile_id: String
 
-## `profile_getter_endpoint` is an url to get profile data (currently it's set to search by id (uid))
-@export var profile_getter_endpoint: String = "/api/v1/profile/uid/%s"
 @export_group("Defaults")
 @export_file("*.png", "*.jpg", "*.webp", "*.svg") var default_profile_picture: String
 

@@ -2,6 +2,7 @@ extends Node
 
 const ENDPOINT_LOGIN        := "/api/auth/login"
 const ENDPOINT_REGISTER     := "/api/auth/register"
+const ENDPOINT_PROTECTED    := "/api/auth/protected"
 const ENDPOINT_PING         := "/api/v1/ping"
 const ENDPOINT_GET_PROFILE  := "/api/v1/profile/uid/%s"
 const ENDPOINT_SEND_PROFILE := "/api/v1/editprofile"
@@ -13,3 +14,12 @@ const ENDPOINT_FOLLOW       := "/api/v1/follow"
 const ENDPOINT_UNFOLLOW     := "/api/v1/unfollow"
 const ENDPOINT_FL_EXISTS    := "/api/v1/follow-exists"
 
+func get_route(endpoint: String) -> String:
+	var host = ProjectSettings.get_setting("application/config/api_host")
+	var url: String
+	if host != "":
+		url = host + endpoint
+	else:
+		push_error("API host is not set in project settings. Using default endpoint.")
+		url = "http://localhost:3000" + endpoint
+	return url

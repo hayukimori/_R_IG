@@ -1,9 +1,6 @@
 extends Node
 
 var default_profile_picture: String
-var profile_getter_endpoint: String = "/api/v1/profile/uid/%s"
-var profile_send_endpoint: String = "/api/v1/editprofile"
-var profile_picture_send_endpoint: String = "/api/v1/update-pfp"
 
 class UserProfile:
 	var id: String
@@ -167,13 +164,13 @@ func getUserPfp(profile_data: UserProfile) -> ImageTexture:
 
 
 func requestProfile(profile_id: String) -> Dictionary:
-	var url = get_route(profile_getter_endpoint % profile_id)
+	var url = Routes.get_route(Routes.ENDPOINT_GET_PROFILE % profile_id)
 	var base_result = await protected_request(url)
 	return base_result.get("parsed_json", {})
 
 
 func sendNewProfileData(targetId: String, data: Dictionary) -> void:
-	var url: String = get_route(profile_send_endpoint)
+	var url: String = Routes.get_route(Routes.ENDPOINT_SEND_PROFILE)
 	var payload = {"targetId": targetId, "fields": data}
 	await protected_request(url, payload, HTTPClient.METHOD_PUT)
 
@@ -266,7 +263,7 @@ func send_image_to_server(target_id: String, image_path: String) -> void:
 	
 	var payload = {"targetId": target_id, "imageData": data_url}
 
-	var url = get_route(profile_picture_send_endpoint)
+	var url = Routes.get_route(Routes.ENDPOINT_SEND_PROFILE)
 	await protected_request(url, payload)
 
 

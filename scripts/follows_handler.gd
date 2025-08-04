@@ -1,6 +1,6 @@
 extends Node
 
-var world_follows_endpoint = GeneralTools.get_route("/api/v1/worldfollows")
+var world_follows_endpoint = Routes.get_route(Routes.ENDPOINT_WORLD_FOLLOWS)
 const FETCH_INTERVAL_SECONDS = 5
 const FETCH_LIMIT = 100
 
