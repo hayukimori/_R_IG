@@ -165,7 +165,7 @@ func getUserPfp(profile_data: UserProfile) -> ImageTexture:
 
 func requestProfile(profile_id: String) -> Dictionary:
 	var url = Routes.get_route(Routes.ENDPOINT_GET_PROFILE % profile_id)
-	var base_result = await protected_request(url)
+	var base_result = await protected_request(url, {}, HTTPClient.METHOD_GET)
 	return base_result.get("parsed_json", {})
 
 
@@ -315,7 +315,7 @@ func protected_request(url: String, payload: Dictionary = {}, method: HTTPClient
 		var parse_result = JSON.parse_string(body_text)
 		if parse_result != null:
 			if typeof(parse_result) == TYPE_ARRAY:
-				result_array.append(parse_result)
+				result_array.assign(parse_result)
 
 			elif typeof(parse_result) == TYPE_DICTIONARY:
 				parsed_json.assign(parse_result)
@@ -340,3 +340,18 @@ func protected_request(url: String, payload: Dictionary = {}, method: HTTPClient
 		"result_array": result_array,
 		"response_code": response_code
 	}
+
+
+
+func get_server_time() -> String:
+	var datereg = await GeneralTools.protected_request(
+		Routes.get_route(Routes.ENDPOINT_STIME),
+		{},
+		HTTPClient.METHOD_GET,
+		[]
+	)
+
+	if datereg["parsed_json"].get('now', '') != "" and datereg["response_code"] == 200:
+		return datereg["parsed_json"].get('now', '')
+
+	return ""

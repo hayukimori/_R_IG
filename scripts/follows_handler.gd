@@ -1,91 +1,174 @@
 extends Node
 
+# Endpoints
 var world_follows_endpoint = Routes.get_route(Routes.ENDPOINT_WORLD_FOLLOWS)
-const FETCH_INTERVAL_SECONDS = 5
-const FETCH_LIMIT = 100
+var world_unfollows_endpoint = Routes.get_route(Routes.ENDPOINT_WORLD_UNFOLLOWS)
+var world_updates_endpoint = Routes.get_route(Routes.ENDPOINT_WORLD_UPDATES)
 
-var last_id: String = ""
-var is_fetching := false
+# Sync definitions
+const DELTA_SYNC_INTERVAL = 15.0
+const BULK_FETCH_INTERVAL = 1.0
+const BULK_FETCH_LIMIT = 100
 
+# State vars
+var is_bulk_loading := true       # Back-filling
+var is_syncing_deltas := false
+var sync_anchor_time: String      # Initial anchor timer
+var last_id_for_bulk_load: String = ""
+
+# Processing Queues
 var pending_connections := []
+var pending_disconnections := []
+
 
 func _ready():
-	_start_world_follow_timer()
+	# Gets server time
+	sync_anchor_time = await GeneralTools.get_server_time()
+	if AppConfig.DEBUG_MODE: print("[SYNC] Anchor time defined to: %s" % sync_anchor_time)
+	
+	# 2. Inicia os timers que rodarão em paralelo
+	_setup_timers()
 
-func _start_world_follow_timer():
-	var timer := Timer.new()
-	timer.name = "FollowPollTimer"
-	timer.wait_time = FETCH_INTERVAL_SECONDS
-	timer.autostart = true
-	timer.one_shot = false
-	timer.timeout.connect(_fetch_world_follows)
-	add_child(timer)
 
-func _fetch_world_follows():
-	if is_fetching:
+func _setup_timers():
+	# Timer 1: Back-filling Timer
+	var bulk_load_timer := Timer.new()
+	bulk_load_timer.name = "BulkLoadTimer"
+	bulk_load_timer.wait_time = BULK_FETCH_INTERVAL
+	bulk_load_timer.autostart = true
+	bulk_load_timer.one_shot = false
+	bulk_load_timer.timeout.connect(_fetch_bulk_follows_page)
+	add_child(bulk_load_timer)
+
+	# Timer 2: Delta sync Timer
+	var delta_sync_timer := Timer.new()
+	delta_sync_timer.name = "DeltaSyncTimer"
+	delta_sync_timer.wait_time = DELTA_SYNC_INTERVAL
+	delta_sync_timer.autostart = true
+	delta_sync_timer.one_shot = false
+	delta_sync_timer.timeout.connect(_perform_delta_sync)
+	add_child(delta_sync_timer)
+
+	# Queue processsing Timers
+	var pending_conn_timer := Timer.new()
+	pending_conn_timer.name = "PendingConnectionsProcessor"
+	pending_conn_timer.wait_time = 5.0; pending_conn_timer.autostart = true; pending_conn_timer.one_shot = false
+	pending_conn_timer.timeout.connect(process_pending_connections)
+	add_child(pending_conn_timer)
+
+	var pending_disconn_timer := Timer.new()
+	pending_disconn_timer.name = "PendingDisconnectionsProcessor"
+	pending_disconn_timer.wait_time = 5.0; pending_disconn_timer.autostart = true; pending_disconn_timer.one_shot = false
+	pending_disconn_timer.timeout.connect(process_pending_disconnections)
+	add_child(pending_disconn_timer)
+
+
+# Gets history
+func _fetch_bulk_follows_page():
+	if not is_bulk_loading:
+		# Stops the timer when finalized
+		get_node("BulkLoadTimer").stop()
 		return
-	is_fetching = true
 
-	var payload := {"limit": FETCH_LIMIT}
-	if last_id != "":
-		payload["lastId"] = last_id
+	var payload := {"limit": BULK_FETCH_LIMIT}
+	if last_id_for_bulk_load != "":
+		payload["lastId"] = last_id_for_bulk_load
 
-	var result: Dictionary = await GeneralTools.protected_request(
-		world_follows_endpoint, 
-		payload, 
-		HTTPClient.METHOD_POST
-	)
+	var result: Dictionary = await GeneralTools.protected_request(world_follows_endpoint, payload, HTTPClient.METHOD_POST)
 
 	if result.has("result_array") and result["is_json"]:
-		var follows = result["result_array"][0]
-
-		if follows is Array and follows.size() > 0:
-			if AppConfig.DEBUG_MODE: print("[!!] New Connections received: %d" % follows.size())
-
+		var follows = result["result_array"]
+		if follows is Array and not follows.is_empty():
+			if AppConfig.DEBUG_MODE: print("[BULK LOAD] Got %d history follows." % follows.size())
 			for follow in follows:
 				_handle_follow_connection(follow)
-
-			last_id = follows[-1].get("id", last_id)
+			last_id_for_bulk_load = follows[-1].get("id", last_id_for_bulk_load)
 		else:
-			if AppConfig.DEBUG_MODE: print("[!!] No new connections..")
+			is_bulk_loading = false
+			print("[SYNC] back-filling concluded.")
 	else:
-		push_warning("[X] Fail getting world follow data")
-
-	is_fetching = false
+		push_warning("[X] Fail getting history")
 
 
-func _handle_follow_connection(follow: Dictionary) -> void:
+# Longer loop
+func _perform_delta_sync():
+	if is_syncing_deltas: return
+	is_syncing_deltas = true
+
+	if AppConfig.DEBUG_MODE: print("[DELTA SYNC] Getting updates since %s" % sync_anchor_time)
+	
+	# Looks for unfollows and updates
+	
+	await _fetch_world_updates(sync_anchor_time)
+	await _fetch_world_unfollows(sync_anchor_time)
+	
+	
+	is_syncing_deltas = false
+
+# World updates
+func _fetch_world_updates(since_time: String):
+	var result = await GeneralTools.protected_request(world_updates_endpoint, {"since": since_time}, HTTPClient.METHOD_POST)
+	if result.has("result_array") and result["is_json"]:
+		var updates = result.get('result_array')
+		if updates is Array and not updates.is_empty():
+			if AppConfig.DEBUG_MODE: print("[DELTA SYNC] %d follows new/activated." % updates.size())
+			for follow in updates:
+				_handle_follow_connection(follow)
+
+# World Unfollows
+func _fetch_world_unfollows(since_time: String):
+	var result = await GeneralTools.protected_request(world_unfollows_endpoint, {"since": since_time}, HTTPClient.METHOD_POST)
+	if result.has("result_array") and result["is_json"]:
+		var unfollows = result.get('result_array')
+		if unfollows is Array and not unfollows.is_empty():
+			if AppConfig.DEBUG_MODE: print("[DELTA SYNC] %d unfollows." % unfollows.size())
+			for unfollow in unfollows:
+				_handle_unfollow_connection(unfollow)
+
+# === Processors ==
+
+func _handle_follow_connection(follow: Dictionary):
 	var follower_id = follow.get("follower_id", "")
 	var following_id = follow.get("following_id", "")
+	var conn_id = follow.get("id", "")
 	var active = follow.get("active", true)
 
-	var gcluster = GlobalCluster.cubes_id
-
-	if gcluster.has(follower_id) and gcluster.has(following_id):
-		_connect_cubes(follower_id, following_id, active)
-
+	if GlobalCluster.cubes_id.has(follower_id) and GlobalCluster.cubes_id.has(following_id):
+		_connect_cubes(follower_id, following_id, active, conn_id)
 	else:
-		pending_connections.append({
-			"follower_id": follower_id,
-			"following_id": following_id,
-			"active": active
-		})
+		if not pending_connections.any(func(c): return c.id == conn_id):
+			pending_connections.append(follow)
+
+func _handle_unfollow_connection(unfollow: Dictionary):
+	var target_id = unfollow.get('id', '')
+	if GlobalCluster.active_connections.has(target_id):
+		_disconnect_cubes(target_id)
+	else:
+		if not pending_disconnections.any(func(d): return d.id == target_id):
+			pending_disconnections.append(unfollow)
 
 func process_pending_connections():
+	if pending_connections.is_empty(): return
 	var still_pending := []
-
 	for conn in pending_connections:
-		var fid = conn.follower_id
-		var tid = conn.following_id
-		var gcluster = GlobalCluster.cubes_id
-
-		if gcluster.has(fid) and gcluster.has(tid):
-			_connect_cubes(fid, tid, conn.active)
+		if GlobalCluster.cubes_id.has(conn.follower_id) and GlobalCluster.cubes_id.has(conn.following_id):
+			_connect_cubes(conn.follower_id, conn.following_id, conn.active, conn.id)
 		else:
 			still_pending.append(conn)
-
 	pending_connections = still_pending
 
+func process_pending_disconnections():
+	if pending_disconnections.is_empty(): return
+	var still_pending := []
+	for conn in pending_disconnections:
+		if GlobalCluster.active_connections.has(conn.id):
+			_disconnect_cubes(conn.id)
+		else:
+			still_pending.append(conn)
+	pending_disconnections = still_pending
 
-func _connect_cubes(fid, tid, active):
-	GlobalCluster.create_connection(fid, tid, active)
+func _connect_cubes(fid, tid, active, conn_id):
+	GlobalCluster.create_connection(fid, tid, active, conn_id)
+
+func _disconnect_cubes(connection_id):
+	GlobalCluster.deactivate_connection(connection_id)
