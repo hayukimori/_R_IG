@@ -1,14 +1,12 @@
-[gd_scene load_steps=21 format=3 uid="uid://bjofi1c2jdw8p"]
+[gd_scene load_steps=19 format=3 uid="uid://bjofi1c2jdw8p"]
 
 [ext_resource type="Script" uid="uid://bvqhv8cjvvan5" path="res://scripts/UserInterface/main_auth_system_ui.gd" id="1_d4jrm"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="2_6c6bm"]
-[ext_resource type="Script" uid="uid://bopmajimwpyp3" path="res://scripts/components/sbv_node_3d_login_register.gd" id="3_g02x7"]
-[ext_resource type="Script" uid="uid://543v7nppoov" path="res://scripts/components/user_cube.gd" id="3_xm0er"]
 [ext_resource type="Script" uid="uid://fc7djnq3nbjb" path="res://scripts/components/cube_grid.gd" id="4_o523d"]
 [ext_resource type="Theme" uid="uid://dgrqrtlgktrk5" path="res://assets/themes/main_auth_system_ui.tres" id="5_60g0b"]
 [ext_resource type="Texture2D" uid="uid://pkr5l1nqxwxs" path="res://assets/textures/icons/auth_system_ui_icons/next_btn.png" id="7_8wg3i"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8wg3i"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_o523d"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60g0b"]
 bg_color = Color(0.215686, 0.215686, 0.215686, 1)
@@ -79,16 +77,8 @@ size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="SBVNode3DLoginRegister" type="Node3D" parent="SubViewportContainer/SubViewport"]
-script = ExtResource("3_g02x7")
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/SBVNode3DLoginRegister"]
-
-[node name="UserCube" type="CSGBox3D" parent="SubViewportContainer/SubViewport/SBVNode3DLoginRegister"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.74971, -0.228184, -2.59247)
-visible = false
-material = SubResource("StandardMaterial3D_8wg3i")
-script = ExtResource("3_xm0er")
-metadata/_custom_type_script = "uid://543v7nppoov"
 
 [node name="CubeGrid" type="Node3D" parent="SubViewportContainer/SubViewport/SBVNode3DLoginRegister"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12.9674)
@@ -98,6 +88,7 @@ spacing = 1.0
 noise_strength = 2.345
 noise_speed = 0.785
 noise_scale = 0.39
+noise = SubResource("FastNoiseLite_o523d")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/SBVNode3DLoginRegister"]
 transform = Transform3D(0.50817, -0.646038, 0.569559, -2.69591e-09, 0.661312, 0.750111, -0.861257, -0.381184, 0.336059, 0, 0, 0)
