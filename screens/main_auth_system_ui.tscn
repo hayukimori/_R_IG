@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://bjofi1c2jdw8p"]
 
-[ext_resource type="Script" uid="uid://bvqhv8cjvvan5" path="res://scripts/main_auth_system_ui.gd" id="1_d4jrm"]
+[ext_resource type="Script" uid="uid://bvqhv8cjvvan5" path="res://scripts/UserInterface/main_auth_system_ui.gd" id="1_d4jrm"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="2_6c6bm"]
 [ext_resource type="Script" uid="uid://bopmajimwpyp3" path="res://scripts/components/sbv_node_3d_login_register.gd" id="3_g02x7"]
 [ext_resource type="Script" uid="uid://543v7nppoov" path="res://scripts/components/user_cube.gd" id="3_xm0er"]
