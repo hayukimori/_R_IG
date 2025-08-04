@@ -59,14 +59,6 @@ func generate_cubes(cubes_array: Array) -> void:
 		i += cubes_per_frame
 
 		await get_tree().process_frame
-		
-
-	# if cubes_array != []:
-	# 	for cube in cubes_array:
-	# 		await get_tree().process_frame
-	# 		new_cube(cube)
-	# else:
-	# 	push_error("cubes_array is empty.")
 
 
 func new_cube(cube_data: Dictionary) -> void:
