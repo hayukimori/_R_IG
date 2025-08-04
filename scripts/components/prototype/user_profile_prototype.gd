@@ -22,6 +22,9 @@ signal profile_loaded(profile_data: GeneralTools.UserProfile)
 @onready var char_count_label: Label = $BgPanel/CharCountLabel
 @onready var profile_color_button: ColorPickerButton = $BgPanel/ProfileColorButton
 
+@onready var followers_static_button: Button = $BgPanel/FollowersStaticButton
+@onready var following_static_button: Button = $BgPanel/FollowingStaticButton
+
 @onready var loading_panel: Panel = $LoadingPanel
 @onready var file_dialog: FileDialog = $Files/FileDialog
 
@@ -101,6 +104,10 @@ func updateUI(profile_data: GeneralTools.UserProfile) -> void:
 	usernameLineEdit.text = profile_data.username
 	idLabel.text = profile_data.id
 	bioTextEdit.text = profile_data.bio
+
+	followers_static_button.text = GeneralTools.format_number(profile_data.followersCount)
+	following_static_button.text = GeneralTools.format_number(profile_data.followingCount)
+	
 
 	changeBackground(profile_data.bannerColor)
 

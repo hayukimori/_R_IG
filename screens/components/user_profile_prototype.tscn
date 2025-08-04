@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://3h8evek0d8yi"]
+[gd_scene load_steps=36 format=3 uid="uid://3h8evek0d8yi"]
 
 [ext_resource type="Script" uid="uid://nljuq63jlygb" path="res://scripts/components/prototype/user_profile_prototype.gd" id="1_4o36r"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="1_u4e2g"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://2amqd8kaowgu" path="res://assets/textures/icons/google_icons/progress_activity_24dp.png" id="3_bucfp"]
 [ext_resource type="Script" uid="uid://dr10d1vij6qys" path="res://scripts/components/prototype/loading_panel_profile.gd" id="3_ljdun"]
 [ext_resource type="Texture2D" uid="uid://clv12evmtslyb" path="res://icon.svg" id="4_mc22h"]
+[ext_resource type="Texture2D" uid="uid://dxotkh28icalt" path="res://assets/textures/icons/google_icons/line_start_square_24dp.png" id="5_m2okr"]
+[ext_resource type="Texture2D" uid="uid://b8ihbnq0julq6" path="res://assets/textures/icons/google_icons/line_end_square_24dp.png" id="6_hxdwq"]
 [ext_resource type="Texture2D" uid="uid://c8yyrk3qh1rn1" path="res://assets/textures/icons/google_icons/person_add_24dp.png" id="7_0nsjr"]
 [ext_resource type="Script" uid="uid://divehiwsvop7k" path="res://scripts/components/prototype/follow_system.gd" id="7_jgs2v"]
 [ext_resource type="Texture2D" uid="uid://ciebp2aikntob" path="res://assets/textures/icons/google_icons/person_remove_24dp.png" id="9_882he"]
@@ -370,6 +372,41 @@ offset_bottom = -9.99997
 grow_vertical = 0
 flat = true
 edit_alpha = false
+
+[node name="FollowersStaticButton" type="Button" parent="BgPanel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 33.0
+offset_top = -92.0
+offset_right = 82.0
+offset_bottom = -60.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_u4e2g")
+theme_override_font_sizes/font_size = 14
+disabled = true
+text = "0"
+icon = ExtResource("5_m2okr")
+flat = true
+
+[node name="FollowingStaticButton" type="Button" parent="BgPanel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.5
+offset_top = -64.0
+offset_right = 81.5
+offset_bottom = -32.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_u4e2g")
+theme_override_font_sizes/font_size = 14
+disabled = true
+text = "0"
+icon = ExtResource("6_hxdwq")
+flat = true
+icon_alignment = 2
 
 [node name="LoadingPanel" type="Panel" parent="."]
 visible = false
