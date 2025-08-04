@@ -8,7 +8,6 @@ extends Control
 
 var profile_data: GeneralTools.UserProfile
 var active: bool = false
-var http: HTTPRequest = HTTPRequest.new()
 
 func _ready() -> void:
 	pass

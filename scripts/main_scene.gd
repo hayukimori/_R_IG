@@ -4,7 +4,6 @@ extends Node3D
 @export var demo_mode: bool = false
 
 @onready var cubes_cluster: Node3D = $CubesCluster
-@onready var http := HTTPRequest.new()
 
 func _ready() -> void:
 	GlobalCluster.cluster_3d = cubes_cluster
@@ -13,7 +12,6 @@ func _ready() -> void:
 	SceneHandler.current_scenes.append(self)
 
 	# Online System
-	add_child(http)
 	var timer := Timer.new()
 	timer.wait_time = 20
 	timer.one_shot = false
