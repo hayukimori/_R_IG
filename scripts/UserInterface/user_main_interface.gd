@@ -68,7 +68,7 @@ func loadProfile(profile_id) -> GeneralTools.UserProfile:
 
 	# Verify errors
 	if data.has("error"):
-		print_debug("Got error at data", data)
+		push_error("Error at loadProfile(): ", data.error)
 	
 	# Gets profile as UserProfile (primitive interface using class)
 	var	profileData: GeneralTools.UserProfile = GeneralTools.UserProfile.new()

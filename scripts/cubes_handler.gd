@@ -6,8 +6,6 @@ signal cube_added_to_cluseter(cube: UserCube)
 @export var cluster: Node3D
 @export var user_cube_scene: PackedScene
 @export var cubes_per_frame: int = 10
-@export var gen_cubes_request_endpoint: String = "/api/v1/cubes"
-@export var new_cubes_endpoint: String = "http://localhost:3000/api/v1/checknewcubes"
 
 @export_category("UI")
 @export var devel_ui: DevelopmentUI
@@ -22,17 +20,9 @@ var cubes_history: Array = []
 var last_cube_id: String = ""
 
 func _ready() -> void:
-	# Check for host setting
-	var host = ProjectSettings.get_setting("application/config/api_host")
-	if host != "":
-		gen_cubes_request_url = host + gen_cubes_request_endpoint
-		new_cubes_url = host + new_cubes_endpoint
-
-	else:
-		push_error("API host is not set in project settings. Using default endpoint.")
-		gen_cubes_request_url = "http://localhost:3000" + gen_cubes_request_endpoint
-		new_cubes_url = "http://localhost:3000" + new_cubes_endpoint
-
+	# Set new routes
+	gen_cubes_request_url = Routes.get_route(Routes.ENDPOINT_CUBES)
+	new_cubes_url = Routes.get_route(Routes.ENDPOINT_NEW_CUBES)
 
 	if (
 		CurrentUserSession.login_token != "" and 
@@ -69,14 +59,6 @@ func generate_cubes(cubes_array: Array) -> void:
 		i += cubes_per_frame
 
 		await get_tree().process_frame
-		
-
-	# if cubes_array != []:
-	# 	for cube in cubes_array:
-	# 		await get_tree().process_frame
-	# 		new_cube(cube)
-	# else:
-	# 	push_error("cubes_array is empty.")
 
 
 func new_cube(cube_data: Dictionary) -> void:
@@ -126,7 +108,7 @@ func request_cubes(get_new: bool = false, last_id: String = "") -> Array:
 
 	http_request.request_completed.connect(func(result_code, response_code, _headers, body):
 		if result_code != 0:
-			print("error connecting, result_code: %d" % result_code)
+			if AppConfig.DEBUG_MODE: print("error connecting, result_code: %d" % result_code)
 			result.assign([
 				{
 				"ConnectionError": "Connection error", 
@@ -136,7 +118,7 @@ func request_cubes(get_new: bool = false, last_id: String = "") -> Array:
 			])
 			
 		match response_code:
-			200, 201: print("Ok")
+			200, 201: pass
 			400: push_error("400 Error")
 			500: push_error("Server error")
 		
@@ -181,7 +163,7 @@ func _on_timer_timeout() -> void:
 		if new_cubes != cubes_history:
 			cubes_history += new_cubes
 			generate_cubes(new_cubes)
-			print(cubes_history[-1])
+			if AppConfig.DEBUG_MODE: print(cubes_history[-1])
 			last_cube_id = cubes_history[-1].id
 		else:
-			print("Is equals")
+			if AppConfig.DEBUG_MODE: print("Is equals")

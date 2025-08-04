@@ -1,9 +1,6 @@
 extends Node
 
 var default_profile_picture: String
-var profile_getter_endpoint: String = "/api/v1/profile/uid/%s"
-var profile_send_endpoint: String = "/api/v1/editprofile"
-var profile_picture_send_endpoint: String = "/api/v1/update-pfp"
 
 class UserProfile:
 	var id: String
@@ -167,107 +164,15 @@ func getUserPfp(profile_data: UserProfile) -> ImageTexture:
 
 
 func requestProfile(profile_id: String) -> Dictionary:
-
-	var headers: Array = [
-		"Authorization: Bearer %s" % CurrentUserSession.login_token,
-		"Content-Type: application/json",
-		"Accept: application/json"
-	]
-
-	var http_request := HTTPRequest.new()
-	add_child(http_request)
-
-	var result: Dictionary = {}
-
-	http_request.request_completed.connect(func(result_code, response_code, _headers, body):
-		if result_code != 0:
-			print("error connecting, result_code: %d" % result_code)
-			result.assign({
-				"ConnectionError": "Connection error", 
-				"context": "Couldn't connect: result_code: %d"  % result_code, 
-				"code": result_code
-			})
-			
-		if response_code >= 400:
-			push_error("Error request")
-		elif response_code >= 500:
-			push_error("Server Error")
-
-		var json = JSON.parse_string(body.get_string_from_utf8())
-
-		if typeof(json) == TYPE_DICTIONARY:
-			result.assign(json)
-	)
-
-
-
-	var url = get_route(profile_getter_endpoint) % profile_id
-	http_request.request(url, headers, HTTPClient.METHOD_GET)
-
-	await http_request.request_completed
-	http_request.queue_free()
-
-	return result
+	var url = Routes.get_route(Routes.ENDPOINT_GET_PROFILE % profile_id)
+	var base_result = await protected_request(url, {}, HTTPClient.METHOD_GET)
+	return base_result.get("parsed_json", {})
 
 
 func sendNewProfileData(targetId: String, data: Dictionary) -> void:
-	var http_request := HTTPRequest.new()
-	add_child(http_request)
-
-	var url: String = get_route(profile_send_endpoint)
-
-	var headers := [
-		"Authorization: Bearer %s" %CurrentUserSession.login_token,
-		"Content-Type: application/json",
-		"Accept: application/json"
-	]
-
-	var payload = {
-		"targetId": targetId,
-		"fields": data
-	}
-	
-	if not Validations.new().validate_url(url):
-		push_error("Invalid URL: %s" % url)
-		return
-
-	var error = http_request.request(url, headers, HTTPClient.METHOD_PUT, JSON.stringify(payload))
-	if error != OK:
-		push_error("Failed to make request.")
-		return 
-
-	var result = await http_request.request_completed
-
-	var result_code = result[0]
-	var response_code = result[1]
-	var _headers = result[2]
-	var body = result[3]
-
-	if result_code != HTTPRequest.RESULT_SUCCESS:
-		push_error("Couldn't send profile data. Result: %d" % result_code)
-		return
-	
-	var body_text: String = body.get_string_from_utf8()
-	var parsed_json := {}
-	var is_json := true
-
-	if body_text != "":
-		var parse_result = JSON.parse_string(body_text)
-		if parse_result != null:
-			parsed_json = parse_result
-		else:
-			is_json = false
-	
-	match response_code:
-		200, 201: print("Profile updated successfuly")
-		400: push_warning("Bad request. %s" % JSON.stringify(parsed_json) if is_json else "")
-		401: push_warning("Unauthorized. Please log in and try again")
-		403: push_warning("Forbidden. You don't have permission")
-		404: push_warning("User or route not found")
-		409: push_warning("Conflicting data")
-		422: push_warning("Validation error: %s" % JSON.stringify(parsed_json) if is_json else "")
-		500, 502, 503: push_warning("Server error (%d). Try agian later." % response_code)
-		_: push_warning("Unexpected response (%d): %s" % [response_code, body_text])
+	var url: String = Routes.get_route(Routes.ENDPOINT_SEND_PROFILE)
+	var payload = {"targetId": targetId, "fields": data}
+	await protected_request(url, payload, HTTPClient.METHOD_PUT)
 
 
 func compare_profile_datas(profile_d1: UserProfile, profile_d2: UserProfile) -> Dictionary:
@@ -336,7 +241,7 @@ func encode_image_to_data_url(image_path: String) -> String:
 	var extension = image_path.get_extension().to_lower()
 	var mime_type = "application/octet-stream"
 
-	print("Current extension: ", extension)
+	if AppConfig.DEBUG_MODE: print("Current extension: ", extension)
 
 	match extension:
 		"png": 
@@ -356,25 +261,39 @@ func send_image_to_server(target_id: String, image_path: String) -> void:
 		push_error("Could not prepare image to send")
 		return
 	
-	var payload = {
-		"targetId": target_id,
-		"imageData": data_url
-	}
+	var payload = {"targetId": target_id, "imageData": data_url}
 
-	var headers = [
-		"Authorization: Bearer %s" % CurrentUserSession.login_token,
-		"Content-Type: application/json",
-	]
+	var url = Routes.get_route(Routes.ENDPOINT_SEND_PROFILE)
+	await protected_request(url, payload)
 
-	var http_request = HTTPRequest.new()
-	var url = get_route(profile_picture_send_endpoint)
 
+## This function calls a url with default Authorization header. Returns a complete dict containing details (and decoded json if the route returns)
+func protected_request(url: String, payload: Dictionary = {}, method: HTTPClient.Method = HTTPClient.METHOD_GET, custom_headers: Array = []) -> Dictionary:
+	if !GeneralTools.Validations.new().validate_url(url):
+		push_warning("Invalid url: ", url)
+		return {}
+	
+	if AppConfig.DEBUG_MODE: print("Requesting url: ", url)
+
+	var http_request := HTTPRequest.new()
 	add_child(http_request)
 
-	var error = http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(payload))
+	var headers = []
+
+	if custom_headers == []:
+		headers = [
+			"Authorization: Bearer %s" %CurrentUserSession.login_token,
+			"Content-Type: application/json",
+			"Accept: application/json"
+		]
+	else:
+		headers = custom_headers
+
+
+	var error = http_request.request(url, headers, method, JSON.stringify(payload))
 	if error != OK:
 		push_error("Failed to make request.")
-		return 
+		return {}
 
 	var result = await http_request.request_completed
 
@@ -384,22 +303,27 @@ func send_image_to_server(target_id: String, image_path: String) -> void:
 	var body = result[3]
 
 	if result_code != HTTPRequest.RESULT_SUCCESS:
-		push_error("Couldn't send profile data. Result: %d" % result_code)
-		return
+		push_error("Couldn't complete request. Result: %d" % result_code)
+		return {}
 	
 	var body_text: String = body.get_string_from_utf8()
 	var parsed_json := {}
+	var result_array := []
 	var is_json := true
 
 	if body_text != "":
 		var parse_result = JSON.parse_string(body_text)
 		if parse_result != null:
-			parsed_json = parse_result
+			if typeof(parse_result) == TYPE_ARRAY:
+				result_array.assign(parse_result)
+
+			elif typeof(parse_result) == TYPE_DICTIONARY:
+				parsed_json.assign(parse_result)
 		else:
 			is_json = false
 	
 	match response_code:
-		200, 201: print("Profile updated successfuly")
+		200, 201: if AppConfig.DEBUG_MODE: print("Protected request, success");
 		400: push_warning("Bad request. %s" % JSON.stringify(parsed_json) if is_json else "")
 		401: push_warning("Unauthorized. Please log in and try again")
 		403: push_warning("Forbidden. You don't have permission")
@@ -408,3 +332,26 @@ func send_image_to_server(target_id: String, image_path: String) -> void:
 		422: push_warning("Validation error: %s" % JSON.stringify(parsed_json) if is_json else "")
 		500, 502, 503: push_warning("Server error (%d). Try agian later." % response_code)
 		_: push_warning("Unexpected response (%d): %s" % [response_code, body_text])
+	
+	return {
+		"body_text": body_text, 
+		"is_json": is_json, 
+		"parsed_json": parsed_json, 
+		"result_array": result_array,
+		"response_code": response_code
+	}
+
+
+
+func get_server_time() -> String:
+	var datereg = await GeneralTools.protected_request(
+		Routes.get_route(Routes.ENDPOINT_STIME),
+		{},
+		HTTPClient.METHOD_GET,
+		[]
+	)
+
+	if datereg["parsed_json"].get('now', '') != "" and datereg["response_code"] == 200:
+		return datereg["parsed_json"].get('now', '')
+
+	return ""

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bnmbbvw7s6jsy"]
 
-[ext_resource type="Script" uid="uid://bpug0cau30obh" path="res://scripts/development_ui.gd" id="1_dnw6o"]
+[ext_resource type="Script" uid="uid://bpug0cau30obh" path="res://scripts/UserInterface/development_ui.gd" id="1_dnw6o"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="2_i6nsb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i6nsb"]

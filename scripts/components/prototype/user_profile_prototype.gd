@@ -7,8 +7,6 @@ signal profile_loaded(profile_data: GeneralTools.UserProfile)
 ## Profile_ID should set in script
 @export var profile_id: String
 
-## `profile_getter_endpoint` is an url to get profile data (currently it's set to search by id (uid))
-@export var profile_getter_endpoint: String = "/api/v1/profile/uid/%s"
 @export_group("Defaults")
 @export_file("*.png", "*.jpg", "*.webp", "*.svg") var default_profile_picture: String
 
@@ -84,7 +82,7 @@ func loadProfile() -> void:
 
 	var data = await GeneralTools.requestProfile(profile_id)
 	if data.has("error"):
-		print_debug("Got error at data", data) # TODO: Handle Errors
+		push_error("error at loadProfile(): ", data.get('error'))
 
 	var	profileData: GeneralTools.UserProfile = GeneralTools.UserProfile.new()
 	profileData.initializeData(data)
@@ -255,7 +253,7 @@ func _on_profile_done_button_pressed() -> void:
 
 
 func _on_edit_pfp_button_pressed() -> void:
-	print("Opening file selector...")
+	if AppConfig.DEBUG_MODE: print("Opening file selector...")
 	open_file_selector()
 
 func _on_file_selected(path: String) -> void:
