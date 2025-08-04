@@ -1,9 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://dvlqau5c7adr6"]
+[gd_scene load_steps=19 format=3 uid="uid://dvlqau5c7adr6"]
 
 [ext_resource type="Script" uid="uid://c3j3p428oc40d" path="res://scripts/UserInterface/user_main_interface.gd" id="1_156ji"]
 [ext_resource type="Script" uid="uid://cwasfeb3if57j" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="1_qflfr"]
 [ext_resource type="Texture2D" uid="uid://clv12evmtslyb" path="res://icon.svg" id="2_j72kl"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="3_j72kl"]
+[ext_resource type="Texture2D" uid="uid://b8ihbnq0julq6" path="res://assets/textures/icons/google_icons/line_end_square_24dp.png" id="5_g83u1"]
+[ext_resource type="Texture2D" uid="uid://dxotkh28icalt" path="res://assets/textures/icons/google_icons/line_start_square_24dp.png" id="6_se22f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rdgy6"]
 bg_color = Color(0.0666667, 0.0666667, 0.0666667, 1)
@@ -43,6 +45,33 @@ font = ExtResource("3_j72kl")
 font_size = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_xhogk"]
+font = ExtResource("3_j72kl")
+font_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xhogk"]
+bg_color = Color(0.0666667, 0.0666667, 0.0666667, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eb8fm"]
+corner_radius_top_left = 64
+corner_radius_top_right = 64
+corner_radius_bottom_right = 64
+corner_radius_bottom_left = 64
+corner_detail = 20
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_bn0bf"]
+font = ExtResource("3_j72kl")
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_78ki5"]
+font = ExtResource("3_j72kl")
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_g83u1"]
 font = ExtResource("3_j72kl")
 font_size = 10
 
@@ -193,6 +222,15 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
+[node name="ProfileClickButton" type="Button" parent="TopBarControl/MainPanel/RightSide/ProfileButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
 [node name="Center" type="Control" parent="TopBarControl/MainPanel"]
 layout_mode = 1
 anchors_preset = 8
@@ -219,5 +257,130 @@ text = "Current Time: XX/XX/XXXX - XX:XX"
 label_settings = SubResource("LabelSettings_xhogk")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ProfilePreview" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -302.0
+offset_top = 85.0
+offset_right = -40.0
+offset_bottom = 222.0
+grow_horizontal = 0
+
+[node name="BgPanel" type="Panel" parent="ProfilePreview"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xhogk")
+
+[node name="ProfilePicture" type="Panel" parent="ProfilePreview"]
+clip_children = 1
+layout_mode = 0
+offset_left = 19.0
+offset_top = 15.0
+offset_right = 67.0
+offset_bottom = 63.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_eb8fm")
+script = ExtResource("1_qflfr")
+corner_detail = 48
+radius_bottom_left = 64
+radius_bottom_right = 64
+radius_top_left = 64
+radius_top_right = 64
+texture = ExtResource("2_j72kl")
+metadata/_custom_type_script = "uid://cwasfeb3if57j"
+
+[node name="DisplayNameLabel" type="Label" parent="ProfilePreview"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 18.0
+offset_right = 245.0
+offset_bottom = 44.0
+text = "TheMaximumNameLength"
+label_settings = SubResource("LabelSettings_bn0bf")
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="UsernameLabel" type="Label" parent="ProfilePreview"]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 36.0
+offset_right = 245.0
+offset_bottom = 62.0
+text = "themaximumnamelength"
+label_settings = SubResource("LabelSettings_78ki5")
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="FollowingCountStaticButton" type="Button" parent="ProfilePreview"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -34.0
+offset_right = -12.0
+offset_bottom = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/icon_max_width = 12
+theme_override_fonts/font = ExtResource("3_j72kl")
+theme_override_font_sizes/font_size = 10
+disabled = true
+button_mask = 0
+text = "0"
+icon = ExtResource("5_g83u1")
+flat = true
+alignment = 2
+icon_alignment = 2
+
+[node name="FollowersCountStaticButton" type="Button" parent="ProfilePreview"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -52.0
+offset_right = -12.0
+offset_bottom = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/icon_max_width = 12
+theme_override_fonts/font = ExtResource("3_j72kl")
+theme_override_font_sizes/font_size = 10
+disabled = true
+button_mask = 0
+text = "0"
+icon = ExtResource("6_se22f")
+flat = true
+alignment = 2
+icon_alignment = 2
+
+[node name="Label" type="Label" parent="ProfilePreview"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_top = -75.0
+offset_right = 209.0
+grow_vertical = 0
+text = "Reserverd space for badges"
+label_settings = SubResource("LabelSettings_g83u1")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [connection signal="pressed" from="TopBarControl/MainPanel/RightSide/LogoutButton" to="." method="_on_logout_button_pressed"]
