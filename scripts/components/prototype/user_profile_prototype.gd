@@ -253,7 +253,7 @@ func _on_profile_done_button_pressed() -> void:
 
 
 func _on_edit_pfp_button_pressed() -> void:
-	print("Opening file selector...")
+	if AppConfig.DEBUG_MODE: print("Opening file selector...")
 	open_file_selector()
 
 func _on_file_selected(path: String) -> void:

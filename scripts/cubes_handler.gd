@@ -116,7 +116,7 @@ func request_cubes(get_new: bool = false, last_id: String = "") -> Array:
 
 	http_request.request_completed.connect(func(result_code, response_code, _headers, body):
 		if result_code != 0:
-			print("error connecting, result_code: %d" % result_code)
+			if AppConfig.DEBUG_MODE: print("error connecting, result_code: %d" % result_code)
 			result.assign([
 				{
 				"ConnectionError": "Connection error", 
@@ -126,7 +126,7 @@ func request_cubes(get_new: bool = false, last_id: String = "") -> Array:
 			])
 			
 		match response_code:
-			200, 201: print("Ok")
+			200, 201: pass
 			400: push_error("400 Error")
 			500: push_error("Server error")
 		
@@ -171,7 +171,7 @@ func _on_timer_timeout() -> void:
 		if new_cubes != cubes_history:
 			cubes_history += new_cubes
 			generate_cubes(new_cubes)
-			print(cubes_history[-1])
+			if AppConfig.DEBUG_MODE: print(cubes_history[-1])
 			last_cube_id = cubes_history[-1].id
 		else:
-			print("Is equals")
+			if AppConfig.DEBUG_MODE: print("Is equals")

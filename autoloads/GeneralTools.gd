@@ -241,7 +241,7 @@ func encode_image_to_data_url(image_path: String) -> String:
 	var extension = image_path.get_extension().to_lower()
 	var mime_type = "application/octet-stream"
 
-	print("Current extension: ", extension)
+	if AppConfig.DEBUG_MODE: print("Current extension: ", extension)
 
 	match extension:
 		"png": 
@@ -273,7 +273,7 @@ func protected_request(url: String, payload: Dictionary = {}, method: HTTPClient
 		push_warning("Invalid url: ", url)
 		return {}
 	
-	print("Requesting url: ", url)
+	if AppConfig.DEBUG_MODE: print("Requesting url: ", url)
 
 	var http_request := HTTPRequest.new()
 	add_child(http_request)
@@ -323,7 +323,7 @@ func protected_request(url: String, payload: Dictionary = {}, method: HTTPClient
 			is_json = false
 	
 	match response_code:
-		200, 201: print("Profile updated successfuly");
+		200, 201: if AppConfig.DEBUG_MODE: print("Protected request, success");
 		400: push_warning("Bad request. %s" % JSON.stringify(parsed_json) if is_json else "")
 		401: push_warning("Unauthorized. Please log in and try again")
 		403: push_warning("Forbidden. You don't have permission")

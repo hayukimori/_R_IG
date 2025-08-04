@@ -75,7 +75,7 @@ func auth_action(action: AuthActions) -> Array:
 			])
 			
 		match response_code:
-			200, 201: print("Ok")
+			200, 201: if AppConfig.DEBUG_MODE:  print("Ok")
 			400: push_error("400 Error")
 			500: push_error("Server error")
 		
@@ -112,7 +112,7 @@ func auth_action(action: AuthActions) -> Array:
 				"password": login_password_line_edit.text,
 			}
 	
-	print("Requesting: %s" % url)
+	if AppConfig.DEBUG_MODE: print("Requesting: %s" % url)
 			
 	http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(data))
 
@@ -200,7 +200,7 @@ func handleError(errorData: Dictionary) -> void:
 			var message = issue.get("message", "Unknown error")
 			errors.append("[x] %s: %s" % [field.capitalize(), message])
 	else:
-		print(errorData.has("name"))
+		if AppConfig.DEBUG_MODE: print(errorData.has("name"))
 		# General erros (DatabaseError, no issues ValidationError )
 		var errname = errorData.get("name", "Error")
 		var message = errorData.get("title", "An error occurred.")
@@ -253,7 +253,7 @@ func handleAuth(action: AuthActions, content: Array) -> void:
 
 func change_to_main() -> void:
 	# Change to main scene
-	print("Changing to main scene...")
+	if AppConfig.DEBUG_MODE: print("Changing to main scene...")
 	get_tree().change_scene_to_packed(SceneRouter.get_main_scene())
 	queue_free()
 
@@ -267,10 +267,10 @@ func _process(_delta: float) -> void:
 
 func _on_login_status_updated(status: String) -> void:
 	match status:
-		"loading": print("Requesting data");
-		"success": print("Success, redirecting to main scene");
-		"failed": print("Autologin failed");
-		"no_default": print("No login token found. Please log in");
+		"loading": if AppConfig.DEBUG_MODE: print("Requesting data");
+		"success": if AppConfig.DEBUG_MODE: print("Success, redirecting to main scene");
+		"failed": if AppConfig.DEBUG_MODE: print("Autologin failed");
+		"no_default": if AppConfig.DEBUG_MODE: print("No login token found. Please log in");
 
 func _on_register_btn_pressed() -> void:
 	disable_register_fields()

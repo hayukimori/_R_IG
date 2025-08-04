@@ -8,7 +8,7 @@ func kill_scene(scene: Node) -> void:
     if scene and scene.is_inside_tree():
         scene.queue_free()
         current_scenes.erase(scene)
-        print("Scene %s has been killed." % scene.name)
+        if AppConfig.DEBUG_MODE: print("Scene %s has been killed." % scene.name)
 
 func change_scene_to_login() -> void:
     if not login_scene:

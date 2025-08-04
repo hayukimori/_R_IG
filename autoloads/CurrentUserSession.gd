@@ -72,7 +72,7 @@ func save_token_to_file() -> void:
 	# Tries to save token at TOKEN_FILE_PATH, as simple string
 	if FileAccess.get_open_error() == OK:
 		file.store_string(login_token)
-		print("Token saved.")
+		if AppConfig.DEBUG_MODE: print("Token saved.")
 	
 	else:
 		printerr("TOKEN SAVE ERROR: couldn't save token.")
@@ -118,13 +118,13 @@ func get_user_by_token(token: String):
 			return
 		
 		if response_code == 200:
-			print("User data received successfully.")
+			if AppConfig.DEBUG_MODE: print("User data received successfully.")
 			
 			var json = JSON.parse_string(body.get_string_from_utf8())
 
 			if typeof(json) == TYPE_DICTIONARY:
 				set_session_data(json.get("user", {}), token)
-				print("User data set from token")
+				if AppConfig.DEBUG_MODE: print("User data set from token")
 
 		http_request.queue_free()
 	)
@@ -138,7 +138,7 @@ func get_user_by_token(token: String):
 	final_url = Routes.get_route(Routes.ENDPOINT_PROTECTED)
 
 	if not token.is_empty():
-		print("Requesting user data by token: %s" % final_url)
+		if AppConfig.DEBUG_MODE: print("Requesting user data by token: %s" % final_url)
 		http_request.request(final_url, headers, HTTPClient.METHOD_POST)
 		current_status = "loading"
 
@@ -151,7 +151,7 @@ func load_token_from_file() -> void:
 		current_status = "no_default"
 		return
 	else:
-		print("Found file: %s" % TOKEN_FILE_PATH)
+		if AppConfig.DEBUG_MODE: print("Found file: %s" % TOKEN_FILE_PATH)
 		var token = FileAccess.get_file_as_string(TOKEN_FILE_PATH).strip_edges()
 		get_user_by_token(token)
 		current_status = "loading"
