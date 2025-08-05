@@ -61,7 +61,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_156ji"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eb8fm"]
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -84,7 +84,7 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eb8fm"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aq8u4"]
 corner_radius_top_left = 64
 corner_radius_top_right = 64
 corner_radius_bottom_right = 64
@@ -214,7 +214,7 @@ offset_top = -12.0
 offset_right = 35.0
 offset_bottom = 12.0
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_156ji")
+theme_override_styles/panel = SubResource("StyleBoxFlat_eb8fm")
 script = ExtResource("1_qflfr")
 corner_detail = 20
 radius_bottom_left = 20
@@ -223,7 +223,6 @@ radius_top_left = 20
 radius_top_right = 20
 texture = ExtResource("2_j72kl")
 metadata/_custom_type_script = "uid://cwasfeb3if57j"
-metadata/_edit_lock_ = true
 
 [node name="UsernameLabel" type="Label" parent="TopBarControl/MainPanel/RightSide/ProfileButton"]
 layout_mode = 0
@@ -237,7 +236,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
-metadata/_edit_lock_ = true
 
 [node name="Center" type="Control" parent="TopBarControl/MainPanel"]
 layout_mode = 1
@@ -294,7 +292,7 @@ offset_left = 21.0
 offset_top = 17.0
 offset_right = 69.0
 offset_bottom = 65.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_eb8fm")
+theme_override_styles/panel = SubResource("StyleBoxFlat_aq8u4")
 script = ExtResource("1_qflfr")
 corner_detail = 48
 radius_bottom_left = 64
