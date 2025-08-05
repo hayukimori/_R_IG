@@ -22,8 +22,8 @@ signal profile_loaded(profile_data: GeneralTools.UserProfile)
 @onready var char_count_label: Label = $BgPanel/CharCountLabel
 @onready var profile_color_button: ColorPickerButton = $BgPanel/ProfileColorButton
 
-@onready var followers_static_button: Button = $BgPanel/FollowersStaticButton
-@onready var following_static_button: Button = $BgPanel/FollowingStaticButton
+@onready var followers_static_button: Button = $BgPanel/FollowSystemHBoxContainer/FollowersStaticButton
+@onready var following_static_button: Button = $BgPanel/FollowSystemHBoxContainer/FollowingStaticButton
 
 @onready var loading_panel: Panel = $LoadingPanel
 @onready var file_dialog: FileDialog = $Files/FileDialog

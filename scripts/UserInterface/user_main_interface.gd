@@ -1,11 +1,22 @@
 extends Control
 
 # Top Bar
+@onready var profile_button: Button = $TopBarControl/MainPanel/RightSide/ProfileButton
 @onready var notifications_button: Button = $TopBarControl/MainPanel/RightSide/NotificationsButton
 @onready var profile_picture_trd: TextureRectRounded = $TopBarControl/MainPanel/RightSide/ProfileButton/ProfilePicture
 @onready var username_label: Label = $TopBarControl/MainPanel/RightSide/ProfileButton/UsernameLabel
 @onready var datetime_label: Label = $TopBarControl/MainPanel/Center/DateTimeLabel
 
+# Profile preview
+@onready var profile_preview: Control = $ProfilePreview
+@onready var pp_picture_trd: TextureRectRounded = $ProfilePreview/ProfilePicture
+@onready var pp_username_label: Label = $ProfilePreview/UsernameLabel
+@onready var pp_displayname_label: Label = $ProfilePreview/DisplayNameLabel
+@onready var pp_bgpanel: Panel = $ProfilePreview/BgPanel
+@onready var pp_followers_count_btn: Button = $ProfilePreview/FollowersCountStaticButton
+@onready var pp_following_count_btn: Button = $ProfilePreview/FollowingCountStaticButton
+
+var preview_open: bool = false
 var default_datetime_format: String = "%02d/%02d/%04d - %02d:%02d:%02d"
 var current_time_string: String = "00/00/0000 - 00:00:00"
 var time: Dictionary = { 
@@ -46,20 +57,53 @@ func updateUI() -> void:
 		push_warning("Failed to load profile data for UID: %s" % uid)
 		return
 
+	updateTopBarElements(profile_data)
+	
+
+func updateTopBarElements(profile_data: GeneralTools.UserProfile) -> void:
 	# Updates UI
 	username_label.text = profile_data.username
 
+	var default_image = Image.new()
+	var texture = ImageTexture.create_from_image(default_image)
+
 	# Checks for profile picture
 	if profile_data.avatarUrl != "":
-		var texture = await GeneralTools.getUserPfp(profile_data)
+		texture = await GeneralTools.getUserPfp(profile_data)
 		profile_picture_trd.texture = texture
 
 	else:
-		var default_image = Image.new()
 		default_image.load(GeneralTools.default_profile_picture)
-		var texture = ImageTexture.create_from_image(default_image)
+		texture = ImageTexture.create_from_image(default_image)
 		profile_picture_trd.texture = texture
 
+	changeMiniPreviewBackground(profile_data.bannerColor)
+	updateProfilePreview(profile_data, texture)
+
+
+func updateProfilePreview(profileData: GeneralTools.UserProfile, pfp_texture: ImageTexture) -> void:
+	pp_displayname_label.text = profileData.displayName
+	pp_username_label.text = profileData.username
+	pp_followers_count_btn.text = GeneralTools.format_number(profileData.followersCount)
+	pp_following_count_btn.text = GeneralTools.format_number(profileData.followingCount)
+	pp_picture_trd.texture = pfp_texture
+	changePreviewBackground(profileData.bannerColor)
+
+func changePreviewBackground(target_color: String) -> void:
+	var color = Color(target_color)
+
+	var stylebox = pp_bgpanel.get_theme_stylebox("panel").duplicate()
+	if stylebox is StyleBoxFlat:
+		stylebox.bg_color = color
+		pp_bgpanel.add_theme_stylebox_override("panel", stylebox)
+
+func changeMiniPreviewBackground(target_color: String) -> void:
+	var color = Color(target_color)
+
+	var hover_stylebox = profile_button.get_theme_stylebox("hover").duplicate()
+	if hover_stylebox is StyleBoxFlat:
+		hover_stylebox.bg_color = color
+		profile_button.add_theme_stylebox_override("hover", hover_stylebox)
 
 
 func loadProfile(profile_id) -> GeneralTools.UserProfile:
@@ -91,3 +135,12 @@ func _process(_delta: float) -> void:
 
 func _on_logout_button_pressed() -> void:
 	SceneHandler.logout()
+
+
+func _on_profile_click_button_pressed() -> void:
+	if preview_open:
+		profile_preview.hide()
+	else:
+		profile_preview.show()
+	
+	preview_open = not preview_open

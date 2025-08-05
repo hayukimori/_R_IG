@@ -333,9 +333,9 @@ vertical_alignment = 1
 [node name="BioTextEdit" type="TextEdit" parent="BgPanel"]
 layout_mode = 0
 offset_left = 27.0
-offset_top = 113.0
+offset_top = 124.0
 offset_right = 192.0
-offset_bottom = 214.0
+offset_bottom = 234.0
 theme_override_colors/font_readonly_color = Color(1, 1, 1, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 1
@@ -373,40 +373,40 @@ grow_vertical = 0
 flat = true
 edit_alpha = false
 
-[node name="FollowersStaticButton" type="Button" parent="BgPanel"]
+[node name="FollowSystemHBoxContainer" type="HBoxContainer" parent="BgPanel"]
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 33.0
-offset_top = -92.0
-offset_right = 82.0
-offset_bottom = -60.0
+offset_left = 103.5
+offset_top = -309.0
+offset_right = 257.5
+offset_bottom = -286.0
+grow_horizontal = 2
 grow_vertical = 0
+alignment = 2
+
+[node name="FollowersStaticButton" type="Button" parent="BgPanel/FollowSystemHBoxContainer"]
+layout_mode = 2
+theme_override_constants/icon_max_width = 14
 theme_override_fonts/font = ExtResource("1_u4e2g")
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 disabled = true
 text = "0"
 icon = ExtResource("5_m2okr")
 flat = true
 
-[node name="FollowingStaticButton" type="Button" parent="BgPanel"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 32.5
-offset_top = -64.0
-offset_right = 81.5
-offset_bottom = -32.0
-grow_vertical = 0
+[node name="FollowingStaticButton" type="Button" parent="BgPanel/FollowSystemHBoxContainer"]
+layout_mode = 2
+theme_override_constants/icon_max_width = 14
 theme_override_fonts/font = ExtResource("1_u4e2g")
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 disabled = true
 text = "0"
 icon = ExtResource("6_hxdwq")
 flat = true
-icon_alignment = 2
 
 [node name="LoadingPanel" type="Panel" parent="."]
 visible = false
