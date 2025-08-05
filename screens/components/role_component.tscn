@@ -1,0 +1,81 @@
+[gd_scene load_steps=9 format=3 uid="uid://b6tfewiml8aep"]
+
+[ext_resource type="Script" uid="uid://dajr6xxlr0f6u" path="res://scripts/UserInterface/InternalComponent/role_component.gd" id="1_5g03f"]
+[ext_resource type="Script" uid="uid://cwasfeb3if57j" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="1_ofkyo"]
+[ext_resource type="Texture2D" uid="uid://clv12evmtslyb" path="res://icon.svg" id="2_5g03f"]
+[ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="3_5pdx2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5g03f"]
+bg_color = Color(0.0666667, 0.0666667, 0.0666667, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5pdx2"]
+corner_radius_top_left = 64
+corner_radius_top_right = 64
+corner_radius_bottom_right = 64
+corner_radius_bottom_left = 64
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_yi6by"]
+font = ExtResource("3_5pdx2")
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_58jtk"]
+font = ExtResource("3_5pdx2")
+font_size = 8
+shadow_size = 0
+
+[node name="RoleComponent" type="Control"]
+custom_minimum_size = Vector2(248, 64)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_5g03f")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5g03f")
+
+[node name="RoleTexture" type="Panel" parent="."]
+clip_children = 1
+layout_mode = 0
+offset_left = 16.0
+offset_top = 13.0
+offset_right = 54.0
+offset_bottom = 51.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5pdx2")
+script = ExtResource("1_ofkyo")
+radius_bottom_left = 64
+radius_bottom_right = 64
+radius_top_left = 64
+radius_top_right = 64
+texture = ExtResource("2_5g03f")
+metadata/_custom_type_script = "uid://cwasfeb3if57j"
+
+[node name="RoleNameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 14.0
+offset_right = 250.0
+offset_bottom = 32.0
+text = "RoleName"
+label_settings = SubResource("LabelSettings_yi6by")
+vertical_alignment = 1
+
+[node name="RoleDescriptionLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 33.0
+offset_right = 236.0
+offset_bottom = 61.0
+text = "RoleDescrption"
+label_settings = SubResource("LabelSettings_58jtk")
+autowrap_mode = 2
+clip_text = true

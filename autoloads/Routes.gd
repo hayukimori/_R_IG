@@ -16,6 +16,7 @@ const ENDPOINT_FL_EXISTS        := "/api/v1/follow-exists"
 const ENDPOINT_WORLD_UNFOLLOWS  := "/api/v1/worldunfollows"
 const ENDPOINT_STIME            := "/api/v1/server-clock"
 const ENDPOINT_WORLD_UPDATES    := "/api/v1/worldupdates"
+const ENDPOINT_ME				:= "/api/v1/me"
 
 
 func get_route(endpoint: String) -> String:
