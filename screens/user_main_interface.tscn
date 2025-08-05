@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://dvlqau5c7adr6"]
+[gd_scene load_steps=23 format=3 uid="uid://dvlqau5c7adr6"]
 
 [ext_resource type="Script" uid="uid://c3j3p428oc40d" path="res://scripts/UserInterface/user_main_interface.gd" id="1_156ji"]
 [ext_resource type="Script" uid="uid://cwasfeb3if57j" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="1_qflfr"]
 [ext_resource type="Texture2D" uid="uid://clv12evmtslyb" path="res://icon.svg" id="2_j72kl"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="3_j72kl"]
+[ext_resource type="Texture2D" uid="uid://c1brspmhijqhs" path="res://assets/textures/icons/google_icons/exit_to_app_24dp.png" id="3_se22f"]
 [ext_resource type="Texture2D" uid="uid://b8ihbnq0julq6" path="res://assets/textures/icons/google_icons/line_end_square_24dp.png" id="5_g83u1"]
 [ext_resource type="Texture2D" uid="uid://dxotkh28icalt" path="res://assets/textures/icons/google_icons/line_start_square_24dp.png" id="6_se22f"]
 
@@ -18,14 +19,42 @@ corner_radius_bottom_left = 8
 font = ExtResource("3_j72kl")
 font_size = 18
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4mht3"]
-bg_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bn0bf"]
+bg_color = Color(0.755421, 0.0715574, 0.163007, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qflfr"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_se22f"]
+bg_color = Color(0.300871, 0.0101536, 0.0401558, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_78ki5"]
+bg_color = Color(0.0937819, 0.0937819, 0.0937819, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tihik"]
+bg_color = Color(0.224304, 0.224304, 0.224304, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8l44x"]
+bg_color = Color(0.0885599, 0.0885599, 0.0885599, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mwlgs"]
 bg_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
@@ -133,24 +162,6 @@ offset_bottom = 28.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="NotificationsButton" type="Button" parent="TopBarControl/MainPanel/RightSide"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -46.0
-offset_top = -16.0
-offset_right = -12.0
-offset_bottom = 18.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("3_j72kl")
-theme_override_font_sizes/font_size = 10
-theme_override_styles/normal = SubResource("StyleBoxFlat_4mht3")
-text = "[N]"
-
 [node name="LogoutButton" type="Button" parent="TopBarControl/MainPanel/RightSide"]
 layout_mode = 1
 anchors_preset = 6
@@ -158,31 +169,39 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -87.0
-offset_top = -16.0
-offset_right = -53.0
-offset_bottom = 18.0
+offset_left = -51.0
+offset_top = -17.0
+offset_right = -17.0
+offset_bottom = 17.0
 grow_horizontal = 0
 grow_vertical = 2
+theme_override_constants/icon_max_width = 14
 theme_override_fonts/font = ExtResource("3_j72kl")
 theme_override_font_sizes/font_size = 10
-theme_override_styles/normal = SubResource("StyleBoxFlat_4mht3")
-text = "[LO]"
+theme_override_styles/hover = SubResource("StyleBoxFlat_bn0bf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_se22f")
+theme_override_styles/normal = SubResource("StyleBoxFlat_78ki5")
+icon = ExtResource("3_se22f")
+icon_alignment = 1
 
-[node name="ProfileButton" type="Panel" parent="TopBarControl/MainPanel/RightSide"]
+[node name="ProfileButton" type="Button" parent="TopBarControl/MainPanel/RightSide"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -240.0
+offset_left = -203.0
 offset_top = -17.0
-offset_right = -98.0
+offset_right = -61.0
 offset_bottom = 18.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_qflfr")
+theme_override_styles/focus = SubResource("StyleBoxFlat_tihik")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_8l44x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tihik")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tihik")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mwlgs")
 
 [node name="ProfilePicture" type="Panel" parent="TopBarControl/MainPanel/RightSide/ProfileButton"]
 clip_children = 1
@@ -204,6 +223,7 @@ radius_top_left = 20
 radius_top_right = 20
 texture = ExtResource("2_j72kl")
 metadata/_custom_type_script = "uid://cwasfeb3if57j"
+metadata/_edit_lock_ = true
 
 [node name="UsernameLabel" type="Label" parent="TopBarControl/MainPanel/RightSide/ProfileButton"]
 layout_mode = 0
@@ -217,15 +237,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
-
-[node name="ProfileClickButton" type="Button" parent="TopBarControl/MainPanel/RightSide/ProfileButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-flat = true
+metadata/_edit_lock_ = true
 
 [node name="Center" type="Control" parent="TopBarControl/MainPanel"]
 layout_mode = 1
@@ -365,4 +377,4 @@ alignment = 2
 icon_alignment = 2
 
 [connection signal="pressed" from="TopBarControl/MainPanel/RightSide/LogoutButton" to="." method="_on_logout_button_pressed"]
-[connection signal="pressed" from="TopBarControl/MainPanel/RightSide/ProfileButton/ProfileClickButton" to="." method="_on_profile_click_button_pressed"]
+[connection signal="pressed" from="TopBarControl/MainPanel/RightSide/ProfileButton" to="." method="_on_profile_click_button_pressed"]

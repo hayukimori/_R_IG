@@ -1,6 +1,7 @@
 extends Control
 
 # Top Bar
+@onready var profile_button: Button = $TopBarControl/MainPanel/RightSide/ProfileButton
 @onready var notifications_button: Button = $TopBarControl/MainPanel/RightSide/NotificationsButton
 @onready var profile_picture_trd: TextureRectRounded = $TopBarControl/MainPanel/RightSide/ProfileButton/ProfilePicture
 @onready var username_label: Label = $TopBarControl/MainPanel/RightSide/ProfileButton/UsernameLabel
@@ -76,6 +77,7 @@ func updateTopBarElements(profile_data: GeneralTools.UserProfile) -> void:
 		texture = ImageTexture.create_from_image(default_image)
 		profile_picture_trd.texture = texture
 
+	changeMiniPreviewBackground(profile_data.bannerColor)
 	updateProfilePreview(profile_data, texture)
 
 
@@ -94,6 +96,14 @@ func changePreviewBackground(target_color: String) -> void:
 	if stylebox is StyleBoxFlat:
 		stylebox.bg_color = color
 		pp_bgpanel.add_theme_stylebox_override("panel", stylebox)
+
+func changeMiniPreviewBackground(target_color: String) -> void:
+	var color = Color(target_color)
+
+	var hover_stylebox = profile_button.get_theme_stylebox("hover").duplicate()
+	if hover_stylebox is StyleBoxFlat:
+		hover_stylebox.bg_color = color
+		profile_button.add_theme_stylebox_override("hover", hover_stylebox)
 
 
 func loadProfile(profile_id) -> GeneralTools.UserProfile:
