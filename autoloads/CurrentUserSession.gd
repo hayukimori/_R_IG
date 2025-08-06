@@ -10,6 +10,8 @@ var email: String = ""
 var created_at: String = ""
 var logged_in: bool = false
 var current_status: String = "loading"
+var user_roles: Array = []
+var user_permissions: Array = []
 
 # => Persistent Data
 var login_token: String = ""
@@ -40,6 +42,7 @@ func set_session_data(data: Dictionary, token: String = "") -> void:
 	logged_in = true
 	current_status = "success"
 	auto_login_status.emit("success")
+	loadUserGroupAndPermissions()
 	session_data_changed.emit({
 		"user_id": user_id,
 		"username": username,
@@ -155,3 +158,11 @@ func load_token_from_file() -> void:
 		var token = FileAccess.get_file_as_string(TOKEN_FILE_PATH).strip_edges()
 		get_user_by_token(token)
 		current_status = "loading"
+
+func loadUserGroupAndPermissions() -> void:
+	var result = await GeneralTools.me_req()
+	if result.has("roles") and result.get("roles").size() > 0:
+		user_roles = result.get("roles")
+
+	if result.has("permissions") and result["permissions"].size() > 0:
+		user_permissions = result.get("permissions")

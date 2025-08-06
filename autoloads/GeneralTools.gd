@@ -355,6 +355,12 @@ func protected_request(url: String, payload: Dictionary = {}, method: HTTPClient
 	}
 
 
+func me_req() -> Dictionary:
+	var url = Routes.get_route(Routes.ENDPOINT_ME)
+	var content = await protected_request(url)
+
+	return content.get('parsed_json', {})
+
 
 func get_server_time() -> String:
 	var datereg = await GeneralTools.protected_request(

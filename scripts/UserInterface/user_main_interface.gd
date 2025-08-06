@@ -16,6 +16,11 @@ extends Control
 @onready var pp_followers_count_btn: Button = $ProfilePreview/FollowersCountStaticButton
 @onready var pp_following_count_btn: Button = $ProfilePreview/FollowingCountStaticButton
 
+# User Roles Preview
+@onready var roles_panel: Panel = $ProfilePreview/RolesPanel
+@onready var roles_container: VBoxContainer = $ProfilePreview/RolesPanel/ScrollContainer/VBoxContainer
+
+var role_component: PackedScene = preload("res://screens/components/role_component.tscn")
 var preview_open: bool = false
 var default_datetime_format: String = "%02d/%02d/%04d - %02d:%02d:%02d"
 var current_time_string: String = "00/00/0000 - 00:00:00"
@@ -88,6 +93,7 @@ func updateProfilePreview(profileData: GeneralTools.UserProfile, pfp_texture: Im
 	pp_following_count_btn.text = GeneralTools.format_number(profileData.followingCount)
 	pp_picture_trd.texture = pfp_texture
 	changePreviewBackground(profileData.bannerColor)
+	loadRoles()
 
 func changePreviewBackground(target_color: String) -> void:
 	var color = Color(target_color)
@@ -120,7 +126,26 @@ func loadProfile(profile_id) -> GeneralTools.UserProfile:
 
 	return profileData
 
+func loadRoles() -> void:
+	roles_panel.visible = true
+	var user_roles = CurrentUserSession.user_roles
+	if user_roles == []:
+		return
 	
+
+	var local_roles_scenes: Array = []
+
+	for role in user_roles:
+		var temp_role_scene = role_component.instantiate()
+		temp_role_scene.role_name = role.get("name")
+		temp_role_scene.role_description = role.get("description")
+
+		local_roles_scenes.append(temp_role_scene)
+	
+	for lrs in local_roles_scenes:
+		roles_container.add_child(lrs)
+		
+
 func _process(_delta: float) -> void:
 
 	time = Time.get_datetime_dict_from_system()
