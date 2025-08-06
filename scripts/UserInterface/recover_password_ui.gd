@@ -6,15 +6,19 @@ extends Control
 
 
 func _ready() -> void:
-    pass
+	_firstStep()
 
 # === Steps ===
 func _firstStep() -> void:
-    pass
+	recover_first_step.show()
+	
 
 func _secondStep() -> void:
-    pass
+	pass
 
 func _gotoStep2() -> void:
-    recover_first_step.hide()
-    recover_second_step.show()
+	recover_first_step.hide()
+	recover_second_step.show()
+
+func _on_send_code_button_pressed() -> void:
+	pass

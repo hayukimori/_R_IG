@@ -28,7 +28,7 @@ static func is_valid_string(
 #   - Includes 1 lower case character
 #   - Includes 1 upper case character
 #   - Includes 1 number
-static func validate_password(password: String) -> bool:
+func validate_password(password: String) -> bool:
     # Setup validator for email (no regex)
     var validation = is_valid_string(
         password, 
@@ -41,7 +41,7 @@ static func validate_password(password: String) -> bool:
 
 
 # Validation for Email
-static func validate_email(email: String) -> bool:
+func validate_email(email: String) -> bool:
     # Setup validator for email
     var validation = is_valid_string(
         email, 
@@ -53,7 +53,7 @@ static func validate_email(email: String) -> bool:
 
 
 # Validation for URL
-static func validate_url(url: String) -> bool:
+func validate_url(url: String) -> bool:
     # Setup validation for url
     var validation = is_valid_string(
         url, 
@@ -64,11 +64,21 @@ static func validate_url(url: String) -> bool:
 
 
 # Validation for MongoDB ObjectId
-static func validate_object_id(object_id: String) -> bool:
+func validate_object_id(object_id: String) -> bool:
     var validation: bool = is_valid_string(
         object_id,
         true, 24, 24,
         r"^[a-fA-F0-9]{24}$"
     )
 
+    return validation
+
+
+func validate_code(code: String) -> bool:
+    var validation: bool = is_valid_string(
+        code,
+        true, 6, 6,
+        r"^\d{6}$"
+    )
+    
     return validation

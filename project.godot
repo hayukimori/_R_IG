@@ -19,7 +19,7 @@ config/api_host="http://localhost:3000"
 [autoload]
 
 AppConfig="*res://autoloads/AppConfig.gd"
-Validations="*res://autoloads/models/Validations.gd"
+GlobalValidations="*res://autoloads/models/GlobalValidations.gd"
 Routes="*res://autoloads/Routes.gd"
 CurrentUserSession="*res://autoloads/CurrentUserSession.gd"
 SceneRouter="*res://autoloads/SceneRouter.gd"
