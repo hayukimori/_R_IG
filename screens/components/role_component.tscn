@@ -1,9 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6tfewiml8aep"]
+[gd_scene load_steps=13 format=3 uid="uid://b6tfewiml8aep"]
 
 [ext_resource type="Script" uid="uid://dajr6xxlr0f6u" path="res://scripts/UserInterface/InternalComponent/role_component.gd" id="1_5g03f"]
 [ext_resource type="Script" uid="uid://cwasfeb3if57j" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="1_ofkyo"]
-[ext_resource type="Texture2D" uid="uid://clv12evmtslyb" path="res://icon.svg" id="2_5g03f"]
+[ext_resource type="Texture2D" uid="uid://cvaojhprb06vf" path="res://assets/textures/icons/roles_icons/icon_admin.png" id="3_5g03f"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="3_5pdx2"]
+[ext_resource type="Texture2D" uid="uid://5oyutqyl5lw2" path="res://assets/textures/icons/roles_icons/icon_mod.png" id="3_yayvd"]
+[ext_resource type="Texture2D" uid="uid://bxfquofgooxv1" path="res://assets/textures/icons/roles_icons/icon_supporter.png" id="4_0suhj"]
+[ext_resource type="Texture2D" uid="uid://b8fieca6tyia3" path="res://assets/textures/icons/roles_icons/icon_content_creator.png" id="5_g7g7o"]
+[ext_resource type="Texture2D" uid="uid://bhb4rs3lh1j60" path="res://assets/textures/icons/roles_icons/icon_unknown_role.png" id="6_0suhj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5g03f"]
 bg_color = Color(0.0666667, 0.0666667, 0.0666667, 1)
@@ -33,6 +37,11 @@ custom_minimum_size = Vector2(248, 64)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_5g03f")
+texture_admin = ExtResource("3_5g03f")
+texture_moderator = ExtResource("3_yayvd")
+texture_supporter = ExtResource("4_0suhj")
+texture_content_creator = ExtResource("5_g7g7o")
+texture_unknown_role = ExtResource("6_0suhj")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -56,7 +65,6 @@ radius_bottom_left = 64
 radius_bottom_right = 64
 radius_top_left = 64
 radius_top_right = 64
-texture = ExtResource("2_5g03f")
 metadata/_custom_type_script = "uid://cwasfeb3if57j"
 
 [node name="RoleNameLabel" type="Label" parent="."]
