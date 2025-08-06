@@ -20,24 +20,24 @@ font_size = 18
 outline_size = 1
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Gradient" id="Gradient_60g0b"]
+[sub_resource type="Gradient" id="Gradient_o523d"]
 offsets = PackedFloat32Array(0, 0.528571, 1)
 colors = PackedColorArray(0, 0, 0, 0.27451, 0, 0, 0, 0.0823529, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_8wg3i"]
-gradient = SubResource("Gradient_60g0b")
+gradient = SubResource("Gradient_o523d")
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o523d"]
 bg_color = Color(0.217101, 0.217101, 0.217101, 1)
 
-[sub_resource type="Gradient" id="Gradient_mpfq1"]
+[sub_resource type="Gradient" id="Gradient_60g0b"]
 offsets = PackedFloat32Array(0, 0.528571, 1)
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.0823529, 0, 0, 0, 0.27451)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0mj6l"]
-gradient = SubResource("Gradient_mpfq1")
+gradient = SubResource("Gradient_60g0b")
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 
