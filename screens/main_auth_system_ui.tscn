@@ -96,76 +96,6 @@ shadow_enabled = true
 directional_shadow_mode = 0
 sky_mode = 1
 
-[node name="RegisterTest" type="Control" parent="."]
-visible = false
-anchors_preset = 0
-offset_left = 92.0
-offset_top = 129.0
-offset_right = 502.0
-offset_bottom = 481.0
-
-[node name="UsernameLabel" type="Label" parent="RegisterTest"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Username"
-
-[node name="EmailLabel" type="Label" parent="RegisterTest"]
-layout_mode = 0
-offset_top = 66.0
-offset_right = 80.0
-offset_bottom = 89.0
-text = "Email"
-
-[node name="PasswordLabel" type="Label" parent="RegisterTest"]
-layout_mode = 0
-offset_top = 142.0
-offset_right = 80.0
-offset_bottom = 165.0
-text = "Password"
-
-[node name="ConfirmPasswordLabel" type="Label" parent="RegisterTest"]
-layout_mode = 0
-offset_top = 212.0
-offset_right = 80.0
-offset_bottom = 235.0
-text = "Confirm password"
-
-[node name="UsernameLineEdit" type="LineEdit" parent="RegisterTest"]
-layout_mode = 0
-offset_top = 23.0
-offset_right = 410.0
-offset_bottom = 54.0
-
-[node name="EmailLineEdit" type="LineEdit" parent="RegisterTest"]
-layout_mode = 0
-offset_top = 89.0
-offset_right = 410.0
-offset_bottom = 120.0
-
-[node name="PasswordLineEdit" type="LineEdit" parent="RegisterTest"]
-layout_mode = 0
-offset_top = 165.0
-offset_right = 410.0
-offset_bottom = 196.0
-
-[node name="ConfirmPasswordLineEdit" type="LineEdit" parent="RegisterTest"]
-layout_mode = 0
-offset_top = 234.0
-offset_right = 410.0
-offset_bottom = 265.0
-
-[node name="RegisterBtn" type="Button" parent="RegisterTest"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -8.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "Register"
-
 [node name="RegisterControl" type="Control" parent="."]
 visible = false
 layout_mode = 1
@@ -568,7 +498,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[connection signal="pressed" from="RegisterTest/RegisterBtn" to="." method="_on_register_btn_pressed"]
 [connection signal="pressed" from="RegisterControl/BG/HeadPanel2/RegisterBtn" to="." method="_on_register_btn_pressed"]
 [connection signal="pressed" from="LoginControl/BG/HeadPanel2/LoginBtn" to="." method="_on_login_btn_pressed"]
 [connection signal="pressed" from="ChangeAuthMethod" to="." method="_on_change_auth_method_pressed"]
