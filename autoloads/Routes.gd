@@ -31,3 +31,11 @@ func get_route(endpoint: String) -> String:
 		push_error("API host is not set in project settings. Using default endpoint.")
 		url = "http://localhost:3000" + endpoint
 	return url
+
+func get_ws_url() -> String:
+	var host: String = ProjectSettings.get_setting("application/config/ws_host")
+	if host.is_empty():
+		push_error("Websocket Host is not set in project settings. Using default host")
+		return "ws://localhost:8080"
+	
+	return host
