@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://cympcmvyfhrm"]
+
+[ext_resource type="Script" uid="uid://fc7djnq3nbjb" path="res://scripts/components/cube_grid.gd" id="1_10gxe"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_o523d"]
+
+[node name="SBVNode3DLoginRegister" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+
+[node name="CubeGrid" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12.9674)
+script = ExtResource("1_10gxe")
+grid_size = Vector2i(128, 64)
+spacing = 1.0
+noise_strength = 2.345
+noise_speed = 0.785
+noise_scale = 0.39
+noise = SubResource("FastNoiseLite_o523d")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.50817, -0.646038, 0.569559, -2.69591e-09, 0.661312, 0.750111, -0.861257, -0.381184, 0.336059, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+sky_mode = 1
