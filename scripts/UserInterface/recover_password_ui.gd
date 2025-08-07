@@ -23,10 +23,6 @@ extends Control
 # On-Screen errors
 @onready var error_message_rtl: RichTextLabel = $UIErrorMessageHandler
 
-# UI Buttons
-@onready var password_visibility_button: Button = $RecoverStep2/MainFramePanel/NewPasswordLineEdit/PasswordVisibilityButton
-@onready var confirm_password_visibility_button: Button = $RecoverStep2/MainFramePanel/ConfirmNewPasswordLineEdit/ConfirmPasswordVisibilityButton
-
 # Important vars
 var recovery_token: String
 
@@ -175,8 +171,6 @@ func enable_second() -> void:
 	second_locked = false
 
 	reset_password_button.disabled = false
-	password_visibility_button.disabled = false
-	confirm_password_visibility_button.disabled = false
 
 	password_field.editable = true
 	confirm_password_field.editable = true
@@ -186,8 +180,6 @@ func disable_second() -> void:
 	second_locked = true
 
 	reset_password_button.disabled = true
-	password_visibility_button.disabled = true
-	confirm_password_visibility_button.disabled = true
 
 	password_field.editable = false
 	confirm_password_field.editable = false
@@ -200,8 +192,7 @@ func disable_all_fields_and_buttons() -> void:
 	step_2_button.disabled = true
 	send_code_button.disabled = true
 	reset_password_button.disabled = true
-	password_visibility_button.disabled = true
-	confirm_password_visibility_button.disabled = true
+
 
 	# Disable Fields
 	password_field.editable = false
@@ -216,8 +207,6 @@ func enable_all_fields_and_buttons() -> void:
 	step_2_button.disabled = false
 	send_code_button.disabled = false
 	reset_password_button.disabled = false
-	password_visibility_button.disabled = false
-	confirm_password_visibility_button.disabled = false
 
 	# Enable Fields
 	password_field.editable = true
@@ -261,23 +250,3 @@ func _manage_t2_fields() -> void:
 	if all_locked: return
 	if second_locked: return
 	reset_password_button.disabled = not reset_button_sch
-
-
-
-func _on_confirm_password_visibility_button_pressed() -> void:
-	var cs_status = confirm_password_field.secret
-	if cs_status:
-		confirm_password_visibility_button.icon = visibility_on_texture
-	else:
-		confirm_password_visibility_button.icon = visibility_off_texture
-	
-	confirm_password_field.secret = not cs_status
-
-func _on_password_visibility_button_pressed() -> void:
-	var p_status = password_field.secret
-	if p_status:
-		password_visibility_button.icon = visibility_on_texture
-	else:
-		password_visibility_button.icon = visibility_off_texture
-	
-	password_field.secret = not p_status

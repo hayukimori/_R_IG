@@ -1,10 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://bjofi1c2jdw8p"]
+[gd_scene load_steps=20 format=3 uid="uid://bjofi1c2jdw8p"]
 
 [ext_resource type="Script" uid="uid://bvqhv8cjvvan5" path="res://scripts/UserInterface/main_auth_system_ui.gd" id="1_d4jrm"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="2_6c6bm"]
 [ext_resource type="PackedScene" uid="uid://cympcmvyfhrm" path="res://scenes/3D/components/cubegrid.tscn" id="2_o523d"]
 [ext_resource type="Theme" uid="uid://dgrqrtlgktrk5" path="res://assets/themes/main_auth_system_ui.tres" id="5_60g0b"]
+[ext_resource type="Texture2D" uid="uid://bex1hitrxwdcf" path="res://assets/textures/icons/google_icons/visibility_off_24dp.png" id="6_60g0b"]
 [ext_resource type="Texture2D" uid="uid://pkr5l1nqxwxs" path="res://assets/textures/icons/auth_system_ui_icons/next_btn.png" id="7_8wg3i"]
+[ext_resource type="Script" uid="uid://bwd7hjmqfy8ln" path="res://scripts/UserInterface/InternalComponent/password_field.gd" id="7_mpfq1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60g0b"]
 bg_color = Color(0.215686, 0.215686, 0.215686, 1)
@@ -164,6 +166,24 @@ theme = ExtResource("5_60g0b")
 placeholder_text = "password"
 alignment = 1
 secret = true
+script = ExtResource("7_mpfq1")
+
+[node name="PasswordVisibility" type="Button" parent="RegisterControl/BG/MainFramePanel/PasswordLineEdit"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -26.0
+offset_top = -12.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+icon = ExtResource("6_60g0b")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
 [node name="ConfirmPasswordLineEdit" type="LineEdit" parent="RegisterControl/BG/MainFramePanel"]
 layout_mode = 1
@@ -182,6 +202,24 @@ theme = ExtResource("5_60g0b")
 placeholder_text = "confirm_password"
 alignment = 1
 secret = true
+script = ExtResource("7_mpfq1")
+
+[node name="PasswordVisibility" type="Button" parent="RegisterControl/BG/MainFramePanel/ConfirmPasswordLineEdit"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -26.0
+offset_top = -12.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+icon = ExtResource("6_60g0b")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
 [node name="HeadPanel" type="Panel" parent="RegisterControl/BG"]
 layout_mode = 0
@@ -333,6 +371,24 @@ theme = ExtResource("5_60g0b")
 placeholder_text = "password"
 alignment = 1
 secret = true
+script = ExtResource("7_mpfq1")
+
+[node name="PasswordVisibility" type="Button" parent="LoginControl/BG/MainFramePanel/PasswordLineEdit"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -26.0
+offset_top = -12.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+icon = ExtResource("6_60g0b")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
 [node name="HeadPanel" type="Panel" parent="LoginControl/BG"]
 layout_mode = 0
