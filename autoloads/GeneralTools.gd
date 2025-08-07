@@ -285,7 +285,7 @@ func request_server_code(email: String) -> Dictionary:
 	var generic_error := {"error": "Verify email and try again later"}
 
 	var email_validation: bool = GlobalValidations.validate_email(email)
-	if !email_validation: return {}
+	if !email_validation: return generic_error
 
 	var payload = {"email": email}
 
@@ -333,9 +333,9 @@ func request_password_reset(token: String, password: String, confirm_password: S
 	
 	# Returns error if passwords are different
 	if (
-		(password_validation and c_password_validation) 
+		!(password_validation and c_password_validation)
 		and 
-		(password == confirm_password)
+		!(password == confirm_password)
 	):
 		return { "error": "Verify passwords and try again" }
 
@@ -380,6 +380,7 @@ func simple_request(
 
 	if custom_headers == []:
 		headers = [
+			"Content-Type: application/json",
 			"Accpet: application/json"
 		]
 	else:

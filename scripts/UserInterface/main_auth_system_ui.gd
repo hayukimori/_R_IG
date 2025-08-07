@@ -19,6 +19,7 @@ enum AuthActions { REGISTER = 0, LOGIN = 1 }
 @onready var register_btn: Button = $RegisterControl/BG/HeadPanel2/RegisterBtn
 @onready var login_btn: Button = $LoginControl/BG/HeadPanel2/LoginBtn
 @onready var change_auth_method_btn: Button = $ChangeAuthMethod
+@onready var forgot_password_btn: Button = $ForgotPasswordButton
 
 @onready var foreground_panel: Panel = $ForegroundPanel
 
@@ -28,6 +29,9 @@ var login_url: String
 var current_auth_method: AuthActions
 var errors: Array = []
 
+# Default Texts 
+const FORGOT_PASSWORD_TEXT: String = "Forgot password?"
+
 
 func _ready() -> void:
 	# Check for host settings
@@ -36,6 +40,9 @@ func _ready() -> void:
 	
 	# Set initial auth method
 	define_current_auth_method(default_method)
+	
+	# Set default "Forgot password" text
+	forgot_password_btn.text = FORGOT_PASSWORD_TEXT
 
 	CurrentUserSession.auto_login_status.connect(Callable(self, "_on_login_status_updated"))
 	CurrentUserSession.session_data_changed.connect(Callable(self, "_on_session_data_changed"))
@@ -130,7 +137,7 @@ func disable_register_fields() -> void:
 
 	register_btn.disabled = true
 	change_auth_method_btn.disabled = true
-	
+	forgot_password_btn.disabled = true
 
 func disable_login_fields() -> void:
 	login_email_line_edit.editable = false
@@ -138,6 +145,7 @@ func disable_login_fields() -> void:
 
 	login_btn.disabled = true
 	change_auth_method_btn.disabled = true
+	forgot_password_btn.disabled = true
 	
 
 func enable_register_fields() -> void:
@@ -148,6 +156,7 @@ func enable_register_fields() -> void:
 
 	register_btn.disabled = false
 	change_auth_method_btn.disabled = false
+	forgot_password_btn.disabled = false
 	
 
 func enable_login_fields() -> void:
@@ -156,6 +165,7 @@ func enable_login_fields() -> void:
 
 	login_btn.disabled = false
 	change_auth_method_btn.disabled = false
+	forgot_password_btn.disabled = false
 	
 
 func _on_change_auth_method_pressed() -> void:
@@ -254,8 +264,17 @@ func handleAuth(action: AuthActions, content: Array) -> void:
 func change_to_main() -> void:
 	# Change to main scene
 	if AppConfig.DEBUG_MODE: print("Changing to main scene...")
+	await get_tree().process_frame
 	get_tree().change_scene_to_packed(SceneRouter.get_main_scene())
 	queue_free()
+
+
+func change_to_fpassword() -> void:
+	if AppConfig.DEBUG_MODE: print("Changing to Forgot Password")
+	await get_tree().process_frame
+	get_tree().change_scene_to_packed(SceneRouter.get_password_reset_scene())
+	queue_free()
+
 
 
 func _process(_delta: float) -> void:
@@ -293,3 +312,6 @@ func _on_session_data_changed(data: Dictionary) -> void:
 		return
 	
 	change_to_main()
+
+func _on_forgot_password_button_pressed() -> void:
+	change_to_fpassword()

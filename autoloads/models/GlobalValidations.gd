@@ -58,8 +58,9 @@ func validate_url(url: String) -> bool:
     var validation = is_valid_string(
         url, 
         true, 1, 255, 
-        r"^https?:\/\/(www\.)?[a-zA-Z0-9\-._~%]+(\.[a-zA-Z]{2,})(:[0-9]{1,5})?(\/[^\s]*)?$")
-
+        #r"^https?:\/\/(www\.)?[a-zA-Z0-9\-._~%]+(\.[a-zA-Z]{2,})(:[0-9]{1,5})?(\/[^\s]*)?$")
+        r"^https?:\/\/(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])\.)*[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9](:\d{1,5})?(\/.*)?$|^https?:\/\/localhost(:\d{1,5})?(\/.*)?$"
+    )
     return validation
 
 
