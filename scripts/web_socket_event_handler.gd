@@ -65,8 +65,15 @@ func _handle_server_shutdown(event: Announcements.EventModel) -> void:
 	var final_actions: Array[PayloadAction] = []
 
 	if event.payload == {}:
-		new_screen_flag("TODO: Change this to actual content")
-		return 
+		# Creates a new event containing only message.
+		var temp_action_json := {
+			"type":"text",
+			"message": event.get("message")
+		}
+
+		var temp_action := PayloadAction.from_dict(temp_action_json)
+		exec_action(temp_action)
+		return
 	
 	var payload_actions = event.payload.get("actions", [])
 	if payload_actions.is_empty(): return
