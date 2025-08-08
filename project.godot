@@ -26,8 +26,9 @@ CurrentUserSession="*res://autoloads/CurrentUserSession.gd"
 SceneRouter="*res://autoloads/SceneRouter.gd"
 GeneralTools="*res://autoloads/GeneralTools.gd"
 GlobalCluster="*res://autoloads/GlobalCluster.gd"
-Announcements="*res://autoloads/Announcements.gd"
+RigSoundLib="*res://autoloads/RIGSoundLib.gd"
 SceneHandler="*res://autoloads/SceneHandler.gd"
+Announcements="*res://autoloads/Announcements.gd"
 
 [display]
 

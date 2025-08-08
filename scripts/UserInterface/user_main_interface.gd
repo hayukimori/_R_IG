@@ -6,6 +6,7 @@ extends Control
 @onready var profile_picture_trd: TextureRectRounded = $TopBarControl/MainPanel/RightSide/ProfileButton/ProfilePicture
 @onready var username_label: Label = $TopBarControl/MainPanel/RightSide/ProfileButton/UsernameLabel
 @onready var datetime_label: Label = $TopBarControl/MainPanel/Center/DateTimeLabel
+@onready var top_announcements: Control = $TopAnnouncement
 
 # Profile preview
 @onready var profile_preview: Control = $ProfilePreview
@@ -20,6 +21,7 @@ extends Control
 @onready var roles_panel: Panel = $ProfilePreview/RolesPanel
 @onready var roles_container: VBoxContainer = $ProfilePreview/RolesPanel/ScrollContainer/VBoxContainer
 
+var announcement_rtext: PackedScene = preload("res://screens/components/announcement_richtext.tscn")
 var role_component: PackedScene = preload("res://screens/components/role_component.tscn")
 var preview_open: bool = false
 var default_datetime_format: String = "%02d/%02d/%04d - %02d:%02d:%02d"
@@ -144,7 +146,13 @@ func loadRoles() -> void:
 	
 	for lrs in local_roles_scenes:
 		roles_container.add_child(lrs)
-		
+
+
+func add_top_announcement(action: PayloadAction) -> void:
+	var ann_obj = announcement_rtext.instantiate()
+	ann_obj.action = action
+
+	top_announcements.add_child(ann_obj)
 
 func _process(_delta: float) -> void:
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://de8beyoq8ki7u"]
+[gd_scene load_steps=11 format=3 uid="uid://de8beyoq8ki7u"]
 
 [ext_resource type="Script" uid="uid://dde25ltj4ho43" path="res://scripts/main_scene.gd" id="1_4tr61"]
 [ext_resource type="PackedScene" uid="uid://bnmbbvw7s6jsy" path="res://screens/development_ui.tscn" id="1_tv7g3"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://p7dnwllk8kn3" path="res://scenes/3D/components/user_cube.tscn" id="3_kb4e5"]
 [ext_resource type="Script" uid="uid://cpcsr6ensolvq" path="res://addons/godot-free-look-camera-132062011edfce9399a489756064cfea880dad4c/free_look_camera.gd" id="5_m7mqk"]
 [ext_resource type="Script" uid="uid://qj4p3pnjsgbi" path="res://scripts/follows_handler.gd" id="7_b6edr"]
+[ext_resource type="Script" uid="uid://xe4nqs3nun4d" path="res://scripts/web_socket_event_handler.gd" id="8_g76d7"]
 
 [sub_resource type="Environment" id="Environment_jt87a"]
 background_mode = 1
@@ -45,12 +46,21 @@ wait_time = 5.0
 [node name="FollowsHandler" type="Node" parent="."]
 script = ExtResource("7_b6edr")
 
+[node name="WebSocketEventHandler" type="Node" parent="." node_paths=PackedStringArray("user_interface")]
+script = ExtResource("8_g76d7")
+user_interface = NodePath("../UserMainInterface")
+player_path = NodePath("../AnnouncementsStreamPlayer")
+
 [node name="CubesCluster" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.8059, -0.313607, 0.502172, 0, 0.848189, 0.529695, -0.592053, -0.426881, 0.683555, 161.995, 165.493, 184.89)
 current = true
 script = ExtResource("5_m7mqk")
+
+[node name="AnnouncementsStreamPlayer" type="AudioStreamPlayer3D" parent="."]
+volume_db = 5.255
+unit_size = 47.35
 
 [connection signal="cube_added_to_cluseter" from="CubesHandler" to="UIManager" method="_on_cubes_handler_cube_added_to_cluseter"]
 [connection signal="timeout" from="CubesHandler/Timer" to="CubesHandler" method="_on_timer_timeout"]

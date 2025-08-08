@@ -1,5 +1,7 @@
 extends Node
 
+signal server_event_received(raw_content: String)
+
 const CONNECTION_KEEPER_INTERVAL = 5.0
 var URL :String
 
@@ -7,6 +9,11 @@ var ws: WebSocketPeer = null
 var ws_connected: bool = false
 var is_connecting: bool = false
 
+class EventModel:
+	var type: String
+	var message: String
+	var payload: Dictionary
+	var timestamp: String
 
 func _ready() -> void:
 	URL = Routes.get_ws_url()
@@ -38,6 +45,7 @@ func _process(_delta: float) -> void:
 			while ws.get_available_packet_count():
 				var packet = ws.get_packet()
 				if AppConfig.DEBUG_MODE: print("[WEBSOCKET] Received package: ", packet.get_string_from_utf8())
+				server_event_received.emit(packet.get_string_from_utf8())
 
 		WebSocketPeer.STATE_CLOSING:
 			pass
@@ -48,14 +56,13 @@ func _process(_delta: float) -> void:
 				if AppConfig.DEBUG_MODE: print("[WEBSOCKET] Websocket failed to connect")
 				ws_connected = false
 				is_connecting = false
-				# Definimos ws como nulo para que o _manage_ws_connection saiba que precisa criar um novo
 				ws = null
 
 
 # Try to connect
 func _manage_ws_connection() -> void:
 	if not ws_connected and not is_connecting:
-		if AppConfig.DEBUG_MODE: print("Trying a new websocket connection")
+		if AppConfig.DEBUG_MODE: print("[WEBSOCKET] Trying a new websocket connection")
 		_connect_to_ws()
 
 func _connect_to_ws() -> void:
