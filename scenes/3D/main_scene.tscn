@@ -63,6 +63,7 @@ unit_size = 173.5
 bus = &"ReverBus"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -3.3
 pitch_scale = 2.0
 bus = &"ReverBus"
 playback_type = 1
