@@ -3,11 +3,15 @@
 [ext_resource type="Script" uid="uid://o5r5o0w41as5" path="res://scripts/UserInterface/InternalComponent/announcement_richtext.gd" id="1_4nqjf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4vxgo"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
 bg_color = Color(0.6, 0.0196078, 0.14902, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="RText" type="RichTextLabel"]
 anchors_preset = 15
@@ -16,6 +20,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_4vxgo")
+bbcode_enabled = true
 text = "--Announcement Text--"
 autowrap_mode = 2
 horizontal_alignment = 1

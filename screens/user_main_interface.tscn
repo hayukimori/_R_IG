@@ -115,8 +115,8 @@ script = ExtResource("1_156ji")
 anchors_preset = 0
 offset_left = 69.0
 offset_top = 85.0
-offset_right = 1093.0
-offset_bottom = 175.0
+offset_right = 330.0
+offset_bottom = 324.0
 
 [node name="TopBarControl" type="Control" parent="."]
 layout_mode = 1

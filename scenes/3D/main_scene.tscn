@@ -49,7 +49,7 @@ script = ExtResource("7_b6edr")
 [node name="WebSocketEventHandler" type="Node" parent="." node_paths=PackedStringArray("user_interface")]
 script = ExtResource("8_g76d7")
 user_interface = NodePath("../UserMainInterface")
-player_path = NodePath("../AnnouncementsStreamPlayer")
+player_path = NodePath("../AudioStreamPlayer")
 
 [node name="CubesCluster" type="Node3D" parent="."]
 
@@ -59,8 +59,13 @@ current = true
 script = ExtResource("5_m7mqk")
 
 [node name="AnnouncementsStreamPlayer" type="AudioStreamPlayer3D" parent="."]
-volume_db = 5.255
-unit_size = 47.35
+unit_size = 173.5
+bus = &"ReverBus"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+pitch_scale = 2.0
+bus = &"ReverBus"
+playback_type = 1
 
 [connection signal="cube_added_to_cluseter" from="CubesHandler" to="UIManager" method="_on_cubes_handler_cube_added_to_cluseter"]
 [connection signal="timeout" from="CubesHandler/Timer" to="CubesHandler" method="_on_timer_timeout"]

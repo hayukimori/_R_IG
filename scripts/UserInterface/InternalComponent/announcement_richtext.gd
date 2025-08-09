@@ -13,16 +13,18 @@ func _ready() -> void:
 	# Announcement Timer
 	var announce_timer := Timer.new()
 	announce_timer.wait_time = action.time
-	announce_timer.start()
 	announce_timer.autostart = true
 	announce_timer.one_shot = false
-	announce_timer.timeout.connect(_close_announcement)
 	add_child(announce_timer)
-
-	var stylebox = self.get_theme_stylebox("panel").duplicate()
+	
+	announce_timer.start()
+	announce_timer.timeout.connect(_close_announcement)
+	
+	print_debug(action.bg_color)
+	var stylebox = get_theme_stylebox("normal").duplicate()
 	if stylebox is StyleBoxFlat:
 		stylebox.bg_color = action.bg_color
-		self.add_theme_stylebox_override("panel", stylebox)
+		self.add_theme_stylebox_override("normal", stylebox)
 
 func _close_announcement() -> void:
 	queue_free()

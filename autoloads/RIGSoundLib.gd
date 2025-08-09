@@ -1,7 +1,8 @@
 extends Node
 
 var sound_library := {
-    
+    "alert0": preload("res://assets/audio/s1.wav"),
+    "alert1": preload("res://assets/audio/alert1.wav")
 }
 
 func get_sound_by_name(sound_name: String) -> AudioStream:
@@ -10,4 +11,5 @@ func get_sound_by_name(sound_name: String) -> AudioStream:
         push_error("[SoundLib] Request sound %s does not exists in library" % sound_name)
         return null
 
-    return sound_library.get(sound_library.get(sound_name))
+    var sound = sound_library.get(sound_name)
+    return sound
