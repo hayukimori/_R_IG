@@ -15,6 +15,7 @@ run/main_scene="uid://bjofi1c2jdw8p"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 config/api_host="http://localhost:3000"
+config/ws_host="ws://localhost:8080"
 
 [autoload]
 
@@ -25,7 +26,9 @@ CurrentUserSession="*res://autoloads/CurrentUserSession.gd"
 SceneRouter="*res://autoloads/SceneRouter.gd"
 GeneralTools="*res://autoloads/GeneralTools.gd"
 GlobalCluster="*res://autoloads/GlobalCluster.gd"
+RigSoundLib="*res://autoloads/RIGSoundLib.gd"
 SceneHandler="*res://autoloads/SceneHandler.gd"
+Announcements="*res://autoloads/Announcements.gd"
 
 [display]
 

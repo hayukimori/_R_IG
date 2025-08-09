@@ -111,6 +111,13 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_156ji")
 
+[node name="TopAnnouncement" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 69.0
+offset_top = 85.0
+offset_right = 330.0
+offset_bottom = 324.0
+
 [node name="TopBarControl" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 10
