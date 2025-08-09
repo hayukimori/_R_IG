@@ -75,6 +75,8 @@ func _fetch_bulk_follows_page():
 		payload["lastId"] = last_id_for_bulk_load
 
 	var result: Dictionary = await GeneralTools.protected_request(world_follows_endpoint, payload, HTTPClient.METHOD_POST)
+	if result.get("response_code") == 401:
+		SceneHandler.logout()
 
 	if result.has("result_array") and result["is_json"]:
 		var follows = result["result_array"]
@@ -108,6 +110,8 @@ func _perform_delta_sync():
 # World updates
 func _fetch_world_updates(since_time: String):
 	var result = await GeneralTools.protected_request(world_updates_endpoint, {"since": since_time}, HTTPClient.METHOD_POST)
+	if result.get("response_code") == 401:SceneHandler.logout()
+
 	if result.has("result_array") and result["is_json"]:
 		var updates = result.get('result_array')
 		if updates is Array and not updates.is_empty():
@@ -118,6 +122,8 @@ func _fetch_world_updates(since_time: String):
 # World Unfollows
 func _fetch_world_unfollows(since_time: String):
 	var result = await GeneralTools.protected_request(world_unfollows_endpoint, {"since": since_time}, HTTPClient.METHOD_POST)
+	if result.get("response_code") == 401:SceneHandler.logout()
+	
 	if result.has("result_array") and result["is_json"]:
 		var unfollows = result.get('result_array')
 		if unfollows is Array and not unfollows.is_empty():

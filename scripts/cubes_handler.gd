@@ -120,6 +120,9 @@ func request_cubes(get_new: bool = false, last_id: String = "") -> Array:
 		match response_code:
 			200, 201: pass
 			400: push_error("400 Error")
+			401: 
+				push_error("Authorization error, logging out.")
+				SceneHandler.logout()
 			500: push_error("Server error")
 		
 		

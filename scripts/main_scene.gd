@@ -13,7 +13,7 @@ func _ready() -> void:
 
 	# Online System
 	var timer := Timer.new()
-	timer.wait_time = 20
+	timer.wait_time = 10
 	timer.one_shot = false
 
 	timer.timeout.connect(_on_ping_timeout)
@@ -29,7 +29,8 @@ func _on_ping_timeout() -> void:
 	var url = Routes.get_route(Routes.ENDPOINT_PING)
 
 	# Sends a ping to API, server will save for 60s
-	GeneralTools.protected_request(url, json, HTTPClient.METHOD_PATCH)
+	var result = await GeneralTools.protected_request(url, json, HTTPClient.METHOD_PATCH)
+	if result.get("response_code") == 401: SceneHandler.logout()
 
 
 func _process(delta: float) -> void:
