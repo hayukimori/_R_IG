@@ -1,6 +1,7 @@
 extends Node
 
 var current_scenes: Array = []
+var profile_loaded: bool = false
 var login_scene: PackedScene = preload("res://screens/main_auth_system_ui.tscn")
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://3h8evek0d8yi"]
+[gd_scene load_steps=35 format=3 uid="uid://3h8evek0d8yi"]
 
 [ext_resource type="Script" uid="uid://nljuq63jlygb" path="res://scripts/components/prototype/user_profile_prototype.gd" id="1_4o36r"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="1_u4e2g"]
@@ -90,9 +90,6 @@ corner_detail = 20
 [sub_resource type="LabelSettings" id="LabelSettings_u4e2g"]
 font_size = 10
 font_color = Color(1, 1, 1, 0.141176)
-
-[sub_resource type="LabelSettings" id="LabelSettings_mc22h"]
-font_size = 10
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m2okr"]
 
@@ -316,19 +313,12 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -174.0
-offset_top = -75.0
+offset_top = -68.0
 offset_right = 172.0
-offset_bottom = -35.0
+offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
-
-[node name="EmptyLabel" type="Label" parent="BgPanel/ProfileBadgesHBoxContainer"]
-layout_mode = 2
-text = "BGIDTEMP"
-label_settings = SubResource("LabelSettings_mc22h")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="BioTextEdit" type="TextEdit" parent="BgPanel"]
 layout_mode = 0
@@ -375,17 +365,14 @@ edit_alpha = false
 
 [node name="FollowSystemHBoxContainer" type="HBoxContainer" parent="BgPanel"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 103.5
-offset_top = -309.0
-offset_right = 257.5
-offset_bottom = -286.0
-grow_horizontal = 2
-grow_vertical = 0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -173.0
+offset_top = 17.0
+offset_right = -19.0
+offset_bottom = 40.0
+grow_horizontal = 0
 alignment = 2
 
 [node name="FollowersStaticButton" type="Button" parent="BgPanel/FollowSystemHBoxContainer"]

@@ -12,7 +12,7 @@ class UserProfile:
 	var followersCount: int
 	var followingCount: int
 	var isFollowing: bool
-	var badgeIds: Array
+	var badges: Array
 	var links: Array
 
 	func initializeData(data: Dictionary) -> void:
@@ -25,7 +25,7 @@ class UserProfile:
 		self.followersCount = data.get('followersCount', 0)
 		self.followingCount = data.get('followingCount', 0)
 		self.isFollowing = data.get('isFollowing', false)
-		self.badgeIds = data.get('badgeIds', [])
+		self.badges = data.get('badges', [])
 		self.links = data.get('links', [])
 
 	func get_fields_as_dict(ignore_follow_system := true, ignore_badges := true) -> Dictionary:
@@ -48,7 +48,7 @@ class UserProfile:
 		
 		if not ignore_badges:
 			data.merge({
-				"badgeIds": self.badgeIds
+				"badges": self.badges
 			})
 
 		return data
@@ -362,6 +362,51 @@ func request_password_reset(token: String, password: String, confirm_password: S
 
 	return result.get("parsed_json")
 
+func get_image_from_url(url: String) -> ImageTexture:
+	var http_request := HTTPRequest.new()
+	add_child(http_request)
+	
+	if not GeneralTools.Validations.new().validate_url(url):
+		push_error("Invalid URL: %s" % url)
+		return ImageTexture.new()
+
+	var error = http_request.request(url, [], HTTPClient.METHOD_GET)
+	if error != OK:
+		push_error("Failed to make request.")
+		return ImageTexture.new()
+
+	var result = await http_request.request_completed
+
+	var result_code = result[0]
+	var _response_code = result[1]
+	var _headers = result[2]
+	var body = result[3]
+
+	if result_code != HTTPRequest.RESULT_SUCCESS:
+		push_error("Image couldn't be downloaded. Result: %d" % result_code)
+		return ImageTexture.new()
+	
+	var image = Image.new()
+	var format = GeneralTools.Validations.new().validate_image_format(body)
+	var err = OK
+
+	match format:
+		"png":
+			err = image.load_png_from_buffer(body)
+		"jpg", "jpeg":
+			err = image.load_jpg_from_buffer(body)
+		"webp":
+			err = image.load_webp_from_buffer(body)
+		_:
+			push_error("Unsupported image format: %s" % format)
+			err = image.load(default_profile_picture)
+
+	if err != OK:
+		push_error("Couldn't load image. Error code: %d" % err)
+		return ImageTexture.new()
+	else:
+		var texture = ImageTexture.create_from_image(image)
+		return texture
 
 func simple_request(
 	url: String, payload: Dictionary = {}, 

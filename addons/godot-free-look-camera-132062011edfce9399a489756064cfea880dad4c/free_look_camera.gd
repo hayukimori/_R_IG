@@ -3,7 +3,7 @@
 extends Camera3D
 
 @export_range(0, 10, 0.01) var sensitivity : float = 3
-@export_range(0, 1000, 0.1) var default_velocity : float = 5
+@export_range(0, 1000, 0.1) var default_velocity : float = 40
 @export_range(0, 10, 0.01) var speed_scale : float = 1.17
 @export_range(1, 100, 0.1) var boost_speed_multiplier : float = 3.0
 @export var max_speed : float = 1000
@@ -31,6 +31,7 @@ func _input(event):
 		match event.button_index:
 			MOUSE_BUTTON_LEFT: # Raycast Mod
 				if event.pressed:
+					if SceneHandler.profile_loaded: return
 					var mouse_pos = get_viewport().get_mouse_position()
 					var from = project_ray_origin(mouse_pos)
 					var to = from + project_ray_normal(mouse_pos) * ray_length
@@ -47,6 +48,7 @@ func _input(event):
 						cube.on_clicked()
 
 			MOUSE_BUTTON_RIGHT:
+				if SceneHandler.profile_loaded: return
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if event.pressed else Input.MOUSE_MODE_VISIBLE)
 			MOUSE_BUTTON_WHEEL_UP: # increase fly velocity
 				_velocity = clamp(_velocity * speed_scale, min_speed, max_speed)
@@ -57,12 +59,14 @@ func _process(delta):
 	if not current:
 		return
 		
+	if SceneHandler.profile_loaded: return
+	
 	var direction = Vector3(
 		float(Input.is_physical_key_pressed(KEY_D)) - float(Input.is_physical_key_pressed(KEY_A)),
 		float(Input.is_physical_key_pressed(KEY_E)) - float(Input.is_physical_key_pressed(KEY_Q)), 
 		float(Input.is_physical_key_pressed(KEY_S)) - float(Input.is_physical_key_pressed(KEY_W))
 	).normalized()
-	
+
 	if Input.is_physical_key_pressed(KEY_SHIFT): # boost
 		translate(direction * _velocity * delta * boost_speed_multiplier)
 	else:
