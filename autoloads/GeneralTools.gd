@@ -12,7 +12,7 @@ class UserProfile:
 	var followersCount: int
 	var followingCount: int
 	var isFollowing: bool
-	var badgeIds: Array
+	var badges: Array
 	var links: Array
 
 	func initializeData(data: Dictionary) -> void:
@@ -25,7 +25,7 @@ class UserProfile:
 		self.followersCount = data.get('followersCount', 0)
 		self.followingCount = data.get('followingCount', 0)
 		self.isFollowing = data.get('isFollowing', false)
-		self.badgeIds = data.get('badgeIds', [])
+		self.badges = data.get('badges', [])
 		self.links = data.get('links', [])
 
 	func get_fields_as_dict(ignore_follow_system := true, ignore_badges := true) -> Dictionary:
@@ -48,7 +48,7 @@ class UserProfile:
 		
 		if not ignore_badges:
 			data.merge({
-				"badgeIds": self.badgeIds
+				"badges": self.badges
 			})
 
 		return data

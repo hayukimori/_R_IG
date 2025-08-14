@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctlimsf2lpgnl"]
+
+[ext_resource type="Script" uid="uid://3oifwv8yvxpv" path="res://scripts/UserInterface/InternalComponent/badge_button.gd" id="1_q16ig"]
+
+[node name="BadgeButton" type="Button"]
+theme_override_constants/icon_max_width = 24
+flat = true
+script = ExtResource("1_q16ig")

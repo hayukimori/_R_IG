@@ -21,12 +21,15 @@ signal profile_loaded(profile_data: GeneralTools.UserProfile)
 @onready var profileDoneButton: Button = $ProfileDoneButton
 @onready var char_count_label: Label = $BgPanel/CharCountLabel
 @onready var profile_color_button: ColorPickerButton = $BgPanel/ProfileColorButton
+@onready var badge_hbox_container: HBoxContainer = $BgPanel/ProfileBadgesHBoxContainer
 
 @onready var followers_static_button: Button = $BgPanel/FollowSystemHBoxContainer/FollowersStaticButton
 @onready var following_static_button: Button = $BgPanel/FollowSystemHBoxContainer/FollowingStaticButton
 
 @onready var loading_panel: Panel = $LoadingPanel
 @onready var file_dialog: FileDialog = $Files/FileDialog
+
+var badge_button_scene: PackedScene = preload("res://screens/components/badge_button.tscn")
 
 var current_pfp_path: String = ""
 var pfp_replaced: bool = false
@@ -84,8 +87,7 @@ func loadProfile() -> void:
 	loading_panel.show()
 
 	var data = await GeneralTools.requestProfile(profile_id)
-	if data.has("error"):
-		push_error("error at loadProfile(): ", data.get('error'))
+	if data.has("error"): push_error("error at loadProfile(): ", data.get('error'))
 
 	var	profileData: GeneralTools.UserProfile = GeneralTools.UserProfile.new()
 	profileData.initializeData(data)
@@ -93,9 +95,24 @@ func loadProfile() -> void:
 	updateUI(profileData)
 	loading_panel.hide()
 
+	# BadgeLoader
+	load_badges(profileData)
+
 	# Emits a profile_loaded signal
 	profile_loaded.emit(profileData)
 
+
+func load_badges(profile: GeneralTools.UserProfile) -> void:
+	if profile.badges.size() == 0: return
+
+	for badge_relation in profile.badges:
+		var raw_badge = badge_relation.get("badge")
+		var scene: BadgeButton = badge_button_scene.instantiate()
+		
+		scene.badge_name = raw_badge.get("name", "")
+		scene.badge_description = raw_badge.get("description", "")
+		scene.badge_icon_url = raw_badge.get("iconUrl", "")
+		badge_hbox_container.add_child(scene)
 
 #region UI Functions
 func updateUI(profile_data: GeneralTools.UserProfile) -> void:
@@ -250,7 +267,7 @@ func _on_profile_done_button_pressed() -> void:
 		"bannerColor": current_color,
 		"followersCount": original_data.followersCount,
 		"followingCount": original_data.followingCount,
-		"badgeIds": [],
+		"badges": original_data.badges,
 		"links": []
 	}
 
