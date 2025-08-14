@@ -16,9 +16,11 @@ func _on_cube_profile_requested(user_id: String) -> void:
 	if current_profile:
 		current_profile.queue_free()
 
-	current_profile = profile_instance	
+	current_profile = profile_instance
 	add_child(profile_instance)
 
+func _process(_delta: float) -> void:
+	SceneHandler.profile_loaded = (current_profile != null)
 
 func _on_cubes_handler_cube_added_to_cluseter(cube: UserCube) -> void:
 	cube.profile_requested.connect(_on_cube_profile_requested)
