@@ -313,9 +313,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -174.0
-offset_top = -75.0
+offset_top = -68.0
 offset_right = 172.0
-offset_bottom = -35.0
+offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
@@ -365,17 +365,14 @@ edit_alpha = false
 
 [node name="FollowSystemHBoxContainer" type="HBoxContainer" parent="BgPanel"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 103.5
-offset_top = -309.0
-offset_right = 257.5
-offset_bottom = -286.0
-grow_horizontal = 2
-grow_vertical = 0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -173.0
+offset_top = 17.0
+offset_right = -19.0
+offset_bottom = 40.0
+grow_horizontal = 0
 alignment = 2
 
 [node name="FollowersStaticButton" type="Button" parent="BgPanel/FollowSystemHBoxContainer"]

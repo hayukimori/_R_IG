@@ -1,8 +1,70 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctlimsf2lpgnl"]
+[gd_scene load_steps=6 format=3 uid="uid://ctlimsf2lpgnl"]
 
 [ext_resource type="Script" uid="uid://3oifwv8yvxpv" path="res://scripts/UserInterface/InternalComponent/badge_button.gd" id="1_q16ig"]
+[ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="2_vsq6p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oij1h"]
+bg_color = Color(0.180392, 0.180392, 0.180392, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+shadow_color = Color(0, 0, 0, 0.278431)
+shadow_size = 2
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0h01q"]
+font = ExtResource("2_vsq6p")
+font_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vsq6p"]
+bg_color = Color(0.180392, 0.180392, 0.180392, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
 
 [node name="BadgeButton" type="Button"]
 theme_override_constants/icon_max_width = 24
+disabled = true
 flat = true
 script = ExtResource("1_q16ig")
+
+[node name="DescriptionLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -105.0
+offset_top = -30.0
+offset_right = 105.0
+offset_bottom = -7.0
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_oij1h")
+label_settings = SubResource("LabelSettings_0h01q")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Panel" type="Panel" parent="DescriptionLabel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = 7.0
+offset_right = 4.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_vsq6p")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

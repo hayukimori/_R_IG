@@ -1,6 +1,8 @@
 extends Button
 class_name BadgeButton
 
+@onready var description_label: Label = $DescriptionLabel
+
 @export var badge_name: String
 @export var badge_icon_url: String
 @export var badge_description: String
@@ -22,6 +24,15 @@ func _ready() -> void:
 	if icons_preloads.has(badge_name):
 		self.icon = icons_preloads.get(badge_name)
 	else:
-		# TODO: Load image from badge_icon_url
-		pass
+		self.icon = await GeneralTools.get_image_from_url(badge_icon_url)
+	
+	description_label.text = badge_description
 
+
+
+func _on_mouse_exited() -> void:
+	description_label.hide()
+
+func _on_mouse_entered() -> void:
+	description_label.show()
+	
