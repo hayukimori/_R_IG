@@ -80,7 +80,7 @@ func _fetch_bulk_follows_page():
 
 	var result: Dictionary = await Services.api.auth_fetch(
 		world_follows_route.url(),
-		world_follows_route.method, 
+		world_follows_route.method,
 		payload, 
 		["Content-Type: application/json"]
 	)

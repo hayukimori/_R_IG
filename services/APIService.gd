@@ -8,20 +8,26 @@ func _init(node: Node) -> void:
 
 ## Requests user profile data
 func request_profile(profile_id: String) -> Dictionary:
-	var url = Services.routes.get_route(Services.routes.ENDPOINT_GET_PROFILE % profile_id)
-	var base_result = await auth_req_get(url)
+	var route: Route = Services.routes.ROUTE_PROFILE
+	var url = route.url({"identifier": profile_id})
+
+	var base_result = await auth_fetch(url, route.method)
 	return base_result.get("parsed_json", {})
 
 ## Requests a PUT request to update profile picture
 func send_profile_data(targetId: String, data: Dictionary) -> void:
-	var url: String = Services.routes.get_route(Services.routes.ENDPOINT_SEND_PROFILE)
+	var route: Route = Services.routes.ROUTE_SEND_PROFILE
+	var url = route.url()
+
 	var payload = {"targetId": targetId, "fields": data}
-	await auth_req_put(url, payload)
+	await auth_fetch(url, route.method, payload)
 
 ## Gets server current time.
 func get_server_time() -> String:
-	var datereg = await auth_req_get(Services.routes.get_route(Services.routes.ENDPOINT_STIME))
+	var route = Services.routes.ROUTE_SERVER_TIME
+	var url = route.url()
 
+	var datereg = await auth_fetch(url, route.method)
 	if datereg["parsed_json"].get('now', '') != "" and datereg["response_code"] == 200:
 		return datereg["parsed_json"].get('now', '')
 
@@ -29,8 +35,10 @@ func get_server_time() -> String:
 
 ## Get's user roles and permissions
 func get_privileges() -> Dictionary:
-	var url = Services.routes.get_route(Services.routes.ENDPOINT_ME)
-	var content = await auth_req_get(url)
+	var route = Services.routes.ROUTE_ME
+	var url = route.url()
+
+	var content = await auth_fetch(url, route.method)
 	return content.get('parsed_json', {})
 
 
@@ -150,7 +158,9 @@ func simple_request(
 
 # Requests a auth code to server
 func request_server_code(email: String) -> Dictionary:
-	var url: String = Services.routes.get_route(Services.routes.ENDPOINT_FORGOT_PASSWD)
+	var route: Route = Services.routes.ROUTE_FORGOT_PASSWORD
+	var url = route.url()
+
 	var generic_error := {"error": "Verify email and try again later"}
 
 	var email_validation: bool = ValidationRules.validate_email(email)
@@ -159,7 +169,7 @@ func request_server_code(email: String) -> Dictionary:
 	var payload = {"email": email}
 
 	# Request
-	var result = await simple_request(url, payload, HTTPClient.METHOD_POST)
+	var result = await simple_request(url, payload, route.method)
 
 	# Verifications
 	if result == {}: return generic_error
@@ -169,7 +179,8 @@ func request_server_code(email: String) -> Dictionary:
 
 # Confirmates the code with the server
 func request_verify_code(email: String, code: String) -> Dictionary:
-	var url := Services.routes.get_route(Services.routes.ENDPOINT_VERIFY_CODE)
+	var route: Route = Services.routes.ROUTE_VERIFY_CODE
+	var url := route.url()
 	var generic_error := {"error": "Verify email or code and try again."}
 
 	# Validates email and six-digit code.
@@ -181,7 +192,7 @@ func request_verify_code(email: String, code: String) -> Dictionary:
 	
 	# Makes request to server using code and email
 	var payload = { "email": email, "code": code }
-	var result = await simple_request(url, payload, HTTPClient.METHOD_POST)
+	var result = await simple_request(url, payload, route.method)
 	
 	# Retuns generic error if it has some error
 	if result == {}: return generic_error
@@ -193,7 +204,8 @@ func request_verify_code(email: String, code: String) -> Dictionary:
 
 # Requests a password reset
 func request_password_reset(token: String, password: String, confirm_password: String) -> Dictionary:
-	var url := Services.routes.get_route(Services.routes.ENDPOINT_RESET_PASSWD)
+	var route := Services.routes.ROUTE_RESET_PASSWORD
+	var url := route.url()
 	var error_ret := {"error": "Could not complete request"}
 
 	# Validates password and confirm_password
@@ -219,7 +231,7 @@ func request_password_reset(token: String, password: String, confirm_password: S
 		"password": password,
 		"confirm_password": confirm_password
 	}
-	var result := await simple_request(url, payload, HTTPClient.METHOD_POST, headers)
+	var result := await simple_request(url, payload, route.method, headers)
 
 	# Verify result
 	if result.is_empty(): return error_ret
@@ -242,8 +254,10 @@ func set_user_profile_picture(target_id: String, image_path: String) -> void:
 	
 	var payload = {"targetId": target_id, "imageData": data_url}
 
-	var url = Services.routes.get_route(Services.routes.ENDPOINT_SEND_PROFILE)
-	await auth_req_post(url, payload)
+	var route := Services.routes.ROUTE_SEND_PROFILE
+	var url := route.url()
+
+	await auth_fetch(url, route.method, payload)
 
 
 ## Gets an image from an url

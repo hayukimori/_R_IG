@@ -145,12 +145,12 @@ func get_user_by_token(token: String):
 		"Authorization: Bearer %s" % token
 	]
 
-	var final_url: String = ""
-	final_url = Services.routes.get_route(Services.routes.ENDPOINT_PROTECTED)
+	var route := Services.routes.ROUTE_PROTECTED
+	var url := route.url()
 
 	if not token.is_empty():
-		if AppConfig.DEBUG_MODE: print("Requesting user data by token: %s" % final_url)
-		http_request.request(final_url, headers, HTTPClient.METHOD_POST)
+		if AppConfig.DEBUG_MODE: print("Requesting user data by token: %s" % url)
+		http_request.request(url, headers, HTTPClient.METHOD_POST)
 		current_status = "loading"
 
 	else:

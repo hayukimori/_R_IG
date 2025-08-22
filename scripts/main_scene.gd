@@ -30,10 +30,12 @@ func _on_ping_timeout() -> void:
 		return
 
 	var json = {"user_id": Services.user_service.user_id}
-	var url = Services.routes.get_route(Services.routes.ENDPOINT_PING)
+
+	var route := Services.routes.ROUTE_STATUS
+	var url := route.url()
 
 	# Sends a ping to API, server will save for 60s
-	var result = await Services.api.auth_req_patch(url, json)
+	var result = await Services.api.auth_fetch(url, route.method, json)
 	if result.get("response_code") == 401: Services.scene_service.logout()
 
 
