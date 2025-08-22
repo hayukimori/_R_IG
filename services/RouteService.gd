@@ -23,6 +23,26 @@ const ENDPOINT_STIME            := "/api/v1/server-clock"
 const ENDPOINT_WORLD_UPDATES    := "/api/v1/worldupdates"
 const ENDPOINT_ME				:= "/api/v1/me"
 
+var ROUTE_LOGIN                 := Route.new("/api/auth/login", HTTPClient.METHOD_POST)
+var ROUTE_REGISTER              := Route.new("/api/auth/register", HTTPClient.METHOD_POST)
+var ROUTE_PROTECTED             := Route.new("/api/auth/protected", HTTPClient.METHOD_POST)
+var ROUTE_FORGOT_PASSWORD       := Route.new("/api/auth/forgot-password", HTTPClient.METHOD_POST)
+var ROUTE_VERIFY_CODE           := Route.new("/api/auth/verify-code", HTTPClient.METHOD_POST)
+var ROUTE_RESET_PASSWORD        := Route.new("/api/auth/reset-password", HTTPClient.METHOD_POST)
+var ROUTE_STATUS                := Route.new("/api/v1/profile/me/status", HTTPClient.METHOD_PATCH)
+var ROUTE_PROFILE               := Route.new("/api/v1/profile/{identifier}", HTTPClient.METHOD_GET)
+var ROUTE_SEND_PROFILE          := Route.new("/api/v1/profile/me", HTTPClient.METHOD_PATCH)
+var ROUTE_SEND_PFP              := Route.new("/api/v1/profile/me/avatar", HTTPClient.METHOD_POST)
+var ROUTE_CUBES                 := Route.new("/api/v1/cubes", HTTPClient.METHOD_GET)
+var ROUTE_NEW_CUBES             := Route.new("/api/v1/cubes?sinceId={sinceId}", HTTPClient.METHOD_GET)
+var ROUTE_WORLD_FOLLOWS         := Route.new("/api/v1/worldfollows", HTTPClient.METHOD_GET)
+var ROUTE_FOLLOW                := Route.new("/api/v1/me/following", HTTPClient.METHOD_POST)
+var ROUTE_UNFOLLOW              := Route.new("/api/v1/me/following/{targetId}", HTTPClient.METHOD_DELETE)
+var ROUTE_FOLLOW_EXISTS         := Route.new("/api/v1/me/following/{targetId}", HTTPClient.METHOD_GET)
+var ROUTE_WORLD_UNFOLLOWS       := Route.new("/api/v1/worldunfollows", HTTPClient.METHOD_POST)
+var ROUTE_ME                    := Route.new("/api/v1/profiles/me", HTTPClient.METHOD_GET)
+
+
 var api_host: String
 var ws_host: String
 

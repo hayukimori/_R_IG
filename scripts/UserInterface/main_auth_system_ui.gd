@@ -23,8 +23,8 @@ enum AuthActions { REGISTER = 0, LOGIN = 1 }
 
 @onready var foreground_panel: Panel = $ForegroundPanel
 
-var register_user_url: String
-var login_url: String
+var register_user_route: Route
+var login_route: Route
 
 var current_auth_method: AuthActions
 var errors: Array = []
@@ -35,11 +35,12 @@ const FORGOT_PASSWORD_TEXT: String = "Forgot password?"
 
 func _ready() -> void:
 	# Check for host settings
-	register_user_url = Services.routes.get_route(Services.routes.ENDPOINT_REGISTER)
-	login_url = Services.routes.get_route(Services.routes.ENDPOINT_LOGIN)
 
-	print("[LOGIN] Got register_user_url: ", register_user_url)
-	print("[LOGIN] Got login_url: ", login_url)
+	register_user_route = Services.routes.ROUTE_REGISTER
+	login_route = Services.routes.ROUTE_LOGIN
+
+	print("[LOGIN] Got register_user_url: ", register_user_route.url())
+	print("[LOGIN] Got login_url: ", login_route.url())
 	
 	# Set initial auth method
 	define_current_auth_method(default_method)
@@ -102,12 +103,12 @@ func auth_action(action: AuthActions) -> Array:
 		"Content-Type: application/json",
 	]
 
-	var url
-	var data
+	var route: Route
+	var data: Dictionary
 
 	match action:
 		AuthActions.REGISTER: 
-			url = register_user_url
+			route = register_user_route
 			data = {
 				"username": register_username_line_edit.text,
 				"email": register_email_line_edit.text,
@@ -115,16 +116,16 @@ func auth_action(action: AuthActions) -> Array:
 				"confirm_password": register_confirm_password_line_edit.text
 			}
 			
-		AuthActions.LOGIN: 
-			url = login_url
+		AuthActions.LOGIN:
+			route = login_route
 			data = {
 				"email": login_email_line_edit.text,
 				"password": login_password_line_edit.text,
 			}
 	
-	if AppConfig.DEBUG_MODE: print("Requesting: %s" % url)
+	if AppConfig.DEBUG_MODE: print("Requesting: %s" % route.url())
 			
-	http_request.request(url, headers, HTTPClient.METHOD_POST, JSON.stringify(data))
+	http_request.request(route.url(), headers, route.method, JSON.stringify(data))
 
 	await http_request.request_completed
 	http_request.queue_free()
