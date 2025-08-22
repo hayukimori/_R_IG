@@ -5,7 +5,7 @@ extends Node
 
 
 func _ready() -> void:
-	Announcements.server_event_received.connect(_manage_server_event)
+	Services.announcements.server_event_received.connect(_manage_server_event)
 
 # Manages server event, creates a new 'EventModel' object
 # and sends it to exec_event (if is a vaid event)
@@ -28,8 +28,8 @@ func _manage_server_event(raw_content: String) -> void:
 
 
 	# Creates a new Announcement event model.
-	var announcement: Announcements.EventModel
-	announcement = Announcements.EventModel.new()
+	var announcement: AnnouncementEventModel
+	announcement = AnnouncementEventModel.new()
 
 	announcement.type = parse_result.get("type", "")
 	announcement.message = parse_result.get("message", "")
@@ -51,7 +51,7 @@ func exec_action(action: PayloadAction) -> void:
 
 
 ## Exects an event getting it's payload events.
-func exec_event(event: Announcements.EventModel) -> void:
+func exec_event(event: AnnouncementEventModel) -> void:
 	var final_actions: Array[PayloadAction] = []
 
 	# Sends a text message on screen (fallback)

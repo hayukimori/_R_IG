@@ -41,7 +41,7 @@ var time: Dictionary = {
 func _ready() -> void:
 	time = Time.get_datetime_dict_from_system()
 
-	if !CurrentUserSession.logged_in:
+	if !Services.user_service.logged_in:
 		push_warning("User is not logged in, profile won't be loaded")
 		return
 	
@@ -49,15 +49,15 @@ func _ready() -> void:
 
 
 func updateUI() -> void:
-	var uid = CurrentUserSession.user_id
+	var uid = Services.user_service.user_id
 
 	# Validates uid
-	if not GeneralTools.Validations.new().validate_uid(uid):
+	if not ValidationRules.validate_object_id(uid):
 		push_warning("Invalid UID: %s" % uid)
 		return
 	
 	# Gets profile data (as UserProfile)
-	var profile_data: GeneralTools.UserProfile = await loadProfile(uid)
+	var profile_data: UserProfile = await loadProfile(uid)
 
 	# Check for profile
 	if not profile_data:
@@ -67,7 +67,7 @@ func updateUI() -> void:
 	updateTopBarElements(profile_data)
 	
 
-func updateTopBarElements(profile_data: GeneralTools.UserProfile) -> void:
+func updateTopBarElements(profile_data: UserProfile) -> void:
 	# Updates UI
 	username_label.text = profile_data.username
 
@@ -75,26 +75,25 @@ func updateTopBarElements(profile_data: GeneralTools.UserProfile) -> void:
 	var texture = ImageTexture.create_from_image(default_image)
 
 	# Checks for profile picture
-	if profile_data.avatarUrl != "":
-		texture = await GeneralTools.getUserPfp(profile_data)
+	if profile_data.avatar_url != "":
+		texture = await Services.profile_service.get_user_avatar(profile_data)
 		profile_picture_trd.texture = texture
 
 	else:
-		default_image.load(GeneralTools.default_profile_picture)
-		texture = ImageTexture.create_from_image(default_image)
+		texture = Services.profile_service._get_default_avatar()
 		profile_picture_trd.texture = texture
 
-	changeMiniPreviewBackground(profile_data.bannerColor)
+	changeMiniPreviewBackground(profile_data.banner_color)
 	updateProfilePreview(profile_data, texture)
 
 
-func updateProfilePreview(profileData: GeneralTools.UserProfile, pfp_texture: ImageTexture) -> void:
-	pp_displayname_label.text = profileData.displayName
-	pp_username_label.text = profileData.username
-	pp_followers_count_btn.text = GeneralTools.format_number(profileData.followersCount)
-	pp_following_count_btn.text = GeneralTools.format_number(profileData.followingCount)
+func updateProfilePreview(profile_data: UserProfile, pfp_texture: ImageTexture) -> void:
+	pp_displayname_label.text = profile_data.display_name
+	pp_username_label.text = profile_data.username
+	pp_followers_count_btn.text = FormatLib.format_number(profile_data.followers_count)
+	pp_following_count_btn.text = FormatLib.format_number(profile_data.following_count)
 	pp_picture_trd.texture = pfp_texture
-	changePreviewBackground(profileData.bannerColor)
+	changePreviewBackground(profile_data.banner_color)
 	loadRoles()
 
 func changePreviewBackground(target_color: String) -> void:
@@ -114,23 +113,22 @@ func changeMiniPreviewBackground(target_color: String) -> void:
 		profile_button.add_theme_stylebox_override("hover", hover_stylebox)
 
 
-func loadProfile(profile_id) -> GeneralTools.UserProfile:
+func loadProfile(profile_id) -> UserProfile:
 	# Request profile data using id
-	var data = await GeneralTools.requestProfile(profile_id)
+	var data = await Services.api.request_profile(profile_id)
 
 	# Verify errors
 	if data.has("error"):
 		push_error("Error at loadProfile(): ", data.error)
 	
 	# Gets profile as UserProfile (primitive interface using class)
-	var	profileData: GeneralTools.UserProfile = GeneralTools.UserProfile.new()
-	profileData.initializeData(data)
+	var	profileData: UserProfile = UserProfile.new(data)
 
 	return profileData
 
 func loadRoles() -> void:
 	roles_panel.visible = true
-	var user_roles = CurrentUserSession.user_roles
+	var user_roles = Services.user_service.user_roles
 	if user_roles == []:
 		return
 	
@@ -167,7 +165,7 @@ func _process(_delta: float) -> void:
 
 
 func _on_logout_button_pressed() -> void:
-	SceneHandler.logout()
+	Services.scene_service.logout()
 
 
 func _on_profile_click_button_pressed() -> void:

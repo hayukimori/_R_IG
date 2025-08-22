@@ -1,5 +1,7 @@
-extends Node
+extends RefCounted
+class_name RouteService
 
+# Constant Routes
 const ENDPOINT_LOGIN            := "/api/auth/login"
 const ENDPOINT_REGISTER         := "/api/auth/register"
 const ENDPOINT_PROTECTED        := "/api/auth/protected"
@@ -21,21 +23,23 @@ const ENDPOINT_STIME            := "/api/v1/server-clock"
 const ENDPOINT_WORLD_UPDATES    := "/api/v1/worldupdates"
 const ENDPOINT_ME				:= "/api/v1/me"
 
+var api_host: String
+var ws_host: String
+
+var parent_node: Node
+
+func _init(node: Node) -> void:
+    api_host = ProjectSettings.get_setting("application/config/api_host", "http://localhost:3000")
+    ws_host = ProjectSettings.get_setting("application/config/ws_host", "ws://localhost:8080")
+
+    parent_node = node
+
+    print("[RouteService] RouteService started. Got api_host and ws_host")
+    print("[RouteService] api_host", api_host)
+    print("[RouteService] ws_host", ws_host)
 
 func get_route(endpoint: String) -> String:
-	var host = ProjectSettings.get_setting("application/config/api_host")
-	var url: String
-	if host != "":
-		url = host + endpoint
-	else:
-		push_error("API host is not set in project settings. Using default endpoint.")
-		url = "http://localhost:3000" + endpoint
-	return url
+    return api_host + endpoint
 
 func get_ws_url() -> String:
-	var host: String = ProjectSettings.get_setting("application/config/ws_host")
-	if host.is_empty():
-		push_error("Websocket Host is not set in project settings. Using default host")
-		return "ws://localhost:8080"
-	
-	return host
+    return ws_host

@@ -1,9 +1,9 @@
 extends Node
 
 # Endpoints
-var world_follows_endpoint = Routes.get_route(Routes.ENDPOINT_WORLD_FOLLOWS)
-var world_unfollows_endpoint = Routes.get_route(Routes.ENDPOINT_WORLD_UNFOLLOWS)
-var world_updates_endpoint = Routes.get_route(Routes.ENDPOINT_WORLD_UPDATES)
+var world_follows_endpoint = Services.routes.get_route(Services.routes.ENDPOINT_WORLD_FOLLOWS)
+var world_unfollows_endpoint = Services.routes.get_route(Services.routes.ENDPOINT_WORLD_UNFOLLOWS)
+var world_updates_endpoint = Services.routes.get_route(Services.routes.ENDPOINT_WORLD_UPDATES)
 
 # Sync definitions
 const DELTA_SYNC_INTERVAL = 15.0
@@ -23,7 +23,7 @@ var pending_disconnections := []
 
 func _ready():
 	# Gets server time
-	sync_anchor_time = await GeneralTools.get_server_time()
+	sync_anchor_time = await Services.api.get_server_time()
 	if AppConfig.DEBUG_MODE: print("[SYNC] Anchor time defined to: %s" % sync_anchor_time)
 	
 	# 2. Inicia os timers que rodarão em paralelo
@@ -74,9 +74,9 @@ func _fetch_bulk_follows_page():
 	if last_id_for_bulk_load != "":
 		payload["lastId"] = last_id_for_bulk_load
 
-	var result: Dictionary = await GeneralTools.protected_request(world_follows_endpoint, payload, HTTPClient.METHOD_POST)
+	var result: Dictionary = await Services.api.auth_req_post(world_follows_endpoint, payload, ["Content-Type: application/json"])
 	if result.get("response_code") == 401:
-		SceneHandler.logout()
+		Services.scene_service.logout()
 
 	if result.has("result_array") and result["is_json"]:
 		var follows = result["result_array"]
@@ -109,8 +109,10 @@ func _perform_delta_sync():
 
 # World updates
 func _fetch_world_updates(since_time: String):
-	var result = await GeneralTools.protected_request(world_updates_endpoint, {"since": since_time}, HTTPClient.METHOD_POST)
-	if result.get("response_code") == 401:SceneHandler.logout()
+	var payload = {"since": since_time}
+	var result = await Services.api.auth_req_post(world_updates_endpoint, payload, ["Content-Type: application/json"])
+
+	if result.get("response_code") == 401:Services.scene_service.logout()
 
 	if result.has("result_array") and result["is_json"]:
 		var updates = result.get('result_array')
@@ -121,8 +123,9 @@ func _fetch_world_updates(since_time: String):
 
 # World Unfollows
 func _fetch_world_unfollows(since_time: String):
-	var result = await GeneralTools.protected_request(world_unfollows_endpoint, {"since": since_time}, HTTPClient.METHOD_POST)
-	if result.get("response_code") == 401:SceneHandler.logout()
+	var payload := {"since": since_time}
+	var result = await Services.api.auth_req_post(world_unfollows_endpoint, payload, ["Content-Type: application/json"])
+	if result.get("response_code") == 401:Services.scene_service.logout()
 	
 	if result.has("result_array") and result["is_json"]:
 		var unfollows = result.get('result_array')
@@ -139,7 +142,7 @@ func _handle_follow_connection(follow: Dictionary):
 	var conn_id = follow.get("id", "")
 	var active = follow.get("active", true)
 
-	if GlobalCluster.cubes_id.has(follower_id) and GlobalCluster.cubes_id.has(following_id):
+	if Services.cluster_service.cubes_id.has(follower_id) and Services.cluster_service.cubes_id.has(following_id):
 		_connect_cubes(follower_id, following_id, active, conn_id)
 	else:
 		if not pending_connections.any(func(c): return c.id == conn_id):
@@ -147,7 +150,7 @@ func _handle_follow_connection(follow: Dictionary):
 
 func _handle_unfollow_connection(unfollow: Dictionary):
 	var target_id = unfollow.get('id', '')
-	if GlobalCluster.active_connections.has(target_id):
+	if Services.cluster_service.active_connections.has(target_id):
 		_disconnect_cubes(target_id)
 	else:
 		if not pending_disconnections.any(func(d): return d.id == target_id):
@@ -157,7 +160,7 @@ func process_pending_connections():
 	if pending_connections.is_empty(): return
 	var still_pending := []
 	for conn in pending_connections:
-		if GlobalCluster.cubes_id.has(conn.follower_id) and GlobalCluster.cubes_id.has(conn.following_id):
+		if Services.cluster_service.cubes_id.has(conn.follower_id) and Services.cluster_service.cubes_id.has(conn.following_id):
 			_connect_cubes(conn.follower_id, conn.following_id, conn.active, conn.id)
 		else:
 			still_pending.append(conn)
@@ -167,14 +170,14 @@ func process_pending_disconnections():
 	if pending_disconnections.is_empty(): return
 	var still_pending := []
 	for conn in pending_disconnections:
-		if GlobalCluster.active_connections.has(conn.id):
+		if Services.cluster_service.active_connections.has(conn.id):
 			_disconnect_cubes(conn.id)
 		else:
 			still_pending.append(conn)
 	pending_disconnections = still_pending
 
 func _connect_cubes(fid, tid, active, conn_id):
-	GlobalCluster.create_connection(fid, tid, active, conn_id)
+	Services.cluster_service.create_connection(fid, tid, active, conn_id)
 
 func _disconnect_cubes(connection_id):
-	GlobalCluster.deactivate_connection(connection_id)
+	Services.cluster_service.deactivate_connection(connection_id)

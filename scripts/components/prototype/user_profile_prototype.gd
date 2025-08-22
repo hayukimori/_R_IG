@@ -1,7 +1,7 @@
 extends Control
 class_name UserProfileUIPrototype
 
-signal profile_loaded(profile_data: GeneralTools.UserProfile)
+signal profile_loaded(profile_data: UserProfile)
 
 @export_group("API")
 ## Profile_ID should set in script
@@ -36,14 +36,14 @@ var pfp_replaced: bool = false
 var is_updating_text: bool = false
 
 var edit_mode: bool = false
-var original_data: GeneralTools.UserProfile
+var original_data: UserProfile
 
 const BIO_MAX_CHARS = 200
 var validator_regex: RegEx
 var corrector_regex: RegEx
 
 var headers: Array = [
-	"Authorization: Bearer %s" % CurrentUserSession.login_token,
+	"Authorization: Bearer %s" % Services.user_service.login_token,
 	"Content-Type: application/json",
 	"Accept: application/json"
 ]
@@ -54,7 +54,7 @@ func _ready() -> void:
 	await get_tree().process_frame
 
 	if profile_id != "":
-		self.edit_mode = profile_id == CurrentUserSession.user_id
+		self.edit_mode = profile_id == Services.user_service.user_id
 	if prepareRequirements():
 		loadProfile()
 
@@ -76,21 +76,18 @@ func _ready() -> void:
 
 
 func prepareRequirements() -> bool:
-	var c_valids = GeneralTools.Validations.new()
-	var uid_is_valid: bool = c_valids.validate_uid(profile_id)
-
-	return uid_is_valid
+	var c_valids = ValidationRules.validate_object_id(profile_id)
+	return c_valids
 
 #endregion
 
 func loadProfile() -> void:
 	loading_panel.show()
 
-	var data = await GeneralTools.requestProfile(profile_id)
+	var data = await Services.api.request_profile(profile_id)
 	if data.has("error"): push_error("error at loadProfile(): ", data.get('error'))
 
-	var	profileData: GeneralTools.UserProfile = GeneralTools.UserProfile.new()
-	profileData.initializeData(data)
+	var	profileData: UserProfile = UserProfile.new(data)
 
 	updateUI(profileData)
 	loading_panel.hide()
@@ -102,7 +99,7 @@ func loadProfile() -> void:
 	profile_loaded.emit(profileData)
 
 
-func load_badges(profile: GeneralTools.UserProfile) -> void:
+func load_badges(profile: UserProfile) -> void:
 	if profile.badges.size() == 0: return
 
 	for badge_relation in profile.badges:
@@ -115,21 +112,21 @@ func load_badges(profile: GeneralTools.UserProfile) -> void:
 		badge_hbox_container.add_child(scene)
 
 #region UI Functions
-func updateUI(profile_data: GeneralTools.UserProfile) -> void:
+func updateUI(profile_data: UserProfile) -> void:
 	original_data = profile_data
-	displayNameLineEdit.text = profile_data.displayName
+	displayNameLineEdit.text = profile_data.display_name
 	usernameLineEdit.text = profile_data.username
 	idLabel.text = profile_data.id
 	bioTextEdit.text = profile_data.bio
 
-	followers_static_button.text = GeneralTools.format_number(profile_data.followersCount)
-	following_static_button.text = GeneralTools.format_number(profile_data.followingCount)
+	followers_static_button.text = FormatLib.format_number(profile_data.followers_count)
+	following_static_button.text = FormatLib.format_number(profile_data.following_count)
 	
 
-	changeBackground(profile_data.bannerColor)
+	changeBackground(profile_data.banner_color)
 
-	if profile_data.avatarUrl != "":
-		var texture = await GeneralTools.getUserPfp(profile_data)
+	if profile_data.avatar_url != "":
+		var texture = await Services.profile_service.get_user_avatar(profile_data)
 		profile_picture_texture_rect.texture = texture
 
 	else:
@@ -153,7 +150,7 @@ func replaceCurrentPicture(path: String) -> void:
 		push_warning("path is empty")
 		return
 	
-	var texture := GeneralTools.texture_from_file(path)
+	var texture := ImageLib.texture_from_file(path)
 	if texture:
 		profile_picture_texture_rect.texture = texture
 
@@ -166,22 +163,22 @@ func open_file_selector() -> void:
 
 #endregion
 
-func send_profile(new_data: GeneralTools.UserProfile) -> void:
+func send_profile(new_data: UserProfile) -> void:
 	loading_panel.show()
-	var diff = GeneralTools.compare_profile_datas(original_data,new_data)
+	var diff = Services.profile_service.compare_profile_datas(original_data,new_data)
 
 	# Lock content
 	disable_edit_functions()
 
 
 	if pfp_replaced == true and current_pfp_path.is_empty() == false:
-		await GeneralTools.send_image_to_server(profile_id, current_pfp_path)
+		await Services.api.set_user_profile_picture(profile_id, current_pfp_path)
 
 	if diff == {}:
 		activate_edit_functions(true)
 		return
 	
-	await GeneralTools.sendNewProfileData(profile_id, diff)
+	await Services.api.send_profile_data(profile_id, diff)
 	activate_edit_functions(true)
 	loading_panel.hide()
 
@@ -263,16 +260,15 @@ func _on_profile_done_button_pressed() -> void:
 		"displayName": displayNameLineEdit.text,
 		"username": usernameLineEdit.text,
 		"bio": bioTextEdit.text,
-		"avatarUrl": original_data.avatarUrl,
+		"avatarUrl": original_data.avatar_url,
 		"bannerColor": current_color,
-		"followersCount": original_data.followersCount,
-		"followingCount": original_data.followingCount,
+		"followersCount": original_data.followers_count,
+		"followingCount": original_data.following_count,
 		"badges": original_data.badges,
 		"links": []
 	}
 
-	var new_data: GeneralTools.UserProfile = GeneralTools.UserProfile.new()
-	new_data.initializeData(raw_data)
+	var new_data: UserProfile = UserProfile.new(raw_data)
 	send_profile(new_data)
 
 

@@ -1,14 +1,20 @@
-extends Node
+extends RefCounted
+class_name ClusterService
 
 var cubes_id: Dictionary = {}
 var active_connections: Dictionary = {}
 var cluster_3d: Node3D
 
+var parent_node: Node
+
+func _init(node: Node) -> void:
+	parent_node = node
+
+
 func add_cube(cube: UserCube) -> void:
 	cubes_id[cube.user_id] = cube
 
 func create_connection(fid: String, tid: String, active: bool, conn_id: String) -> void:
-	# c
 	if active_connections.has(conn_id):
 		var existing_connection = active_connections[conn_id]
 		
@@ -39,7 +45,7 @@ func create_connection(fid: String, tid: String, active: bool, conn_id: String) 
 	if cluster_3d != null:
 		cluster_3d.add_child(mesh_instance)
 	else:
-		add_child(mesh_instance)
+		parent_node.add_child(mesh_instance)
 	
 	active_connections[conn_id] = {
 		"mesh": mesh_instance, 

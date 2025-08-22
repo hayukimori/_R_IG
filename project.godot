@@ -20,15 +20,9 @@ config/ws_host="ws://localhost:8080"
 [autoload]
 
 AppConfig="*res://autoloads/AppConfig.gd"
-GlobalValidations="*res://autoloads/models/GlobalValidations.gd"
-Routes="*res://autoloads/Routes.gd"
-CurrentUserSession="*res://autoloads/CurrentUserSession.gd"
-SceneRouter="*res://autoloads/SceneRouter.gd"
-GeneralTools="*res://autoloads/GeneralTools.gd"
-GlobalCluster="*res://autoloads/GlobalCluster.gd"
-RigSoundLib="*res://autoloads/RIGSoundLib.gd"
-SceneHandler="*res://autoloads/SceneHandler.gd"
-Announcements="*res://autoloads/Announcements.gd"
+Repositories="*res://autoloads/Repositories.gd"
+Services="*res://autoloads/Services.gd"
+Models="*res://autoloads/Models.gd"
 
 [display]
 

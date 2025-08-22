@@ -35,8 +35,11 @@ const FORGOT_PASSWORD_TEXT: String = "Forgot password?"
 
 func _ready() -> void:
 	# Check for host settings
-	register_user_url = Routes.get_route(Routes.ENDPOINT_REGISTER)
-	login_url = Routes.get_route(Routes.ENDPOINT_LOGIN)
+	register_user_url = Services.routes.get_route(Services.routes.ENDPOINT_REGISTER)
+	login_url = Services.routes.get_route(Services.routes.ENDPOINT_LOGIN)
+
+	print("[LOGIN] Got register_user_url: ", register_user_url)
+	print("[LOGIN] Got login_url: ", login_url)
 	
 	# Set initial auth method
 	define_current_auth_method(default_method)
@@ -44,8 +47,8 @@ func _ready() -> void:
 	# Set default "Forgot password" text
 	forgot_password_btn.text = FORGOT_PASSWORD_TEXT
 
-	CurrentUserSession.auto_login_status.connect(Callable(self, "_on_login_status_updated"))
-	CurrentUserSession.session_data_changed.connect(Callable(self, "_on_session_data_changed"))
+	Services.user_service.auto_login_status.connect(Callable(self, "_on_login_status_updated"))
+	Services.user_service.session_data_changed.connect(Callable(self, "_on_session_data_changed"))
 
 
 func define_current_auth_method(action: AuthActions) -> void:
@@ -247,11 +250,11 @@ func handleAuth(action: AuthActions, content: Array) -> void:
 
 		if item.has("authorizedUser"):
 			item.authorizedUser["token"] = item.token
-			CurrentUserSession.set_session_data(item.authorizedUser, item.token)
+			Services.user_service.set_session_data(item.authorizedUser, item.token)
 
 		elif item.has("createdUser"):
 			item.createdUser["token"] = item.token
-			CurrentUserSession.set_session_data(item.createdUser, item.token)
+			Services.user_service.set_session_data(item.createdUser, item.token)
 			
 		
 		else:
@@ -265,20 +268,20 @@ func change_to_main() -> void:
 	# Change to main scene
 	if AppConfig.DEBUG_MODE: print("Changing to main scene...")
 	await get_tree().process_frame
-	get_tree().change_scene_to_packed(SceneRouter.get_main_scene())
+	get_tree().change_scene_to_packed(Services.scene_service.get_main_scene())
 	queue_free()
 
 
 func change_to_fpassword() -> void:
 	if AppConfig.DEBUG_MODE: print("Changing to Forgot Password")
 	await get_tree().process_frame
-	get_tree().change_scene_to_packed(SceneRouter.get_password_reset_scene())
+	get_tree().change_scene_to_packed(Services.scene_service.get_password_reset_scene())
 	queue_free()
 
 
 
 func _process(_delta: float) -> void:
-	match CurrentUserSession.current_status:
+	match Services.user_service.current_status:
 		"loading": foreground_panel.visible = true
 		"success": foreground_panel.visible = false
 		"failed": foreground_panel.visible = false

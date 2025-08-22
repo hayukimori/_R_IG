@@ -21,15 +21,15 @@ var last_cube_id: String = ""
 
 func _ready() -> void:
 	# Set new routes
-	gen_cubes_request_url = Routes.get_route(Routes.ENDPOINT_CUBES)
-	new_cubes_url = Routes.get_route(Routes.ENDPOINT_NEW_CUBES)
+	gen_cubes_request_url = Services.routes.get_route(Services.routes.ENDPOINT_CUBES)
+	new_cubes_url = Services.routes.get_route(Services.routes.ENDPOINT_NEW_CUBES)
 
 	if (
-		CurrentUserSession.login_token != "" and 
-		CurrentUserSession.user_id != ""
+		Services.user_service.login_token != "" and 
+		Services.user_service.user_id != ""
 	):
 		if devel_ui != null:
-			devel_ui.update_user_id(CurrentUserSession.user_id)
+			devel_ui.update_user_id(Services.user_service.user_id)
 
 	var content = await request_cubes()
 	# TODO: Add an error hanlder
@@ -94,7 +94,7 @@ func new_cube(cube_data: Dictionary) -> void:
 	devel_ui.update_current_json_content(cube_data)
 
 	t_cube.add_to_group("cubes")
-	GlobalCluster.add_cube(t_cube)
+	Services.cluster_service.add_cube(t_cube)
 	cube_added_to_cluseter.emit(t_cube)
 
 
@@ -122,7 +122,7 @@ func request_cubes(get_new: bool = false, last_id: String = "") -> Array:
 			400: push_error("400 Error")
 			401: 
 				push_error("Authorization error, logging out.")
-				SceneHandler.logout()
+				Services.scene_service.logout()
 			500: push_error("Server error")
 		
 		
@@ -134,7 +134,7 @@ func request_cubes(get_new: bool = false, last_id: String = "") -> Array:
 	)
 
 	
-	var token = CurrentUserSession.login_token
+	var token = Services.user_service.login_token
 	if token == "":
 		push_error("CUBES HANDLER REQUEST ERROR: No Token Provided, it can result in request error.")
 
