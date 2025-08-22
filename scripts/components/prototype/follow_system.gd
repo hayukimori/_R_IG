@@ -21,7 +21,8 @@ func valid_profile_id(profile_id: String) -> bool:
 
 func follow() -> void:
 	if valid_profile_id(profile_data.id):
-		var url = Services.routes.get_route(Services.routes.ENDPOINT_FOLLOW)
+		var route := Services.routes.ROUTE_FOLLOW
+		var url = route.url()
 		var payload = {"targetId": profile_data.id}
 		var content = await Services.api.auth_req_post(url, payload, ["Content-Type: application/json"])
 
@@ -40,9 +41,10 @@ func follow() -> void:
 
 func unfollow() -> void:
 	if valid_profile_id(profile_data.id):
-		var url = Services.routes.get_route(Services.routes.ENDPOINT_UNFOLLOW)
+		var route := Services.routes.ROUTE_FOLLOW
+		var url := route.url()
 		var payload = {"targetId": profile_data.id}
-		var content = await Services.api.auth_req_post(url, payload, ["Content-Type: application/json"])
+		var content = await Services.api.auth_fetch(url, route.method, payload, ["Content-Type: application/json"])
 
 		if content == {}:
 			return

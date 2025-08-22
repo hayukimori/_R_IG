@@ -12,8 +12,9 @@ signal cube_added_to_cluseter(cube: UserCube)
 
 @onready var main_timer: Timer = $Timer
 
-var gen_cubes_request_url: String
-var new_cubes_url: String
+
+var cubes_route: Route
+var new_cubes_route: Route
 
 var cubes_count: int = 0
 var cubes_history: Array = []
@@ -21,8 +22,8 @@ var last_cube_id: String = ""
 
 func _ready() -> void:
 	# Set new routes
-	gen_cubes_request_url = Services.routes.get_route(Services.routes.ENDPOINT_CUBES)
-	new_cubes_url = Services.routes.get_route(Services.routes.ENDPOINT_NEW_CUBES)
+	cubes_route = Services.routes.ROUTE_CUBES
+	new_cubes_route = Services.routes.ROUTE_NEW_CUBES
 
 	if (
 		Services.user_service.login_token != "" and 
@@ -145,13 +146,11 @@ func request_cubes(get_new: bool = false, last_id: String = "") -> Array:
 	]
 
 	if get_new:
-		var dict_data = { "id": last_id }
-		var jsondata = JSON.stringify(dict_data)
-
-		http_request.request(new_cubes_url, headers, HTTPClient.METHOD_POST, jsondata)
+		var url = new_cubes_route.url({"sinceId": last_id})
+		http_request.request(url, headers, new_cubes_route.method)
 
 	else:
-		http_request.request(gen_cubes_request_url, headers, HTTPClient.METHOD_GET)
+		http_request.request(cubes_route.url(), headers, cubes_route.method)
 
 	await http_request.request_completed
 	http_request.queue_free()

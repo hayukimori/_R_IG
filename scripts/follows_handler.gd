@@ -1,9 +1,9 @@
 extends Node
 
-# Endpoints
-var world_follows_endpoint = Services.routes.get_route(Services.routes.ENDPOINT_WORLD_FOLLOWS)
-var world_unfollows_endpoint = Services.routes.get_route(Services.routes.ENDPOINT_WORLD_UNFOLLOWS)
-var world_updates_endpoint = Services.routes.get_route(Services.routes.ENDPOINT_WORLD_UPDATES)
+# Routes
+var world_follows_route = Services.routes.ROUTE_WORLD_FOLLOWS
+var world_unfollows_route = Services.routes.ROUTE_WORLD_UNFOLLOWS
+var world_updates_route = Services.routes.ROUTE_WORLD_UPDATES
 
 # Sync definitions
 const DELTA_SYNC_INTERVAL = 15.0
@@ -22,6 +22,10 @@ var pending_disconnections := []
 
 
 func _ready():
+	world_follows_route = Services.routes.ROUTE_WORLD_FOLLOWS
+	world_unfollows_route = Services.routes.ROUTE_WORLD_UNFOLLOWS
+	world_updates_route = Services.routes.ROUTE_WORLD_UPDATES
+
 	# Gets server time
 	sync_anchor_time = await Services.api.get_server_time()
 	if AppConfig.DEBUG_MODE: print("[SYNC] Anchor time defined to: %s" % sync_anchor_time)
@@ -74,7 +78,12 @@ func _fetch_bulk_follows_page():
 	if last_id_for_bulk_load != "":
 		payload["lastId"] = last_id_for_bulk_load
 
-	var result: Dictionary = await Services.api.auth_req_post(world_follows_endpoint, payload, ["Content-Type: application/json"])
+	var result: Dictionary = await Services.api.auth_fetch(
+		world_follows_route.url(),
+		world_follows_route.method,
+		payload, 
+		["Content-Type: application/json"]
+	)
 	if result.get("response_code") == 401:
 		Services.scene_service.logout()
 
@@ -110,7 +119,12 @@ func _perform_delta_sync():
 # World updates
 func _fetch_world_updates(since_time: String):
 	var payload = {"since": since_time}
-	var result = await Services.api.auth_req_post(world_updates_endpoint, payload, ["Content-Type: application/json"])
+	var result = await Services.api.auth_fetch(
+		world_updates_route.url(),
+		world_updates_route.method, 
+		payload, 
+		["Content-Type: application/json"]
+	)
 
 	if result.get("response_code") == 401:Services.scene_service.logout()
 
@@ -124,7 +138,12 @@ func _fetch_world_updates(since_time: String):
 # World Unfollows
 func _fetch_world_unfollows(since_time: String):
 	var payload := {"since": since_time}
-	var result = await Services.api.auth_req_post(world_unfollows_endpoint, payload, ["Content-Type: application/json"])
+	var result = await Services.api.auth_fetch(
+		world_unfollows_route.url(),
+		world_unfollows_route.method, 
+		payload, 
+		["Content-Type: application/json"]
+	)
 	if result.get("response_code") == 401:Services.scene_service.logout()
 	
 	if result.has("result_array") and result["is_json"]:
