@@ -36,7 +36,7 @@ static func from_dict(payload: Dictionary) -> PayloadAction:
 
 		"sound":
 			action.current_type = ActionType.AUDIO_PLAY
-			var endfile = RigSoundLib.get_sound_by_name(payload_file)
+			var endfile = RIGSoundLibrary.get_sound_by_name(payload_file)
 			action.loaded_audio_file = endfile
 			action.valid_action = action.loaded_audio_file != null
 

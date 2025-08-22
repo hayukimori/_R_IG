@@ -6,7 +6,7 @@ extends Control
 
 @onready var follow_button: Button = $FollowUnfollowButton
 
-var profile_data: GeneralTools.UserProfile
+var profile_data: UserProfile
 var active: bool = false
 
 func _ready() -> void:
@@ -15,18 +15,15 @@ func _ready() -> void:
 func valid_profile_id(profile_id: String) -> bool:
 	if profile_id == null: return false
 	if profile_id.length() != 24: return false
-	if profile_id == CurrentUserSession.user_id: return false
+	if profile_id == Services.user_service.user_id: return false
 	
 	return true
 
 func follow() -> void:
 	if valid_profile_id(profile_data.id):
-		var url = Routes.get_route(Routes.ENDPOINT_FOLLOW)
-		var content = await GeneralTools.protected_request(
-			url, 
-			{"targetId": profile_data.id}, 
-			HTTPClient.METHOD_POST
-		)
+		var url = Services.routes.get_route(Services.routes.ENDPOINT_FOLLOW)
+		var payload = {"targetId": profile_data.id}
+		var content = await Services.api.auth_req_post(url, payload, ["Content-Type: application/json"])
 
 		if content == {}:
 			return
@@ -43,12 +40,9 @@ func follow() -> void:
 
 func unfollow() -> void:
 	if valid_profile_id(profile_data.id):
-		var url = Routes.get_route(Routes.ENDPOINT_UNFOLLOW)
-		var content = await GeneralTools.protected_request(
-			url, 
-			{"targetId": profile_data.id}, 
-			HTTPClient.METHOD_POST
-		)
+		var url = Services.routes.get_route(Services.routes.ENDPOINT_UNFOLLOW)
+		var payload = {"targetId": profile_data.id}
+		var content = await Services.api.auth_req_post(url, payload, ["Content-Type: application/json"])
 
 		if content == {}:
 			return
@@ -71,12 +65,12 @@ func update_button(function) -> void:
 
 	follow_button.pressed.connect(function)
 
-func _on_user_profile_prototype_profile_loaded(received_profile_data:GeneralTools.UserProfile) -> void:
+func _on_user_profile_prototype_profile_loaded(received_profile_data: UserProfile) -> void:
 	profile_data = received_profile_data
 	active = true
 
 	if valid_profile_id(profile_data.id):
-		if profile_data.isFollowing:
+		if profile_data.is_following:
 			follow_button.icon = unfollow_image
 			follow_button.pressed.connect(unfollow)
 		else:

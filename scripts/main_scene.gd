@@ -10,10 +10,10 @@ var last_target: Node3D = null
 var hover_material: StandardMaterial3D = preload("res://assets/materials/3D/user_cube_hover_material.tres")
 
 func _ready() -> void:
-	GlobalCluster.cluster_3d = cubes_cluster
+	Services.cluster_service.cluster_3d = cubes_cluster
 
 	# Add this scene to the current scenes list for management
-	SceneHandler.current_scenes.append(self)
+	Services.scene_service.current_scenes.append(self)
 
 	# Online System
 	var timer := Timer.new()
@@ -26,15 +26,15 @@ func _ready() -> void:
 
 
 func _on_ping_timeout() -> void:
-	if !CurrentUserSession.logged_in:
+	if !Services.user_service.logged_in:
 		return
 
-	var json = {"user_id": CurrentUserSession.user_id}
-	var url = Routes.get_route(Routes.ENDPOINT_PING)
+	var json = {"user_id": Services.user_service.user_id}
+	var url = Services.routes.get_route(Services.routes.ENDPOINT_PING)
 
 	# Sends a ping to API, server will save for 60s
-	var result = await GeneralTools.protected_request(url, json, HTTPClient.METHOD_PATCH)
-	if result.get("response_code") == 401: SceneHandler.logout()
+	var result = await Services.api.auth_req_patch(url, json)
+	if result.get("response_code") == 401: Services.scene_service.logout()
 
 
 func _process(delta: float) -> void:

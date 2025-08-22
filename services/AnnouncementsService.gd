@@ -1,4 +1,5 @@
-extends Node
+extends RefCounted
+class_name AnnouncementsService
 
 signal server_event_received(raw_content: String)
 
@@ -9,21 +10,19 @@ var ws: WebSocketPeer = null
 var ws_connected: bool = false
 var is_connecting: bool = false
 
-class EventModel:
-	var type: String
-	var message: String
-	var payload: Dictionary
-	var timestamp: String
+var parent_node: Node
 
-func _ready() -> void:
-	URL = Routes.get_ws_url()
+func _init(node: Node) -> void:
+	parent_node = node
+
+	URL = Services.routes.get_ws_url()
 
 	var conn_timer := Timer.new()
 	conn_timer.wait_time = CONNECTION_KEEPER_INTERVAL
 	conn_timer.autostart = true
 	conn_timer.one_shot = false
 	conn_timer.timeout.connect(_manage_ws_connection)
-	add_child(conn_timer)
+	parent_node.add_child(conn_timer)
 
 func _process(_delta: float) -> void:
 	# Make a new websocket if is null

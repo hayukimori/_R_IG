@@ -76,13 +76,13 @@ func _wipe_on_screen_errors() -> void:
 # == Main functions ===
 func validate_email_send_code() -> void:
 	# Validation
-	var email_validation = GlobalValidations.validate_email(recovery_email_field.text)
+	var email_validation = ValidationRules.validate_email(recovery_email_field.text)
 	if !email_validation: _show_on_screen_error({"error": "Invalid email address"}); return
 	_wipe_on_screen_errors()
 
 	# Send code over request
 	disable_first()
-	var result = await GeneralTools.request_server_code(recovery_email_field.text)
+	var result = await Services.api.request_server_code(recovery_email_field.text)
 	var error = result.has("error")
 	if error: _show_on_screen_error(result); enable_first(); return
 
@@ -93,16 +93,16 @@ func validate_email_send_code() -> void:
 
 func validate_code_continue() -> void:
 	# Validation
-	var email_validation = GlobalValidations.validate_email(recovery_email_field.text)
+	var email_validation = ValidationRules.validate_email(recovery_email_field.text)
 	if !email_validation: _show_on_screen_error({"error": "Invalid email address"}); return
 
-	var code_validation = GlobalValidations.validate_code(six_digit_code_field.text)
+	var code_validation = ValidationRules.validate_code(six_digit_code_field.text)
 	if !code_validation: _show_on_screen_error({"error": "Invalid code"}); return
 	_wipe_on_screen_errors()
 
 	disable_first()
 	# Send code to verification on server
-	var result = await GeneralTools.request_verify_code(recovery_email_field.text, six_digit_code_field.text)
+	var result = await Services.api.request_verify_code(recovery_email_field.text, six_digit_code_field.text)
 	var error = result.has("error")
 	if error: _show_on_screen_error(result); enable_first(); return
 	_wipe_on_screen_errors()
@@ -114,8 +114,8 @@ func validate_code_continue() -> void:
 		enable_first()
 
 func reset_password_to_new() -> void:
-	var password_validation = GlobalValidations.validate_password(password_field.text)
-	var c_password_validation = GlobalValidations.validate_password(confirm_password_field.text)
+	var password_validation = ValidationRules.validate_password(password_field.text)
+	var c_password_validation = ValidationRules.validate_password(confirm_password_field.text)
 	
 	# Validates before call
 	if !password_validation or !c_password_validation:
@@ -134,7 +134,7 @@ func reset_password_to_new() -> void:
 
 	disable_second()
 
-	var result = await GeneralTools.request_password_reset(
+	var result = await Services.api.request_password_reset(
 		recovery_token, 
 		password_field.text, confirm_password_field.text
 	)
@@ -147,7 +147,7 @@ func reset_password_to_new() -> void:
 
 		# Redirect to login
 		await get_tree().create_timer(2).timeout
-		get_tree().change_scene_to_packed(SceneRouter.get_login_scene())
+		get_tree().change_scene_to_packed(Services.scene_service.get_login_scene())
 
 	_show_on_screen_error(result)
 
@@ -230,16 +230,16 @@ func _on_goto_step_2_button_pressed() -> void:
 	_second_step()
 
 func _manage_t1_fields() -> void:
-	var email_validation = GlobalValidations.validate_email(recovery_email_field.text)
-	var code_validation = GlobalValidations.validate_code(six_digit_code_field.text)
+	var email_validation = ValidationRules.validate_email(recovery_email_field.text)
+	var code_validation = ValidationRules.validate_code(six_digit_code_field.text)
 
 	if all_locked: return
 	if first_locked: return
 	step_2_button.disabled = not (email_validation and code_validation)
 
 func _manage_t2_fields() -> void:
-	var password_validation = GlobalValidations.validate_password(password_field.text)
-	var confirm_password_validation = GlobalValidations.validate_password(confirm_password_field.text)
+	var password_validation = ValidationRules.validate_password(password_field.text)
+	var confirm_password_validation = ValidationRules.validate_password(confirm_password_field.text)
 
 	var reset_button_sch = (
 		( password_validation and confirm_password_validation ) and

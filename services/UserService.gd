@@ -1,7 +1,11 @@
-extends Node
+extends RefCounted
+class_name UserService
 
 signal session_data_changed(data: Dictionary)
 signal auto_login_status(status: String)
+
+# => Const
+const TOKEN_FILE_PATH := "user://session.token"
 
 # => Memory Data
 var user_id: String = ""
@@ -16,12 +20,14 @@ var user_permissions: Array = []
 # => Persistent Data
 var login_token: String = ""
 
-const TOKEN_FILE_PATH := "user://session.token"
+var parent_node: Node
 
-func _ready() -> void:
+func _init(node: Node) -> void:
 	# Load token from file if exists
+	parent_node = node
 	load_token_from_file()
 
+## Sets new session data
 func set_session_data(data: Dictionary, token: String = "") -> void:
 	user_id = data.get("id", "")
 	username = data.get("name", "") if data.has("name") else data.get("username", "")
@@ -42,7 +48,7 @@ func set_session_data(data: Dictionary, token: String = "") -> void:
 	logged_in = true
 	current_status = "success"
 	auto_login_status.emit("success")
-	loadUserGroupAndPermissions()
+	load_user_privileges()
 	session_data_changed.emit({
 		"user_id": user_id,
 		"username": username,
@@ -52,6 +58,7 @@ func set_session_data(data: Dictionary, token: String = "") -> void:
 	})
 	
 
+## Clear current user session and deletes it from user://
 func clear_session() -> void:
 	user_id = ""
 	username = ""
@@ -65,7 +72,7 @@ func clear_session() -> void:
 
 
 # => Save & Load functions
-
+## Save token to TOKEN_FILE_PATH
 func save_token_to_file() -> void:
 	if login_token.is_empty():
 		return # No token
@@ -81,10 +88,11 @@ func save_token_to_file() -> void:
 		printerr("TOKEN SAVE ERROR: couldn't save token.")
 
 
+# => Gets current user by it's token
 func get_user_by_token(token: String):
 	# Rquests user data by token from the server
 	var http_request := HTTPRequest.new()
-	add_child(http_request)
+	parent_node.add_child(http_request)
 
 	http_request.request_completed.connect(func(result_code, response_code, _headers, body):
 		if result_code != HTTPRequest.RESULT_SUCCESS:
@@ -138,7 +146,7 @@ func get_user_by_token(token: String):
 	]
 
 	var final_url: String = ""
-	final_url = Routes.get_route(Routes.ENDPOINT_PROTECTED)
+	final_url = Services.routes.get_route(Services.routes.ENDPOINT_PROTECTED)
 
 	if not token.is_empty():
 		if AppConfig.DEBUG_MODE: print("Requesting user data by token: %s" % final_url)
@@ -148,6 +156,8 @@ func get_user_by_token(token: String):
 	else:
 		push_error("No token provided for user request.")
 
+
+## Loads a token from TOKEN_FILE_PATH
 func load_token_from_file() -> void:
 	if not FileAccess.file_exists(TOKEN_FILE_PATH):
 		push_warning("TOKEN NOT EXISTS: Token file does not exists.")
@@ -159,8 +169,9 @@ func load_token_from_file() -> void:
 		get_user_by_token(token)
 		current_status = "loading"
 
-func loadUserGroupAndPermissions() -> void:
-	var result = await GeneralTools.me_req()
+## Get user's gorup and permission
+func load_user_privileges() -> void:
+	var result = await Services.api.get_privileges()
 	if result.has("roles") and result.get("roles").size() > 0:
 		user_roles = result.get("roles")
 

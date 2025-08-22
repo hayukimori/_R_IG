@@ -11,7 +11,7 @@ func _ready() -> void:
 		push_error("Invalid user/cube.")
 		queue_free()
 	else:
-		if user_id == CurrentUserSession.user_id:
+		if user_id == Services.user_service.user_id:
 			enable_track()
 		
 

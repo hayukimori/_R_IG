@@ -24,7 +24,7 @@ func _ready() -> void:
 	if icons_preloads.has(badge_name):
 		self.icon = icons_preloads.get(badge_name)
 	else:
-		self.icon = await GeneralTools.get_image_from_url(badge_icon_url)
+		self.icon = await Services.api.get_image_from_url(badge_icon_url)
 	
 	description_label.text = badge_description
 
