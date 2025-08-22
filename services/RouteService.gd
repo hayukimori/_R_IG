@@ -40,6 +40,7 @@ var ROUTE_FOLLOW                := Route.new("/api/v1/me/following", HTTPClient.
 var ROUTE_UNFOLLOW              := Route.new("/api/v1/me/following/{targetId}", HTTPClient.METHOD_DELETE)
 var ROUTE_FOLLOW_EXISTS         := Route.new("/api/v1/me/following/{targetId}", HTTPClient.METHOD_GET)
 var ROUTE_WORLD_UNFOLLOWS       := Route.new("/api/v1/worldunfollows", HTTPClient.METHOD_POST)
+var ROUTE_WORLD_UPDATES         := Route.new("/api/v1/worldupdates", HTTPClient.METHOD_POST)
 var ROUTE_ME                    := Route.new("/api/v1/profiles/me", HTTPClient.METHOD_GET)
 
 
