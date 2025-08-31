@@ -10,7 +10,7 @@ var ROUTE_VERIFY_CODE           := Route.new("/api/auth/verify-code", HTTPClient
 var ROUTE_RESET_PASSWORD        := Route.new("/api/auth/reset-password", HTTPClient.METHOD_POST)
 var ROUTE_STATUS                := Route.new("/api/v1/profiles/me/status", HTTPClient.METHOD_PATCH)
 var ROUTE_PROFILE               := Route.new("/api/v1/profiles/{identifier}", HTTPClient.METHOD_GET)
-var ROUTE_SEND_PROFILE          := Route.new("/api/v1/profiles/me", HTTPClient.METHOD_PATCH)
+var ROUTE_SEND_PROFILE          := Route.new("/api/v1/profiles/me", HTTPClient.METHOD_PUT)
 var ROUTE_SEND_PFP              := Route.new("/api/v1/profiles/me/avatar", HTTPClient.METHOD_POST)
 var ROUTE_CUBES                 := Route.new("/api/v1/cubes", HTTPClient.METHOD_GET)
 var ROUTE_NEW_CUBES             := Route.new("/api/v1/cubes?sinceId={sinceId}", HTTPClient.METHOD_GET)
