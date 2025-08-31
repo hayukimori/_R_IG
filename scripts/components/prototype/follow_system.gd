@@ -24,7 +24,7 @@ func follow() -> void:
 		var route := Services.routes.ROUTE_FOLLOW
 		var url = route.url()
 		var payload = {"targetId": profile_data.id}
-		var content = await Services.api.auth_req_post(url, payload, ["Content-Type: application/json"])
+		var content = await Services.api.auth_req_post(url, payload)
 
 		if content == {}:
 			return
@@ -44,7 +44,7 @@ func unfollow() -> void:
 		var route := Services.routes.ROUTE_FOLLOW
 		var url := route.url()
 		var payload = {"targetId": profile_data.id}
-		var content = await Services.api.auth_fetch(url, route.method, payload, ["Content-Type: application/json"])
+		var content = await Services.api.auth_fetch(url, route.method, payload)
 
 		if content == {}:
 			return

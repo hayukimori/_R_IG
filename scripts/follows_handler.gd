@@ -81,8 +81,7 @@ func _fetch_bulk_follows_page():
 	var result: Dictionary = await Services.api.auth_fetch(
 		world_follows_route.url(),
 		world_follows_route.method,
-		payload, 
-		["Content-Type: application/json"]
+		payload
 	)
 	if result.get("response_code") == 401:
 		Services.scene_service.logout()
@@ -122,8 +121,7 @@ func _fetch_world_updates(since_time: String):
 	var result = await Services.api.auth_fetch(
 		world_updates_route.url(),
 		world_updates_route.method, 
-		payload, 
-		["Content-Type: application/json"]
+		payload
 	)
 
 	if result.get("response_code") == 401:Services.scene_service.logout()
@@ -141,8 +139,7 @@ func _fetch_world_unfollows(since_time: String):
 	var result = await Services.api.auth_fetch(
 		world_unfollows_route.url(),
 		world_unfollows_route.method, 
-		payload, 
-		["Content-Type: application/json"]
+		payload
 	)
 	if result.get("response_code") == 401:Services.scene_service.logout()
 	

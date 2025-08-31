@@ -48,12 +48,20 @@ func get_privileges() -> Dictionary:
 func auth_fetch(url: String, method: HTTPClient.Method, payload: Dictionary = {}, extra_headers: Array = []) -> Dictionary:
 	var headers: Array = []
 
+	# This should solve "Content-Type: application/json" issues when calling a POST, PATCH or PUT method.
+	var ctype_methods = [HTTPClient.METHOD_POST, HTTPClient.METHOD_PATCH, HTTPClient.METHOD_PUT]
+
 	var auth_header = "Authorization: Bearer %s" % Services.user_service.login_token #.login_token
+	var content_type_header = "Content-Type: application/json"
 	headers.append(auth_header)
+
+	if method in ctype_methods and not extra_headers.has(content_type_header):
+		headers.append(content_type_header)
 
 	for h in extra_headers:
 		if not h.begins_with("Authorization: "):
 			headers.append(h)
+
 
 	var result = await simple_request(url, payload, method, headers)
 	return result
@@ -254,7 +262,7 @@ func set_user_profile_picture(target_id: String, image_path: String) -> void:
 	
 	var payload = {"targetId": target_id, "imageData": data_url}
 
-	var route := Services.routes.ROUTE_SEND_PROFILE
+	var route := Services.routes.ROUTE_SEND_PFP
 	var url := route.url()
 
 	await auth_fetch(url, route.method, payload)
