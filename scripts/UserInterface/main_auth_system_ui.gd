@@ -23,6 +23,8 @@ enum AuthActions { REGISTER = 0, LOGIN = 1 }
 
 @onready var foreground_panel: Panel = $ForegroundPanel
 
+@onready var update_control: PackedScene = preload("res://screens/components/update_control.tscn")
+
 var register_user_route: Route
 var login_route: Route
 
@@ -35,13 +37,22 @@ const FORGOT_PASSWORD_TEXT: String = "Forgot password?"
 
 func _ready() -> void:
 	# Check for host settings
-
 	register_user_route = Services.routes.ROUTE_REGISTER
 	login_route = Services.routes.ROUTE_LOGIN
 
 	print("[LOGIN] Got register_user_url: ", register_user_route.url())
 	print("[LOGIN] Got login_url: ", login_route.url())
 	
+	foreground_panel.visible = true
+	var update_data = await Services.api.update_available()
+	if update_data.get("status") and update_data.get("required"):
+		var upd_control: UpdateControl = update_control.instantiate()
+		upd_control.current_version = update_data.get("current_version")
+		upd_control.server_version = update_data.get("next_version")
+		add_child(upd_control)
+	foreground_panel.visible = false
+
+
 	# Set initial auth method
 	define_current_auth_method(default_method)
 	

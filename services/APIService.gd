@@ -267,6 +267,25 @@ func set_user_profile_picture(target_id: String, image_path: String) -> void:
 
 	await auth_fetch(url, route.method, payload)
 
+## Checks for updates
+func update_available() -> Dictionary:
+	var default := {
+		"status": false, 
+		"current_version": "", 
+		"next_version": "", 
+		"required": false
+	}
+
+	var route := Services.routes.ROUTE_CHECK_UPDATES # Method: Post
+	var url := route.url()
+
+	var current_version : String = ProjectSettings.get_setting("application/config/version")
+	print_debug(current_version)
+
+	var result = await simple_request(url, {"version": current_version}, route.method, ["Content-Type: application/json"])
+	var rs = result.get("parsed_json", {})
+
+	return rs if rs != {} else default
 
 ## Gets an image from an url
 func get_image_from_url(url: String) -> ImageTexture:
