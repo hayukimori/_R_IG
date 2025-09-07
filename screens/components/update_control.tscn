@@ -1,0 +1,92 @@
+[gd_scene load_steps=5 format=3 uid="uid://dscbuj8evs7jf"]
+
+[ext_resource type="Script" uid="uid://bqxif8404krsf" path="res://scripts/components/update_control.gd" id="1_f86oc"]
+[ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="2_sj4qg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nhlgf"]
+bg_color = Color(0.06521184, 0.030864596, 0.038196925, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v84vv"]
+bg_color = Color(0.30588236, 0.050980393, 0.18431373, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.30588236, 0.050980393, 0.18431373, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="UpdateControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f86oc")
+
+[node name="bgPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nhlgf")
+
+[node name="VersionLabel" type="Label" parent="bgPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -306.0
+offset_top = -159.5
+offset_right = 306.0
+offset_bottom = 159.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Update is required.
+
+{client_version} ---> {new_version}"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpdateButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -296.0
+offset_top = -91.0
+offset_right = -46.75
+offset_bottom = -39.75
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_sj4qg")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_v84vv")
+text = "Update!!!"
+
+[node name="NewVersionAvailableLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -576.0
+offset_top = 31.0
+offset_right = 576.0
+offset_bottom = 115.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_sj4qg")
+theme_override_font_sizes/font_size = 24
+text = "New version available"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="UpdateButton" to="." method="_on_update_button_pressed"]

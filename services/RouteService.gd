@@ -1,6 +1,9 @@
 extends RefCounted
 class_name RouteService
 
+# URLs
+var GITHUB_RELEASE_URL          := "https://github.com/hayukimori/_R_IG/releases"
+
 # Routes
 var ROUTE_LOGIN                 := Route.new("/api/auth/login", HTTPClient.METHOD_POST)
 var ROUTE_REGISTER              := Route.new("/api/auth/register", HTTPClient.METHOD_POST)
@@ -23,7 +26,7 @@ var ROUTE_WORLD_UPDATES         := Route.new("/api/v1/worldupdates", HTTPClient.
 var ROUTE_ME                    := Route.new("/api/v1/profiles/me", HTTPClient.METHOD_GET)
 var ROUTE_SERVER_TIME           := Route.new("/api/v1/server-clock", HTTPClient.METHOD_GET)
 var ROUTE_HEALTH                := Route.new("/api/v1/health", HTTPClient.METHOD_GET)
-
+var ROUTE_CHECK_UPDATES         := Route.new("/api/v1/check-updates", HTTPClient.METHOD_POST)
 
 var api_host: String
 var ws_host: String
