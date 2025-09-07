@@ -22,6 +22,7 @@ var ROUTE_WORLD_UNFOLLOWS       := Route.new("/api/v1/worldunfollows", HTTPClien
 var ROUTE_WORLD_UPDATES         := Route.new("/api/v1/worldupdates", HTTPClient.METHOD_POST)
 var ROUTE_ME                    := Route.new("/api/v1/profiles/me", HTTPClient.METHOD_GET)
 var ROUTE_SERVER_TIME           := Route.new("/api/v1/server-clock", HTTPClient.METHOD_GET)
+var ROUTE_HEALTH                := Route.new("/api/v1/health", HTTPClient.METHOD_GET)
 
 
 var api_host: String

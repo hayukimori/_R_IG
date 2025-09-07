@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bjofi1c2jdw8p"]
+[gd_scene load_steps=21 format=3 uid="uid://bjofi1c2jdw8p"]
 
 [ext_resource type="Script" uid="uid://bvqhv8cjvvan5" path="res://scripts/UserInterface/main_auth_system_ui.gd" id="1_d4jrm"]
 [ext_resource type="FontFile" uid="uid://d1ih4lgkwhl61" path="res://assets/fonts/Aldrich/Aldrich-Regular.ttf" id="2_6c6bm"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bex1hitrxwdcf" path="res://assets/textures/icons/google_icons/visibility_off_24dp.png" id="6_60g0b"]
 [ext_resource type="Texture2D" uid="uid://pkr5l1nqxwxs" path="res://assets/textures/icons/auth_system_ui_icons/next_btn.png" id="7_8wg3i"]
 [ext_resource type="Script" uid="uid://bwd7hjmqfy8ln" path="res://scripts/UserInterface/InternalComponent/password_field.gd" id="7_mpfq1"]
+[ext_resource type="PackedScene" uid="uid://b1l3hewnxdhln" path="res://screens/components/server_online_panel.tscn" id="8_mpfq1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60g0b"]
 bg_color = Color(0.215686, 0.215686, 0.215686, 1)
@@ -284,19 +285,19 @@ offset_right = 15.0
 offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/icon_hover_pressed_color = Color(0.0415072, 0.0415072, 0.0415072, 1)
 theme_override_colors/icon_hover_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/hover = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_colors/icon_hover_pressed_color = Color(0.0415072, 0.0415072, 0.0415072, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0mj6l")
 icon = ExtResource("7_8wg3i")
 icon_alignment = 1
 
@@ -452,19 +453,19 @@ offset_right = 15.0
 offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/icon_hover_pressed_color = Color(0.0415072, 0.0415072, 0.0415072, 1)
 theme_override_colors/icon_hover_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
-theme_override_styles/focus = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/hover = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_0mj6l")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_colors/icon_hover_pressed_color = Color(0.0415072, 0.0415072, 0.0415072, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_0mj6l")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0mj6l")
 icon = ExtResource("7_8wg3i")
 icon_alignment = 1
 
@@ -490,23 +491,23 @@ offset_right = 97.0
 offset_bottom = -107.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_hover_pressed_color = Color(0.407056, 0.407056, 0.407056, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_color = Color(0.374641, 0.5694, 1, 1)
 theme_override_colors/font_focus_color = Color(0.376471, 0.568627, 1, 1)
 theme_override_colors/font_pressed_color = Color(0.00243804, 0.000138135, 0.491117, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.407056, 0.407056, 0.407056, 1)
 theme_override_font_sizes/font_size = 12
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8wg3i")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8wg3i")
 text = "{ default auth method text }"
 
 [node name="ForgotPasswordButton" type="Button" parent="."]
@@ -522,23 +523,23 @@ offset_right = 97.0
 offset_bottom = -76.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_hover_pressed_color = Color(0.407056, 0.407056, 0.407056, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_colors/font_color = Color(0.374641, 0.5694, 1, 1)
 theme_override_colors/font_focus_color = Color(0.376471, 0.568627, 1, 1)
 theme_override_colors/font_pressed_color = Color(0.00243804, 0.000138135, 0.491117, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.407056, 0.407056, 0.407056, 1)
 theme_override_font_sizes/font_size = 12
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_8wg3i")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8wg3i")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_8wg3i")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8wg3i")
 text = "{ forgot_password text }"
 
 [node name="ErrorLabel" type="Label" parent="."]
@@ -565,6 +566,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ServerOnlinePanel" parent="." instance=ExtResource("8_mpfq1")]
+layout_mode = 1
+offset_left = 21.0
+offset_top = -51.0
+offset_right = 188.0
+offset_bottom = -17.0
 
 [connection signal="pressed" from="RegisterControl/BG/HeadPanel2/RegisterBtn" to="." method="_on_register_btn_pressed"]
 [connection signal="pressed" from="LoginControl/BG/HeadPanel2/LoginBtn" to="." method="_on_login_btn_pressed"]
