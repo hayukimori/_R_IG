@@ -1,0 +1,161 @@
+[gd_scene load_steps=14 format=3 uid="uid://b7utqqev7jty1"]
+
+[ext_resource type="Script" uid="uid://bn4tifbv4y16u" path="res://scripts/components/post_object.gd" id="1_doxdq"]
+[ext_resource type="Script" uid="uid://cwasfeb3if57j" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="2_wuxtp"]
+[ext_resource type="Texture2D" uid="uid://clv12evmtslyb" path="res://icon.svg" id="3_t8i48"]
+[ext_resource type="Texture2D" uid="uid://di0cfhrdys5px" path="res://assets/textures/icons/google_icons/favorite_24dp.png" id="4_fnew4"]
+[ext_resource type="Texture2D" uid="uid://kecq6dfgbia" path="res://assets/textures/icons/google_icons/comment_mode_24dp.png" id="5_lbbdq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqjpr"]
+bg_color = Color(0.13561687, 0.13561687, 0.13561681, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_doxdq"]
+corner_radius_top_left = 64
+corner_radius_top_right = 64
+corner_radius_bottom_right = 64
+corner_radius_bottom_left = 64
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_akgjv"]
+content_margin_left = 8.0
+
+[sub_resource type="SystemFont" id="SystemFont_doxdq"]
+font_names = PackedStringArray("Roboto")
+font_weight = 550
+
+[sub_resource type="LabelSettings" id="LabelSettings_k4x0u"]
+font = SubResource("SystemFont_doxdq")
+
+[sub_resource type="SystemFont" id="SystemFont_wuxtp"]
+font_names = PackedStringArray("Open Sans")
+font_weight = 175
+
+[sub_resource type="LabelSettings" id="LabelSettings_doxdq"]
+font = SubResource("SystemFont_wuxtp")
+font_size = 14
+
+[sub_resource type="LabelSettings" id="LabelSettings_uomto"]
+font_size = 8
+
+[node name="PostObject" type="Control"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_doxdq")
+
+[node name="BackPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bqjpr")
+
+[node name="LeftContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 17.0
+offset_top = 16.0
+offset_right = 276.0
+offset_bottom = 64.0
+
+[node name="TextureRectRounded" type="Panel" parent="LeftContainer"]
+clip_children = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_doxdq")
+script = ExtResource("2_wuxtp")
+radius_bottom_left = 64
+radius_bottom_right = 64
+radius_top_left = 64
+radius_top_right = 64
+texture = ExtResource("3_t8i48")
+metadata/_custom_type_script = "uid://cwasfeb3if57j"
+
+[node name="DisplayNameLabel" type="Label" parent="LeftContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_akgjv")
+text = "TheMaximumNameLength"
+label_settings = SubResource("LabelSettings_k4x0u")
+
+[node name="ContentLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 24.0
+offset_top = 8.0
+offset_right = -16.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_doxdq")
+autowrap_mode = 1
+
+[node name="InteractionsContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -49.0
+offset_top = 10.0
+offset_right = -9.0
+offset_bottom = 50.0
+grow_horizontal = 0
+
+[node name="LikeButton" type="Button" parent="InteractionsContainer"]
+layout_mode = 2
+theme_override_constants/icon_max_width = 16
+icon = ExtResource("4_fnew4")
+flat = true
+icon_alignment = 1
+
+[node name="LikeLabel" type="Label" parent="InteractionsContainer/LikeButton"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -41.0
+offset_top = 4.0
+offset_right = 1.0
+offset_bottom = 17.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_uomto")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="CommentButton" type="Button" parent="InteractionsContainer"]
+layout_mode = 2
+theme_override_constants/icon_max_width = 16
+icon = ExtResource("5_lbbdq")
+flat = true
+icon_alignment = 1
+
+[node name="CommetLabel" type="Label" parent="InteractionsContainer/CommentButton"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -41.0
+offset_top = 6.0
+offset_right = 1.0
+offset_bottom = 19.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_uomto")
+horizontal_alignment = 1
+vertical_alignment = 2

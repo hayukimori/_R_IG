@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dvlqau5c7adr6"]
+[gd_scene load_steps=25 format=3 uid="uid://dvlqau5c7adr6"]
 
 [ext_resource type="Script" uid="uid://c3j3p428oc40d" path="res://scripts/UserInterface/user_main_interface.gd" id="1_156ji"]
 [ext_resource type="Script" uid="uid://cwasfeb3if57j" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="1_qflfr"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c1brspmhijqhs" path="res://assets/textures/icons/google_icons/exit_to_app_24dp.png" id="3_se22f"]
 [ext_resource type="Texture2D" uid="uid://b8ihbnq0julq6" path="res://assets/textures/icons/google_icons/line_end_square_24dp.png" id="5_g83u1"]
 [ext_resource type="Texture2D" uid="uid://dxotkh28icalt" path="res://assets/textures/icons/google_icons/line_start_square_24dp.png" id="6_se22f"]
+[ext_resource type="PackedScene" uid="uid://b4vtx5x86fxft" path="res://screens/components/posts_frame.tscn" id="8_eb8fm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rdgy6"]
 bg_color = Color(0.0666667, 0.0666667, 0.0666667, 1)
@@ -61,7 +62,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eb8fm"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aq8u4"]
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -84,7 +85,7 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aq8u4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4vxgo"]
 corner_radius_top_left = 64
 corner_radius_top_right = 64
 corner_radius_bottom_right = 64
@@ -223,7 +224,7 @@ offset_top = -12.0
 offset_right = 35.0
 offset_bottom = 12.0
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_eb8fm")
+theme_override_styles/panel = SubResource("StyleBoxFlat_aq8u4")
 script = ExtResource("1_qflfr")
 corner_detail = 20
 radius_bottom_left = 20
@@ -301,7 +302,7 @@ offset_left = 21.0
 offset_top = 17.0
 offset_right = 69.0
 offset_bottom = 65.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_aq8u4")
+theme_override_styles/panel = SubResource("StyleBoxFlat_4vxgo")
 script = ExtResource("1_qflfr")
 corner_detail = 48
 radius_bottom_left = 64
@@ -404,6 +405,13 @@ metadata/_edit_lock_ = true
 [node name="VBoxContainer" type="VBoxContainer" parent="ProfilePreview/RolesPanel/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="PostsFrame" parent="." instance=ExtResource("8_eb8fm")]
+layout_mode = 1
+offset_left = -557.0
+offset_top = -227.0
+offset_right = 1.0
+offset_bottom = 221.0
 
 [connection signal="pressed" from="TopBarControl/MainPanel/RightSide/LogoutButton" to="." method="_on_logout_button_pressed"]
 [connection signal="pressed" from="TopBarControl/MainPanel/RightSide/ProfileButton" to="." method="_on_profile_click_button_pressed"]

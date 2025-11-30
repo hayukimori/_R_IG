@@ -1,0 +1,105 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4vtx5x86fxft"]
+
+[ext_resource type="Script" uid="uid://um4fkipb8erx" path="res://scripts/components/posts_frame.gd" id="1_chyg4"]
+[ext_resource type="Script" uid="uid://dvokist4akwyy" path="res://scripts/components/main_post_text_edit.gd" id="1_kbekx"]
+[ext_resource type="Texture2D" uid="uid://cdj3dla4n521j" path="res://assets/textures/icons/google_icons/send_24dp.png" id="2_o5l3b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3j3pm"]
+bg_color = Color(0.1452662, 0.1452662, 0.14526615, 1)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color(0.14509805, 0.14509805, 0.14509805, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.6901961)
+shadow_offset = Vector2(0, 2.015)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xvcr3"]
+bg_color = Color(1, 1, 1, 0.09803922)
+corner_radius_top_left = 99
+corner_radius_top_right = 99
+corner_radius_bottom_right = 99
+corner_radius_bottom_left = 99
+
+[node name="PostsFrame" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -571.0
+offset_top = -236.0
+offset_right = -13.0
+offset_bottom = 212.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_chyg4")
+
+[node name="PostsScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -247.0
+offset_top = 76.0
+offset_right = 220.0
+offset_bottom = 514.0
+grow_horizontal = 2
+
+[node name="PostsListVBox" type="VBoxContainer" parent="PostsScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MainPostControl" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -254.5
+offset_right = 299.0
+offset_bottom = 58.0
+grow_horizontal = 2
+
+[node name="TEditor" type="TextEdit" parent="MainPostControl"]
+layout_direction = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_3j3pm")
+theme_override_styles/focus = SubResource("StyleBoxFlat_3j3pm")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_3j3pm")
+placeholder_text = "Write here"
+wrap_mode = 1
+scroll_smooth = true
+caret_blink = true
+script = ExtResource("1_kbekx")
+
+[node name="Submit" type="Button" parent="MainPostControl/TEditor"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -51.5
+offset_top = 14.0
+offset_right = -19.5
+offset_bottom = 46.0
+grow_horizontal = 0
+theme_override_constants/icon_max_width = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_xvcr3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_xvcr3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xvcr3")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_xvcr3")
+theme_override_styles/focus = SubResource("StyleBoxFlat_xvcr3")
+icon = ExtResource("2_o5l3b")
+icon_alignment = 1
+
+[connection signal="pressed" from="MainPostControl/TEditor/Submit" to="." method="_on_submit_pressed"]

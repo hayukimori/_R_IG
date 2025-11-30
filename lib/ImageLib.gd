@@ -74,3 +74,20 @@ static func buffer_to_texture(buffer: PackedByteArray) -> ImageTexture:
 		"webp": image.load_webp_from_buffer(buffer)
 	
 	return ImageTexture.create_from_image(image)
+
+
+static func _get_default_avatar() -> ImageTexture:
+	return load("res://assets/default_profile_picture.png")
+
+
+### Gets an image or default
+static func get_image_or_default(url: String) -> ImageTexture:
+	if not ValidationRules.validate_url(url):
+		push_error("Invalid URL: %s" % url)
+		return _get_default_avatar()
+	
+	var image_data = await Repositories.profile_repository.download_image(url)
+	if image_data.is_empty():
+		return _get_default_avatar()
+	
+	return ImageLib.buffer_to_texture(image_data)
