@@ -19,8 +19,8 @@ corner_radius_bottom_left = 8
 font = ExtResource("3_j72kl")
 font_size = 18
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bn0bf"]
-bg_color = Color(0.755421, 0.0715574, 0.163007, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_78ki5"]
+bg_color = Color(0.0937819, 0.0937819, 0.0937819, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -33,8 +33,15 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_78ki5"]
-bg_color = Color(0.0937819, 0.0937819, 0.0937819, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bn0bf"]
+bg_color = Color(0.755421, 0.0715574, 0.163007, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mwlgs"]
+bg_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -49,13 +56,6 @@ corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8l44x"]
 bg_color = Color(0.0885599, 0.0885599, 0.0885599, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mwlgs"]
-bg_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -187,9 +187,9 @@ grow_vertical = 2
 theme_override_constants/icon_max_width = 14
 theme_override_fonts/font = ExtResource("3_j72kl")
 theme_override_font_sizes/font_size = 10
-theme_override_styles/hover = SubResource("StyleBoxFlat_bn0bf")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_se22f")
 theme_override_styles/normal = SubResource("StyleBoxFlat_78ki5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_se22f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bn0bf")
 icon = ExtResource("3_se22f")
 icon_alignment = 1
 
@@ -206,11 +206,11 @@ offset_right = -61.0
 offset_bottom = 18.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_tihik")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_8l44x")
-theme_override_styles/hover = SubResource("StyleBoxFlat_tihik")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_tihik")
 theme_override_styles/normal = SubResource("StyleBoxFlat_mwlgs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tihik")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tihik")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_8l44x")
+theme_override_styles/focus = SubResource("StyleBoxFlat_tihik")
 
 [node name="ProfilePicture" type="Panel" parent="TopBarControl/MainPanel/RightSide/ProfileButton"]
 clip_children = 1

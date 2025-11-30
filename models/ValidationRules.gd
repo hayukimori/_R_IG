@@ -101,3 +101,15 @@ static func validate_image_format(data: PackedByteArray) -> String:
 		if riff_str == "RIFF" and webp_str == "WEBP":
 			return "webp"
 	return "unknown"
+
+
+static func validate_post_content(data: String) -> bool:
+	var validation: bool = is_valid_string(
+		data,
+		true,
+		1, 
+		1000, 
+		""
+	)
+
+	return validation;

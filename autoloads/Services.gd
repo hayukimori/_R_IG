@@ -7,6 +7,7 @@ var announcements: AnnouncementsService
 var routes: RouteService
 var profile_service: ProfileService
 var cluster_service: ClusterService
+var posts_service: PostService
 
 func _ready() -> void:
 	print("[Services] Starting services")
@@ -17,3 +18,4 @@ func _ready() -> void:
 	announcements = AnnouncementsService.new(self);
 	profile_service = ProfileService.new();
 	cluster_service = ClusterService.new(self);
+	posts_service = PostService.new(self);

@@ -28,6 +28,14 @@ var ROUTE_SERVER_TIME           := Route.new("/api/v1/server-clock", HTTPClient.
 var ROUTE_HEALTH                := Route.new("/api/v1/health", HTTPClient.METHOD_GET)
 var ROUTE_CHECK_UPDATES         := Route.new("/api/v1/check-updates", HTTPClient.METHOD_POST)
 
+# Posts routes
+var ROUTE_POST                  := Route.new("/api/v1/posts", HTTPClient.METHOD_POST)
+var ROUTE_COMMENT_POST          := Route.new("/api/v1/posts/{postId}/comment", HTTPClient.METHOD_POST)
+var ROUTE_LIKE_POST             := Route.new("/api/v1/posts/{postId}/like", HTTPClient.METHOD_POST)
+var ROUTE_GET_POSTS             := Route.new("/api/v1/posts", HTTPClient.METHOD_GET)
+var ROUTE_GET_COMMENTS          := Route.new("/api/v1/posts/{postId}/comment", HTTPClient.METHOD_GET)
+var ROUTE_GET_LIKES             := Route.new("/api/v1/posts/{postId}/like", HTTPClient.METHOD_GET)
+
 var api_host: String
 var ws_host: String
 

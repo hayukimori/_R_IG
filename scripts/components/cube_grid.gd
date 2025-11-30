@@ -63,6 +63,3 @@ func _process(delta: float) -> void:
 
 		var noise_value = noise.get_noise_3d(x, y, time)
 		cube.position.z = noise_value * noise_strength
-
-
-
