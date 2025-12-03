@@ -115,7 +115,6 @@ anchors_preset = 0
 offset_right = 410.0
 offset_bottom = 170.0
 script = ExtResource("1_05lmw")
-post_has_image = false
 
 [node name="BgPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -189,6 +188,7 @@ offset_right = -27.0
 offset_bottom = 267.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_0d1m5")
 script = ExtResource("1_0vpvm")
+expand_mode = 5
 metadata/_custom_type_script = "uid://cwasfeb3if57j"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
