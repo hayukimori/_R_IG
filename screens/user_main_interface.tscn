@@ -62,7 +62,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aq8u4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eb8fm"]
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -85,7 +85,7 @@ corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4vxgo"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aq8u4"]
 corner_radius_top_left = 64
 corner_radius_top_right = 64
 corner_radius_bottom_right = 64
@@ -224,7 +224,7 @@ offset_top = -12.0
 offset_right = 35.0
 offset_bottom = 12.0
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_aq8u4")
+theme_override_styles/panel = SubResource("StyleBoxFlat_eb8fm")
 script = ExtResource("1_qflfr")
 corner_detail = 20
 radius_bottom_left = 20
@@ -302,7 +302,7 @@ offset_left = 21.0
 offset_top = 17.0
 offset_right = 69.0
 offset_bottom = 65.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_4vxgo")
+theme_override_styles/panel = SubResource("StyleBoxFlat_aq8u4")
 script = ExtResource("1_qflfr")
 corner_detail = 48
 radius_bottom_left = 64
@@ -408,10 +408,16 @@ size_flags_horizontal = 3
 
 [node name="PostsFrame" parent="." instance=ExtResource("8_eb8fm")]
 layout_mode = 1
-offset_left = -557.0
-offset_top = -227.0
-offset_right = 1.0
-offset_bottom = 221.0
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 95.0
+offset_right = -43.0
+offset_bottom = -39.0
+grow_horizontal = 0
 
 [connection signal="pressed" from="TopBarControl/MainPanel/RightSide/LogoutButton" to="." method="_on_logout_button_pressed"]
 [connection signal="pressed" from="TopBarControl/MainPanel/RightSide/ProfileButton" to="." method="_on_profile_click_button_pressed"]

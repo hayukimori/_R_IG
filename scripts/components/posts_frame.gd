@@ -1,6 +1,6 @@
 extends Control
 
-var post_object = preload("res://screens/components/post_object.tscn")
+var post_object = preload("res://screens/components/post_component_model.tscn")
 
 @onready var post_list_vbox_container = $PostsScrollContainer/PostsListVBox
 @onready var teditor: TextEdit = $MainPostControl/TEditor

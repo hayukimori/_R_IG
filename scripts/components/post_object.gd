@@ -14,14 +14,17 @@ extends Control
 
 
 @onready var content_label: Label = $ContentLabel
-@onready var pfp_texture_rect: TextureRectRounded = $LeftContainer/TextureRectRounded
-@onready var display_name_label: Label = $LeftContainer/DisplayNameLabel
+@onready var pfp_texture_rect: TextureRectRounded = $TextureRectRounded
+@onready var display_name_label: Label = $DisplayNameLabel
 @onready var likes_count_label: Label = $InteractionsContainer/LikeButton/LikeLabel
 @onready var comments_count_label: Label = $InteractionsContainer/CommentButton/CommetLabel
 
+@onready var like_btn: Button = $InteractionsContainer/LikeButton
+@onready var comment_btn: Button = $InteractionsContainer/CommentButton
+
 
 func change_current_size() -> void:
-	custom_minimum_size.y = content_label.size.y + 64
+	custom_minimum_size.y = content_label.size.y + 48
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -43,3 +46,22 @@ func load_data() -> void:
 	
 	var texture = await ImageLib.get_image_or_default(avatarUrl)
 	pfp_texture_rect.texture = texture
+
+
+func like_post() -> void:
+	# to be implemented
+	pass
+
+func comment_post() -> void:
+	# to be implemented
+	pass
+
+
+func _on_comment_button_pressed() -> void:
+	pass # Replace with function body.
+
+func _on_like_button_pressed() -> void:
+	like_btn.disabled = true
+	like_post()
+	like_btn.disabled = false
+

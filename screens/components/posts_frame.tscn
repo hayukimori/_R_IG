@@ -1,20 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4vtx5x86fxft"]
+[gd_scene load_steps=8 format=3 uid="uid://b4vtx5x86fxft"]
 
 [ext_resource type="Script" uid="uid://um4fkipb8erx" path="res://scripts/components/posts_frame.gd" id="1_chyg4"]
 [ext_resource type="Script" uid="uid://dvokist4akwyy" path="res://scripts/components/main_post_text_edit.gd" id="1_kbekx"]
 [ext_resource type="Texture2D" uid="uid://cdj3dla4n521j" path="res://assets/textures/icons/google_icons/send_24dp.png" id="2_o5l3b"]
+[ext_resource type="Texture2D" uid="uid://n1u6jqxpcaj7" path="res://assets/textures/icons/iconic_icons/attach-outline.png" id="4_chyg4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3j3pm"]
-bg_color = Color(0.1452662, 0.1452662, 0.14526615, 1)
+bg_color = Color(0.11764706, 0.11764706, 0.11764706, 1)
 border_width_left = 20
 border_width_top = 20
 border_width_right = 20
 border_width_bottom = 20
-border_color = Color(0.14509805, 0.14509805, 0.14509805, 1)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
+border_color = Color(0.11764706, 0.11764706, 0.11764706, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
 shadow_color = Color(0, 0, 0, 0.6901961)
 shadow_offset = Vector2(0, 2.015)
 
@@ -25,6 +24,14 @@ corner_radius_top_right = 99
 corner_radius_bottom_right = 99
 corner_radius_bottom_left = 99
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chyg4"]
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+border_width_top = 1
+border_color = Color(0.12156863, 0.11764706, 0.1254902, 1)
+border_blend = true
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
 [node name="PostsFrame" type="Control"]
 layout_mode = 3
 anchors_preset = 8
@@ -32,46 +39,54 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -571.0
-offset_top = -236.0
-offset_right = -13.0
-offset_bottom = 212.0
+offset_left = -521.0
+offset_top = -293.0
+offset_right = 538.0
+offset_bottom = 229.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_chyg4")
 
 [node name="PostsScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -247.0
-offset_top = 76.0
-offset_right = 220.0
-offset_bottom = 514.0
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = -0.008
+anchor_right = 1.0
+anchor_bottom = 0.85800004
+offset_left = -418.0
+offset_top = 0.17600012
+offset_bottom = 74.12399
 grow_horizontal = 2
+grow_vertical = 2
 
 [node name="PostsListVBox" type="VBoxContainer" parent="PostsScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 9
+metadata/_edit_lock_ = true
 
 [node name="MainPostControl" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -254.5
-offset_right = 299.0
-offset_bottom = 58.0
-grow_horizontal = 2
+anchors_preset = 0
+offset_left = 9.0
+offset_top = 10.0
+offset_right = 491.5
+offset_bottom = 82.0
 
 [node name="TEditor" type="TextEdit" parent="MainPostControl"]
+clip_contents = false
 layout_direction = 4
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -4.0
+offset_right = -1.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_3j3pm")
@@ -82,6 +97,7 @@ wrap_mode = 1
 scroll_smooth = true
 caret_blink = true
 script = ExtResource("1_kbekx")
+metadata/_edit_lock_ = true
 
 [node name="Submit" type="Button" parent="MainPostControl/TEditor"]
 layout_mode = 1
@@ -101,5 +117,38 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_xvcr3")
 theme_override_styles/focus = SubResource("StyleBoxFlat_xvcr3")
 icon = ExtResource("2_o5l3b")
 icon_alignment = 1
+
+[node name="Panel" type="Panel" parent="MainPostControl/TEditor"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_chyg4")
+
+[node name="Button" type="Button" parent="MainPostControl/TEditor/Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 4.0
+offset_right = 102.0
+offset_bottom = 29.0
+theme_override_font_sizes/font_size = 12
+text = "Attach file"
+icon = ExtResource("4_chyg4")
+flat = true
+expand_icon = true
+
+[node name="Files" type="Node" parent="."]
+
+[node name="FileDialog" type="FileDialog" parent="Files"]
+oversampling_override = 1.0
+title = "Open a File"
+file_mode = 0
+access = 1
+filters = PackedStringArray("*.png", "*.jpg", "*.jpeg", "*.mp4")
+use_native_dialog = true
 
 [connection signal="pressed" from="MainPostControl/TEditor/Submit" to="." method="_on_submit_pressed"]

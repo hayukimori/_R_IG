@@ -1,0 +1,288 @@
+[gd_scene load_steps=25 format=3 uid="uid://b5r3ipopybqfm"]
+
+[ext_resource type="Script" uid="uid://cwasfeb3if57j" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="1_0vpvm"]
+[ext_resource type="Script" uid="uid://b4t3xig4ewy7f" path="res://scripts/components/prototype/post_component_model.gd" id="1_05lmw"]
+[ext_resource type="Texture2D" uid="uid://clv12evmtslyb" path="res://icon.svg" id="2_05lmw"]
+[ext_resource type="Texture2D" uid="uid://di0cfhrdys5px" path="res://assets/textures/icons/google_icons/favorite_24dp.png" id="4_01da6"]
+[ext_resource type="Texture2D" uid="uid://d181bqmhvp7fn" path="res://assets/textures/icons/iconic_icons/chatbubble-outline-white.png" id="5_01da6"]
+[ext_resource type="Texture2D" uid="uid://bgpida1teedql" path="res://assets/textures/icons/iconic_icons/share-social-outline.png" id="6_7syyy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7syyy"]
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.15294118, 0.14901961, 0.15686275, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_01da6"]
+bg_color = Color(0.16445974, 0.16445976, 0.16445965, 1)
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.15294118, 0.14901961, 0.15686275, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+anti_aliasing = false
+anti_aliasing_size = 0.01
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_popio"]
+corner_radius_top_left = 99
+corner_radius_top_right = 99
+corner_radius_bottom_right = 99
+corner_radius_bottom_left = 99
+anti_aliasing = false
+
+[sub_resource type="SystemFont" id="SystemFont_01da6"]
+font_names = PackedStringArray("Inter")
+font_weight = 575
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_odrxe"]
+font = SubResource("SystemFont_01da6")
+font_size = 13
+
+[sub_resource type="SystemFont" id="SystemFont_7syyy"]
+font_names = PackedStringArray("Noto Sans Mono")
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_0d1m5"]
+font = SubResource("SystemFont_7syyy")
+font_size = 10
+font_color = Color(0.47657818, 0.47657818, 0.47657806, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_popio"]
+font_names = PackedStringArray("Liberation Sans")
+font_weight = 225
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_g3b8r"]
+font = SubResource("SystemFont_popio")
+font_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0d1m5"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_odrxe"]
+bg_color = Color(0.15294118, 0.14901961, 0.15686275, 1)
+corner_radius_top_left = 99
+corner_radius_top_right = 99
+corner_radius_bottom_right = 99
+corner_radius_bottom_left = 99
+
+[sub_resource type="SystemFont" id="SystemFont_05lmw"]
+font_names = PackedStringArray("Inter")
+font_weight = 350
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_popio"]
+font = SubResource("SystemFont_05lmw")
+font_size = 9
+font_color = Color(0.5925394, 0.58389336, 0.60122633, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_01da6"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_01da6"]
+color = Color(0.25882354, 0.25882354, 0.25882354, 0.3254902)
+
+[sub_resource type="SystemFont" id="SystemFont_odrxe"]
+font_names = PackedStringArray("Noto Sans Mono")
+font_weight = 100
+
+[sub_resource type="LabelSettings" id="LabelSettings_ns33d"]
+font = SubResource("SystemFont_odrxe")
+font_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g3b8r"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="PostObject2" type="Control"]
+custom_minimum_size = Vector2(410, 0)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 410.0
+offset_bottom = 170.0
+script = ExtResource("1_05lmw")
+post_has_image = false
+
+[node name="BgPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7syyy")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 13.0
+offset_right = 61.0
+offset_bottom = 55.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_01da6")
+
+[node name="ProfilePictureTextureRect" type="Panel" parent="."]
+clip_children = 1
+layout_mode = 0
+offset_left = 22.0
+offset_top = 16.0
+offset_right = 58.0
+offset_bottom = 52.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_popio")
+script = ExtResource("1_0vpvm")
+radius_bottom_left = 99
+radius_bottom_right = 99
+radius_top_left = 99
+radius_top_right = 99
+texture = ExtResource("2_05lmw")
+metadata/_custom_type_script = "uid://cwasfeb3if57j"
+
+[node name="DisplayNameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 21.0
+offset_right = 379.0
+offset_bottom = 41.0
+text = "TheMaximumNameLength"
+label_settings = SubResource("LabelSettings_odrxe")
+
+[node name="UsernameTimestampLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 71.0
+offset_top = 36.0
+offset_right = 285.0
+offset_bottom = 59.0
+text = "@username"
+label_settings = SubResource("LabelSettings_0d1m5")
+
+[node name="MainContentLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 26.5
+offset_top = 76.0
+offset_right = 380.5
+offset_bottom = 104.0
+label_settings = SubResource("LabelSettings_g3b8r")
+autowrap_mode = 2
+
+[node name="PostMediaTextureRectRounded" type="Panel" parent="."]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 27.0
+offset_top = 104.0
+offset_right = -27.0
+offset_bottom = 267.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0d1m5")
+script = ExtResource("1_0vpvm")
+metadata/_custom_type_script = "uid://cwasfeb3if57j"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -32.0
+offset_right = -156.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme_override_constants/icon_max_width = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_odrxe")
+text = "
+"
+icon = ExtResource("4_01da6")
+autowrap_trim_flags = 0
+icon_alignment = 1
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_popio")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+theme_override_styles/separator = SubResource("StyleBoxEmpty_01da6")
+
+[node name="Button2" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme_override_constants/icon_max_width = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_odrxe")
+text = "
+"
+icon = ExtResource("5_01da6")
+autowrap_trim_flags = 0
+icon_alignment = 1
+
+[node name="Label2" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_popio")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -48.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_01da6")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 253.0
+offset_top = -33.0
+offset_right = -23.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 16
+alignment = 2
+
+[node name="Label" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+text = "01/12/2025"
+label_settings = SubResource("LabelSettings_ns33d")
+
+[node name="Button" type="Button" parent="HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/icon_max_width = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_g3b8r")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g3b8r")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g3b8r")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_g3b8r")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g3b8r")
+icon = ExtResource("6_7syyy")
