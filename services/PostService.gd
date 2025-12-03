@@ -59,9 +59,35 @@ func new_post(content: String) -> PostResult:
 	if response_code not in range(200, 299):
 		req_result.get("response_code")
 		main_result.reasons.append("Post error. Unexpected Response: " + str(response_code))
+		return main_result
 	
+	main_result.postId = req_result.get("parsed_json").get("post").get("id") # Todo: fix this thing.
 
 	return main_result
+
+
+func upload_photo(rst: PostResult, file_path: String) -> ImgPostResult:
+	if !rst.ok:
+		return
+
+	var route = Services.routes.ROUTE_UPLOAD_RAW
+	var url = route.url({ "postId": rst.postId })
+
+	var rest: Dictionary = await Services.api.auth_req_img_post(url, file_path)
+	print(rest)
+
+	var r_code = rest.get("response_code")
+
+	var result: ImgPostResult = ImgPostResult.new()
+	if (r_code >= 200 and r_code <= 299):
+		result.ok = true
+	
+	else:
+		result.ok = false
+		result.reasons.append("Error uploading image.")
+
+
+	return result
 
 
 

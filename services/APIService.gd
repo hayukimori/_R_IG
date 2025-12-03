@@ -87,6 +87,145 @@ func auth_req_patch(url: String, payload: Dictionary, custom_headers: Array = []
 	var result = await auth_fetch(url, HTTPClient.METHOD_PATCH, payload, custom_headers)
 	return result
 
+## POST method for sending image (multipart/form-data) - Godot 4.5 compat
+func auth_req_img_post(url: String, file_path: String, custom_headers: Array = []) -> Dictionary:
+	var method = HTTPClient.METHOD_POST
+
+	# validates url
+	var validation = ValidationRules.validate_url(url)
+	if not validation:
+		push_warning("Invalid url:", url)
+		return {}
+
+	var http_request : HTTPRequest = HTTPRequest.new()
+	parent_node.add_child(http_request)
+
+	# open 
+	var file := FileAccess.open(file_path, FileAccess.READ)
+	if file == null:
+		push_error("Failed to open file: %s" % file_path)
+		return {}
+
+	var file_bytes: PackedByteArray = file.get_buffer(file.get_length())
+	file.close()
+
+	# filename by extension
+	var filename := file_path.get_file()
+	var ext := filename.get_extension().to_lower()
+	var mime := "application/octet-stream"
+	if ext in ["png","jpg","jpeg","webp","gif","bmp"]:
+		if ext == "png":
+			mime = "image/png"
+		elif ext == "jpg" or ext == "jpeg":
+			mime = "image/jpeg"
+		elif ext == "webp":
+			mime = "image/webp"
+		elif ext == "gif":
+			mime = "image/gif"
+		elif ext == "bmp":
+			mime = "image/bmp"
+
+	# boundary
+	var boundary := "----GodotBoundary%08x" % randi()
+
+	
+	var b_body: PackedByteArray = PackedByteArray()
+	# helper inline
+	b_body += ("--" + boundary + "\r\n").to_utf8_buffer()
+	b_body += ('Content-Disposition: form-data; name="file"; filename="%s"\r\n' % filename).to_utf8_buffer()
+	b_body += ("Content-Type: %s\r\n\r\n" % mime).to_utf8_buffer()
+	b_body += file_bytes
+	b_body += "\r\n".to_utf8_buffer()
+	b_body += ("--" + boundary + "--\r\n").to_utf8_buffer()
+
+	# headers
+	var headers: Array = []
+	if custom_headers == []:
+		headers = [
+			"Content-Type: multipart/form-data; boundary=%s" % boundary,
+			"Accept: application/json",
+			"Authorization: Bearer %s" % Services.user_service.login_token
+		]
+	else:
+		headers = custom_headers
+
+	# send raw
+	var err = http_request.request_raw(url, headers, method, b_body)
+	if err != OK:
+		push_error("Failed to make request: %s" % err)
+		return {}
+
+	# wait response
+	var result = await http_request.request_completed
+
+	var result_code = result[0]
+	var response_code = result[1]
+	var _headers = result[2]
+	var body: PackedByteArray = result[3]
+
+	if result_code != HTTPRequest.RESULT_SUCCESS:
+		push_error("Couldn't complete request. Result: %d" % result_code)
+		return {}
+
+	# processar corpo
+	var body_text: String = ""
+	if body.size() > 0:
+		body_text = body.get_string_from_utf8()
+	var parsed_json := {}
+	var result_array := []
+	var is_json := true
+
+	if body_text != "":
+		var parse_result = JSON.parse_string(body_text)
+		if typeof(parse_result) == TYPE_DICTIONARY or typeof(parse_result) == TYPE_ARRAY:
+			if typeof(parse_result) == TYPE_ARRAY:
+				result_array.assign(parse_result)
+			else:
+				parsed_json.assign(parse_result)
+		else:
+			var parse = JSON.new()
+
+			var try_parsed = parse.parse(body_text)
+			if try_parsed.error == OK:
+				if typeof(try_parsed.result) == TYPE_ARRAY:
+					result_array.assign(try_parsed.result)
+				elif typeof(try_parsed.result) == TYPE_DICTIONARY:
+					parsed_json.assign(try_parsed.result)
+				else:
+					is_json = false
+			else:
+				is_json = false
+
+	match response_code:
+		200, 201:
+			if AppConfig.DEBUG_MODE:
+				print("Protected request, success")
+		400:
+			push_warning("Bad request. %s" % (JSON.stringify(parsed_json) if is_json else ""))
+		401:
+			push_warning("Unauthorized. Please log in and try again")
+		403:
+			push_warning("Forbidden. You don't have permission")
+		404:
+			push_warning("User or route not found")
+		409:
+			push_warning("Conflicting data")
+		422:
+			push_warning("Validation error: %s" % (JSON.stringify(parsed_json) if is_json else ""))
+		500, 502, 503:
+			push_warning("Server error (%d). Try again later." % response_code)
+		_:
+			push_warning("Unexpected response (%d): %s" % [response_code, body_text])
+
+	return {
+		"body_text": body_text,
+		"is_json": is_json,
+		"parsed_json": parsed_json,
+		"result_array": result_array,
+		"response_code": response_code
+	}
+
+
 
 # Makes a request and returns it as json, containing body_text, is_json, parsed_json, result_array and response_code
 func simple_request(

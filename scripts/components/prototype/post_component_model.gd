@@ -1,5 +1,5 @@
 extends Control
-
+class_name PostComponentView
 
 @export var post_id: String;
 @export var authorId: String;
@@ -8,9 +8,13 @@ extends Control
 @export var updatedAt: String;
 @export var avatarUrl: String;
 @export var displayName: String;
+@export var username: String;
 @export var likesCount: int;
 @export var commentsCount: int;
-@export var post_has_image: bool = true;
+@export var media: Array = []
+
+@export var has_media: bool = false
+
 
 
 @onready var content_label: Label = $MainContentLabel
@@ -41,6 +45,21 @@ func _ready() -> void:
 func load_data() -> void:
 	display_name_label.text = displayName
 	content_label.text = content
+
+	if has_media:
+		var raw_url = media[0].get("url")
+		var media_url = Services.routes.get_media_url(raw_url)
+
+		print("[POST] raw_url: ", raw_url)
+		print("[POST] media_url: ", media_url)
+
+		var media_texture = await ImageLib.get_image_or_default(media_url)
+		print("[POST] Texture: ", media_texture)
+
+		postmedia_tr.texture = media_texture
+
+
+
 	#comments_count_label.text = str(commentsCount)
 	#likes_count_label.text = str(likesCount)
 	
@@ -50,7 +69,7 @@ func load_data() -> void:
 
 
 func calc_size() -> int:
-	if post_has_image:
+	if has_media:
 		postmedia_tr.size = DEFAULT_IMAGE_SIZE
 	else:
 		postmedia_tr.size = Vector2.ZERO

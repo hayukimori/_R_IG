@@ -274,6 +274,19 @@ label_settings = SubResource("LabelSettings_xhogk")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="PostsFrame" parent="." instance=ExtResource("8_eb8fm")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 95.0
+offset_right = -43.0
+offset_bottom = -39.0
+grow_horizontal = 0
+
 [node name="ProfilePreview" type="Control" parent="."]
 visible = false
 layout_mode = 1
@@ -405,19 +418,6 @@ metadata/_edit_lock_ = true
 [node name="VBoxContainer" type="VBoxContainer" parent="ProfilePreview/RolesPanel/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="PostsFrame" parent="." instance=ExtResource("8_eb8fm")]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 40.0
-offset_top = 95.0
-offset_right = -43.0
-offset_bottom = -39.0
-grow_horizontal = 0
 
 [connection signal="pressed" from="TopBarControl/MainPanel/RightSide/LogoutButton" to="." method="_on_logout_button_pressed"]
 [connection signal="pressed" from="TopBarControl/MainPanel/RightSide/ProfileButton" to="." method="_on_profile_click_button_pressed"]

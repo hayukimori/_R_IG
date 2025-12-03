@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4vtx5x86fxft"]
+[gd_scene load_steps=9 format=3 uid="uid://b4vtx5x86fxft"]
 
 [ext_resource type="Script" uid="uid://um4fkipb8erx" path="res://scripts/components/posts_frame.gd" id="1_chyg4"]
 [ext_resource type="Script" uid="uid://dvokist4akwyy" path="res://scripts/components/main_post_text_edit.gd" id="1_kbekx"]
@@ -31,6 +31,10 @@ border_color = Color(0.12156863, 0.11764706, 0.1254902, 1)
 border_blend = true
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_chyg4"]
+font_size = 10
+font_color = Color(0.40960324, 0.40960327, 0.40960324, 1)
 
 [node name="PostsFrame" type="Control"]
 layout_mode = 3
@@ -74,7 +78,7 @@ anchors_preset = 0
 offset_left = 9.0
 offset_top = 10.0
 offset_right = 491.5
-offset_bottom = 82.0
+offset_bottom = 109.0
 
 [node name="TEditor" type="TextEdit" parent="MainPostControl"]
 clip_contents = false
@@ -94,10 +98,10 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_3j3pm")
 theme_override_styles/read_only = SubResource("StyleBoxFlat_3j3pm")
 placeholder_text = "Write here"
 wrap_mode = 1
+autowrap_mode = 2
 scroll_smooth = true
 caret_blink = true
 script = ExtResource("1_kbekx")
-metadata/_edit_lock_ = true
 
 [node name="Submit" type="Button" parent="MainPostControl/TEditor"]
 layout_mode = 1
@@ -129,7 +133,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_chyg4")
 
-[node name="Button" type="Button" parent="MainPostControl/TEditor/Panel"]
+[node name="AttachFileButton" type="Button" parent="MainPostControl/TEditor/Panel"]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 4.0
@@ -141,6 +145,18 @@ icon = ExtResource("4_chyg4")
 flat = true
 expand_icon = true
 
+[node name="SelectedFileLabel" type="Label" parent="MainPostControl/TEditor/Panel"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 5.0
+offset_right = 456.0
+offset_bottom = 28.0
+text = "no file selected"
+label_settings = SubResource("LabelSettings_chyg4")
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
 [node name="Files" type="Node" parent="."]
 
 [node name="FileDialog" type="FileDialog" parent="Files"]
@@ -151,4 +167,17 @@ access = 1
 filters = PackedStringArray("*.png", "*.jpg", "*.jpeg", "*.mp4")
 use_native_dialog = true
 
+[node name="ReloadButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -24.0
+offset_right = 65.0
+offset_bottom = 29.0
+grow_vertical = 2
+text = "reload"
+
 [connection signal="pressed" from="MainPostControl/TEditor/Submit" to="." method="_on_submit_pressed"]
+[connection signal="pressed" from="MainPostControl/TEditor/Panel/AttachFileButton" to="." method="_on_attach_file_button_pressed"]
+[connection signal="pressed" from="ReloadButton" to="." method="_on_reload_button_pressed"]

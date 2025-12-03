@@ -35,15 +35,18 @@ var ROUTE_LIKE_POST             := Route.new("/api/v1/posts/{postId}/like", HTTP
 var ROUTE_GET_POSTS             := Route.new("/api/v1/posts", HTTPClient.METHOD_GET)
 var ROUTE_GET_COMMENTS          := Route.new("/api/v1/posts/{postId}/comment", HTTPClient.METHOD_GET)
 var ROUTE_GET_LIKES             := Route.new("/api/v1/posts/{postId}/like", HTTPClient.METHOD_GET)
+var ROUTE_UPLOAD_RAW            := Route.new("/api/v1/upload/raw?postId={postId}", HTTPClient.METHOD_POST)
 
 var api_host: String
 var ws_host: String
+var media_host: String
 
 var parent_node: Node
 
 func _init(node: Node) -> void:
     api_host = ProjectSettings.get_setting("application/config/api_host", "http://localhost:3000")
     ws_host = ProjectSettings.get_setting("application/config/ws_host", "ws://localhost:8080")
+    media_host = ProjectSettings.get_setting("application/config/md_host", "http://localhost:3013")
 
     parent_node = node
 
@@ -56,3 +59,6 @@ func get_route(endpoint: String) -> String:
 
 func get_ws_url() -> String:
     return ws_host
+
+func get_media_url(endpoint: String) -> String:
+    return media_host + endpoint

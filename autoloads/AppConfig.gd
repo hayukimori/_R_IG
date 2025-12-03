@@ -19,6 +19,7 @@ func _ready():
 	# Loads [network] values
 	var api_url = config.get_value("network", "api_base_url", "")
 	var ws_url  = config.get_value("network", "ws_base_url", "")
+	var md_url  = config.get_value("network", "media_base_url", "")
 
 	# Set api url on project settings
 	if api_url != "":
@@ -33,3 +34,7 @@ func _ready():
 		if DEBUG_MODE: print("Websocket Host set to: ", ws_url)
 	else:
 		push_error("WS_HOST not set in environment config. Using default endpoint.")
+
+	if md_url != "":
+		ProjectSettings.set_setting("application/config/md_host", md_url)
+		if DEBUG_MODE: print("Media Host set to: ", md_url)
