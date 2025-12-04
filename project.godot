@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 config/api_host="http://localhost:3000"
 config/ws_host="ws://localhost:8080"
+config/md_host="http://localhost:3013"
 
 [autoload]
 

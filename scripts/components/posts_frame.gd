@@ -41,17 +41,63 @@ func refresh_posts() -> void:
 	var current_post_ids = current_posts.map(func(p): return p.id)
 	
 	var posts_to_add = new_posts.filter(func(p): return p.id not in current_post_ids)
+	var posts_to_update = new_posts.filter(func(p): return p.id in current_post_ids)
 	
+	# Add new posts
 	for post in posts_to_add:
 		var object: PostComponentView = post_object.instantiate()
 		_setup_post_object(object, post)
 		post_list_vbox_container.add_child(object)
 		post_list_vbox_container.move_child(object, 0)
-
 		posts_list.append(object)
-	
+		
+		object.connect("request_refresh", Callable(self, "_on_request_refresh"))
+
+	for upd_post in posts_to_update:
+		var post_obj = posts_list.filter(func(p): return p.post_id == upd_post.id)[0]
+
+		if _has_post_changed(post_obj, upd_post):
+			var x_index = posts_list.find(post_obj)
+			var y_index = post_list_vbox_container.get_children().find(post_obj)
+			print("[POSTS_FRAME] x_index from this updated post: ", x_index)
+			posts_list.remove_at(x_index)
+			post_list_vbox_container.remove_child(post_obj)
+			post_obj.queue_free()
+
+			var new_obj = post_object.instantiate()
+			_setup_post_object(new_obj, upd_post)
+			post_list_vbox_container.add_child(new_obj)
+			post_list_vbox_container.move_child(new_obj, y_index)
+			posts_list.insert(x_index, new_obj)
+			new_obj.connect("request_refresh", Callable(self, "_on_request_refresh"))
+
 	current_posts = new_posts
 
+
+
+func _on_request_refresh() -> void:
+	refresh_posts()
+
+
+func _has_post_changed(object: PostComponentView, post: PostModel) -> bool:
+	var content_changed = object.content != post.content
+	var likes_changed = object.likesCount != post.likesCount
+	var comments_changed = object.commentsCount != post.commentsCount
+	var avatar_changed = object.avatarUrl != post.avatarUrl
+	var display_name_changed = object.displayName != post.displayName
+	var media_changed = object.media != post.media
+	var updated_at_changed = object.updatedAt != post.updatedAt
+	
+	
+	var has_changed = content_changed or \
+					likes_changed or \
+					comments_changed or \
+					avatar_changed or \
+					display_name_changed or \
+					media_changed or \
+					updated_at_changed
+	
+	return has_changed
 
 func reload_posts() -> void:
 	for item in posts_list:
@@ -71,6 +117,7 @@ func load_posts() -> void:
 		post_list_vbox_container.add_child(object)
 	
 		posts_list.append(object)
+		object.connect("request_refresh", Callable(self, "_on_request_refresh"))
 
 
 func _setup_post_object(object: PostComponentView, item: PostModel) -> void:
@@ -86,6 +133,7 @@ func _setup_post_object(object: PostComponentView, item: PostModel) -> void:
 	object.has_media = item.has_media
 	object.media = item.media
 	object.username = item.username
+	object.liked = item.liked
 
 
 func send_post() -> void:

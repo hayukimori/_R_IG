@@ -32,6 +32,7 @@ var ROUTE_CHECK_UPDATES         := Route.new("/api/v1/check-updates", HTTPClient
 var ROUTE_POST                  := Route.new("/api/v1/posts", HTTPClient.METHOD_POST)
 var ROUTE_COMMENT_POST          := Route.new("/api/v1/posts/{postId}/comment", HTTPClient.METHOD_POST)
 var ROUTE_LIKE_POST             := Route.new("/api/v1/posts/{postId}/like", HTTPClient.METHOD_POST)
+var ROUTE_LIKE_DEL              := Route.new("/api/v1/posts/{postId}/like", HTTPClient.METHOD_DELETE)
 var ROUTE_GET_POSTS             := Route.new("/api/v1/posts", HTTPClient.METHOD_GET)
 var ROUTE_GET_COMMENTS          := Route.new("/api/v1/posts/{postId}/comment", HTTPClient.METHOD_GET)
 var ROUTE_GET_LIKES             := Route.new("/api/v1/posts/{postId}/like", HTTPClient.METHOD_GET)

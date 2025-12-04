@@ -51,10 +51,17 @@ func sendComment(comment: CommentModel) -> Dictionary:
 	return rest
 
 func sendLike(model: LikeModel) -> Dictionary:
-	var route = Services.route.ROUTE_LIKE_POST
-	var payload = { "userId": model.userId, "postId": model.post_id}
+	var route = Services.routes.ROUTE_LIKE_POST
+	var payload = { "userId": model.userId, "postId": model.postId}
 	var url = route.url({"postId": model.postId})
 
 	var rest = await Services.api.auth_req_post(url, payload)
 
+	return rest
+
+func deleteLike(post_id) -> Dictionary:
+	var route = Services.routes.ROUTE_LIKE_DEL
+	var url = route.url({"postId": post_id})
+	
+	var rest = await Services.api.auth_req_delete(url)
 	return rest

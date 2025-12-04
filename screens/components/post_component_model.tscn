@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b5r3ipopybqfm"]
+[gd_scene load_steps=26 format=3 uid="uid://b5r3ipopybqfm"]
 
 [ext_resource type="Script" uid="uid://cwasfeb3if57j" path="res://addons/TextureRectRounded/TextureRectRounded.gd" id="1_0vpvm"]
 [ext_resource type="Script" uid="uid://b4t3xig4ewy7f" path="res://scripts/components/prototype/post_component_model.gd" id="1_05lmw"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://di0cfhrdys5px" path="res://assets/textures/icons/google_icons/favorite_24dp.png" id="4_01da6"]
 [ext_resource type="Texture2D" uid="uid://d181bqmhvp7fn" path="res://assets/textures/icons/iconic_icons/chatbubble-outline-white.png" id="5_01da6"]
 [ext_resource type="Texture2D" uid="uid://bgpida1teedql" path="res://assets/textures/icons/iconic_icons/share-social-outline.png" id="6_7syyy"]
+[ext_resource type="Texture2D" uid="uid://dapcdrklltvea" path="res://assets/textures/icons/iconic_icons/ellipsis-horizontal-outline.png" id="7_popio"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7syyy"]
 bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
@@ -100,6 +101,7 @@ color = Color(0.25882354, 0.25882354, 0.25882354, 0.3254902)
 [sub_resource type="SystemFont" id="SystemFont_odrxe"]
 font_names = PackedStringArray("Noto Sans Mono")
 font_weight = 100
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_ns33d"]
 font = SubResource("SystemFont_odrxe")
@@ -159,39 +161,55 @@ offset_bottom = 41.0
 text = "TheMaximumNameLength"
 label_settings = SubResource("LabelSettings_odrxe")
 
-[node name="UsernameTimestampLabel" type="Label" parent="."]
+[node name="UsernameLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 71.0
+offset_left = 70.0
 offset_top = 36.0
-offset_right = 285.0
+offset_right = 284.0
 offset_bottom = 59.0
 text = "@username"
 label_settings = SubResource("LabelSettings_0d1m5")
 
+[node name="PostMediaVSP" type="VideoStreamPlayer" parent="."]
+clip_children = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 29.0
+offset_top = -65.0
+offset_right = 385.0
+offset_bottom = 98.0
+grow_horizontal = 2
+grow_vertical = 0
+
 [node name="MainContentLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 26.5
-offset_top = 76.0
+offset_top = 74.0
 offset_right = 380.5
-offset_bottom = 104.0
+offset_bottom = 105.0
 label_settings = SubResource("LabelSettings_g3b8r")
 autowrap_mode = 2
 
-[node name="PostMediaTextureRectRounded" type="Panel" parent="."]
+[node name="PostMediaTextureRectRounded" type="Panel" parent="MainContentLabel"]
 clip_children = 1
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 27.0
-offset_top = 104.0
-offset_right = -27.0
-offset_bottom = 267.0
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.5
+offset_top = 4.0
+offset_right = 358.5
+offset_bottom = 167.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_0d1m5")
 script = ExtResource("1_0vpvm")
 expand_mode = 5
 metadata/_custom_type_script = "uid://cwasfeb3if57j"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="InteractionsContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -204,7 +222,7 @@ offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Button" type="Button" parent="HBoxContainer"]
+[node name="LikeButton" type="Button" parent="InteractionsContainer"]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 theme_override_constants/icon_max_width = 16
@@ -215,19 +233,19 @@ icon = ExtResource("4_01da6")
 autowrap_trim_flags = 0
 icon_alignment = 1
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="LikeCountLabel" type="Label" parent="InteractionsContainer"]
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_popio")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="InteractionsContainer"]
 layout_mode = 2
 theme_override_constants/separation = 8
 theme_override_styles/separator = SubResource("StyleBoxEmpty_01da6")
 
-[node name="Button2" type="Button" parent="HBoxContainer"]
+[node name="CommentButton" type="Button" parent="InteractionsContainer"]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 theme_override_constants/icon_max_width = 14
@@ -238,7 +256,7 @@ icon = ExtResource("5_01da6")
 autowrap_trim_flags = 0
 icon_alignment = 1
 
-[node name="Label2" type="Label" parent="HBoxContainer"]
+[node name="CommentCountLabel" type="Label" parent="InteractionsContainer"]
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_popio")
@@ -272,12 +290,12 @@ grow_vertical = 0
 theme_override_constants/separation = 16
 alignment = 2
 
-[node name="Label" type="Label" parent="HBoxContainer2"]
+[node name="TimestampLabel" type="Label" parent="HBoxContainer2"]
 layout_mode = 2
 text = "01/12/2025"
 label_settings = SubResource("LabelSettings_ns33d")
 
-[node name="Button" type="Button" parent="HBoxContainer2"]
+[node name="ShareButton" type="Button" parent="HBoxContainer2"]
 layout_mode = 2
 theme_override_constants/icon_max_width = 14
 theme_override_styles/normal = SubResource("StyleBoxFlat_g3b8r")
@@ -286,3 +304,19 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_g3b8r")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_g3b8r")
 theme_override_styles/focus = SubResource("StyleBoxFlat_g3b8r")
 icon = ExtResource("6_7syyy")
+
+[node name="MoreBtn" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0.7764706)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -48.0
+offset_top = 17.0
+offset_right = -24.0
+offset_bottom = 41.0
+grow_horizontal = 0
+theme_override_constants/icon_max_width = 16
+icon = ExtResource("7_popio")
+
+[connection signal="pressed" from="InteractionsContainer/LikeButton" to="." method="_on_like_button_pressed"]

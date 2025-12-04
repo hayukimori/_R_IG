@@ -14,6 +14,7 @@ var commentsCount: int;
 var username: String;
 var media: Array;
 var has_media: bool;
+var liked: bool;
 
 var author: UserProfile
 
@@ -28,7 +29,8 @@ func _init(
 	post_comments_count: int = 0,
 	post_username: String = "",
 	post_media: Array = [],
-	post_has_media: bool = false
+	post_has_media: bool = false,
+	post_liked: bool = false
 	) -> void:
 
 	id = post_id
@@ -42,6 +44,7 @@ func _init(
 	username = post_username
 	media = post_media
 	has_media = post_has_media
+	liked = post_liked
 	
 
 func load_dict(dict: Dictionary):
@@ -60,7 +63,9 @@ func load_dict(dict: Dictionary):
 	
 	likesCount = dict["likesCount"]
 	commentsCount = dict["commentsCount"]
-	
+
+	liked = dict["liked"]
+
 
 
 func self_validate_post() -> ValidationResult:

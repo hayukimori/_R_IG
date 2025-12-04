@@ -38,3 +38,5 @@ func _ready():
 	if md_url != "":
 		ProjectSettings.set_setting("application/config/md_host", md_url)
 		if DEBUG_MODE: print("Media Host set to: ", md_url)
+	else:
+		push_error("MD_HOST not set in evironment config. Using default endpoint.")

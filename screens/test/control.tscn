@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://hmv4iahbvefx"]
+
+[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_x6nkq"]
+file = "user://cache/videos/6931237dfa9bf8e7ad660558-1764835516331.ogv"
+
+[node name="Control" type="VideoStreamPlayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = SubResource("VideoStreamTheora_x6nkq")
+autoplay = true

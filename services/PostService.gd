@@ -25,8 +25,6 @@ func load_posts() -> Array[PostModel]:
 
 
 	for item in posts2:
-		print_rich(item)
-
 		var model = PostModel.new()
 		model.load_dict(item)
 		post_list.append(model)
@@ -57,6 +55,7 @@ func new_post(content: String) -> PostResult:
 	var response_code: int = req_result.get("response_code")
 
 	if response_code not in range(200, 299):
+		main_result.ok = false
 		req_result.get("response_code")
 		main_result.reasons.append("Post error. Unexpected Response: " + str(response_code))
 		return main_result
@@ -111,6 +110,7 @@ func new_comment(post_id: String, content: String) -> PostResult:
 	var response_code: int = req_result.get("response_code")
 
 	if response_code not in range(200, 299):
+		main_result.ok = false
 		req_result.get("response_code")
 		main_result.reasons.append("Post error. Unexpected Response: " + str(response_code))
 	
@@ -138,12 +138,28 @@ func new_like(post_id: String) -> PostResult:
 	var response_code: int = req_result.get("response_code")
 
 	if response_code not in range(200, 299):
+		main_result.ok = false
 		req_result.get("response_code")
 		main_result.reasons.append("Post error. Unexpected Response: " + str(response_code))
 	
 
 	return main_result
 
+
+func unlike(post_id: String) -> PostResult:
+	var main_result: PostResult = PostResult.new()
+	main_result.ok = true
+
+	var req_result = await Repositories.post_repository.deleteLike(post_id)
+	var response_code: int = req_result.get("response_code")
+
+	if response_code not in range(200, 299):
+		main_result.ok = false
+		req_result.get("response_code")
+		main_result.reasons.append("Post error. Unexpected Response: " + str(response_code))
+	
+	return main_result
+	
 
 func generate_post_model_send(author_id: String, content: String, _has_media: bool = false) -> PostModel:
 	var temp_post = PostModel.new()

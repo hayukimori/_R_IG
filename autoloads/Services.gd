@@ -8,6 +8,7 @@ var routes: RouteService
 var profile_service: ProfileService
 var cluster_service: ClusterService
 var posts_service: PostService
+var videolib: VideoLib
 
 func _ready() -> void:
 	print("[Services] Starting services")
@@ -19,3 +20,5 @@ func _ready() -> void:
 	profile_service = ProfileService.new();
 	cluster_service = ClusterService.new(self);
 	posts_service = PostService.new(self);
+
+	videolib = VideoLib.new(self);

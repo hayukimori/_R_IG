@@ -87,6 +87,10 @@ func auth_req_patch(url: String, payload: Dictionary, custom_headers: Array = []
 	var result = await auth_fetch(url, HTTPClient.METHOD_PATCH, payload, custom_headers)
 	return result
 
+func auth_req_delete(url: String, custom_headers: Array = []) -> Dictionary:
+	var result = await auth_fetch(url, HTTPClient.METHOD_DELETE, {}, custom_headers)
+	return result
+
 ## POST method for sending image (multipart/form-data) - Godot 4.5 compat
 func auth_req_img_post(url: String, file_path: String, custom_headers: Array = []) -> Dictionary:
 	var method = HTTPClient.METHOD_POST
